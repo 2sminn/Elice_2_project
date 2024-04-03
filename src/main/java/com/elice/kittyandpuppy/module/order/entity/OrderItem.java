@@ -18,15 +18,15 @@ import lombok.Setter;
 // TODO: Product 객체 연결하는 과정 필요
 
 /**
- * OrderDetail 객체
+ * OrderItem 객체
  * <p>주문하는 상품의 상품 정보, 개수, 구매 시점의 상품 가격을 관리한다.<br>
- * 또한, 한 번의 주문에서 여러개의 상품을 선택할 경우를 고려하여, OrderDetail 객체는 Order 객체와 다대일 관계를 갖는다.</p>
+ * 또한, 한 번의 주문에서 여러개의 상품을 선택할 경우를 고려하여, OrderItem 객체는 Order 객체와 다대일 관계를 갖는다.</p>
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 @Entity
-@Table(name = "order_detail")
-public class OrderDetail {
+@Table(name = "order_item")
+public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,8 +46,8 @@ public class OrderDetail {
     @Column(name = "product_price")
     private int productPrice;
 
-    public static OrderDetail createOrderItem(Product product, int productAmount, int productPrice) {
-        OrderDetail orderItem = new OrderDetail();
+    public static OrderItem createOrderItem(Product product, int productAmount, int productPrice) {
+        OrderItem orderItem = new OrderItem();
         orderItem.setProduct(product);
         orderItem.setProductAmount(productAmount);
         orderItem.setProductPrice(productPrice);

@@ -40,7 +40,7 @@ public class Order {
     private Member member;
 
     @OneToMany(mappedBy = "order_detail", cascade = CascadeType.ALL)
-    private List<OrderDetail> orderDetails = new ArrayList<>();
+    private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Delivery delivery;
@@ -58,9 +58,9 @@ public class Order {
 //        member.getOrders().add(this);
     }
 
-    public void addOrderDetail(OrderDetail orderDetail) {
-        this.orderDetails.add(orderDetail);
-        orderDetail.setOrder(this);
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+        orderItem.setOrder(this);
     }
 
     public void setDelivery(Delivery delivery) {
@@ -86,13 +86,13 @@ public class Order {
      * @param orderItems
      * @return 저장된 Order 객체
      */
-    public static Order createOrder(Member member, Delivery delivery, List<OrderDetail> orderItems) {
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order order = new Order();
         order.setMember(member);
         order.setDelivery(delivery);
 
-        for(OrderDetail orderItem : orderItems) {
-            order.addOrderDetail(orderItem);
+        for(OrderItem orderItem : orderItems) {
+            order.addOrderItem(orderItem);
         }
 
         order.setStatus(OrderStatus.ORDER);
@@ -119,7 +119,7 @@ public class Order {
 
         this.setStatus(OrderStatus.CANCEL);
         // 재고 복구 로직
-        for(OrderDetail orderItem : this.orderDetails) {
+        for(OrderItem orderItem : this.orderItems) {
             orderItem.cancel();
         }
     }
@@ -161,7 +161,7 @@ public class Order {
     public int getTotalPrice() {
         int totalPrice = 0;
 
-        for (OrderDetail orderItem : this.orderDetails) {
+        for (OrderItem orderItem : this.orderItems) {
             totalPrice += orderItem.getTotalPrice();
         }
 

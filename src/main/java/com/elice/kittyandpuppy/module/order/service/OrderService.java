@@ -3,7 +3,7 @@ package com.elice.kittyandpuppy.module.order.service;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.order.entity.Delivery;
 import com.elice.kittyandpuppy.module.order.entity.Order;
-import com.elice.kittyandpuppy.module.order.entity.OrderDetail;
+import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,7 @@ public class OrderService {
      * @param orderItems
      * @return 생성된 Order 객체
      */
-    public Order create(Member member, Delivery delivery, List<OrderDetail> orderItems) {
+    public Order create(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order createdOrder = Order.createOrder(member, delivery, orderItems);
 
         return orderRepository.save(createdOrder);
@@ -44,7 +44,7 @@ public class OrderService {
 
     /**
      * Order 객체를 삭제한다.<br>
-     * 삭제시 Cascade 설정으로 인해 해당하는 OrderDetail, Delivery 정보들도 자동으로 삭제된다.
+     * 삭제시 Cascade 설정으로 인해 해당하는 OrderItem, Delivery 정보들도 자동으로 삭제된다.
      * @param id
      */
     public void deleteById(long id) {
