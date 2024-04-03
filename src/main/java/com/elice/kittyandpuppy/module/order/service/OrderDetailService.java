@@ -31,7 +31,7 @@ public class OrderDetailService {
      * id 값으로 OrderDetail 객체를 조회한다.
      *
      * @param  id
-     * @throws IllegalArgumentException OrderDetail 조회 실패
+     * @throws IllegalArgumentException OrderDetail 조회 실패<br>
      *         - "Not Found OrderDetail Info By: {id}"
      * @return 찾은 OrderDetail 객체
      */
