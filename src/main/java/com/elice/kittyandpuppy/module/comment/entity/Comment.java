@@ -36,7 +36,7 @@ public class Comment extends BaseTimeEntity{
     private Post post;
 
 //    public CommentResponse fromEntity(Comment comment){
-//        re
+//
 //    }
 
 }

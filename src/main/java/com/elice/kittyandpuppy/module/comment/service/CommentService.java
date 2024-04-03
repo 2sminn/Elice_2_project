@@ -6,6 +6,7 @@ import com.elice.kittyandpuppy.module.comment.repository.CommentRepository;
 import com.elice.kittyandpuppy.module.comment.repository.request.CommentRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,25 +15,30 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public Comment save(CommentRequest commentDto){
+    public Comment save(CommentRequest commentDto) {
         return Comment.builder()
                 .content(commentDto.getContent())
                 .parent_id(commentDto.getParent_id())
                 .build();
     }
 
-    public Comment update(Long commentId, CommentRequest commentDto){
+    @Transactional
+    public Comment update(Long commentId, CommentRequest commentDto) {
         Comment findComment = commentRepository.findById(commentId).orElseThrow();
         findComment.setContent(commentDto.getContent());
         return findComment;
     }
+
+    @Transactional(readOnly = true) // 몰까용 ㅋ
     public Comment findById(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow();
     }
-    public List<Comment> findedByPostId(Long postId){
+
+    public List<Comment> findedByPostId(Long postId) {
         return commentRepository.findByPostId(postId);
     }
-    public void deleteComment(Long commentId){
+
+    public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         commentRepository.delete(comment);
     }
