@@ -1,6 +1,6 @@
 package com.elice.kittyandpuppy.global;
 
-import lombok.Builder;
+import jakarta.persistence.Embeddable;
 import lombok.Getter;
 
 /**
@@ -15,6 +15,8 @@ import lombok.Getter;
  * @detail: 상세 주소
  *
  */
+
+@Embeddable
 @Getter
 public class Address {
 
@@ -22,17 +24,16 @@ public class Address {
     private String street;
     private String detail;
 
-    @Builder
+    protected Address() {}
+
     public Address(String zipCode, String street, String detail) {
-
-        zipCodeValidator(zipCode);
-
-        this.zipCode = zipCode;
-        this.street = street;
-        this.detail = detail;
+        this.zipCode = zipCodeValidator(zipCode);
+        this.street = emptyValidator(street);
+        this.detail = emptyValidator(detail);
     }
 
-    private void zipCodeValidator(String zipCode) {
+    private String zipCodeValidator(String zipCode) {
+
         try {
             Integer.parseInt(zipCode);
         } catch (NumberFormatException exception) {
@@ -42,5 +43,15 @@ public class Address {
         if (zipCode.length() != 5) {
             throw new RuntimeException("우편번호는 5자리 입니다.");
         }
+
+        return zipCode;
+    }
+
+    private String emptyValidator(String address) {
+        if (address.isEmpty()) {
+            throw new RuntimeException("주소가 비어 있습니다.");
+        }
+
+        return address;
     }
 }
