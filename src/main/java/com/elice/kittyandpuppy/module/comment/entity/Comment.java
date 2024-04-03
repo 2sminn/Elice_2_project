@@ -2,6 +2,7 @@ package com.elice.kittyandpuppy.module.comment.entity;
 
 
 import com.elice.kittyandpuppy.global.BaseTimeEntity;
+import com.elice.kittyandpuppy.module.comment.repository.response.CommentResponse;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.post.entity.Post;
 import jakarta.persistence.*;
@@ -33,5 +34,9 @@ public class Comment extends BaseTimeEntity{
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+//    public CommentResponse fromEntity(Comment comment){
+//        re
+//    }
 
 }
