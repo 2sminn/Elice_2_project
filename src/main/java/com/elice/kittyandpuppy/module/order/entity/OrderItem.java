@@ -13,7 +13,6 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 // TODO: Product 객체 연결하는 과정 필요
 
@@ -23,7 +22,7 @@ import lombok.Setter;
  * 또한, 한 번의 주문에서 여러개의 상품을 선택할 경우를 고려하여, OrderItem 객체는 Order 객체와 다대일 관계를 갖는다.</p>
  */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter @Setter
+@Getter
 @Entity
 @Table(name = "order_item")
 public class OrderItem {
@@ -79,4 +78,16 @@ public class OrderItem {
         return this.productAmount * this.productPrice;
     }
 
+    // 외부에서 데이터 변경이 없도록 private 접근제어자로 setter 작성
+    private void setProduct(Product product) {
+        this.product = product;
+    }
+
+    private void setProductAmount(int productAmount) {
+        this.productAmount = productAmount;
+    }
+
+    private void setProductPrice(int productPrice) {
+        this.productPrice = productPrice;
+    }
 }
