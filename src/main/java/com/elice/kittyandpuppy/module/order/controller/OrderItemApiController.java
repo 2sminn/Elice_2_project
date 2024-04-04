@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class OrderItemApiController {
 //    private final ProductService productService;
 
     @PostMapping("/orderItem")
-    public ResponseEntity<Long> createOrderDetail(@RequestParam OrderItemRequest request) {
+    public ResponseEntity<Long> createOrderDetail(@RequestBody OrderItemRequest request) {
         Product product = /*productService.findById(request.getProductId());*/ new Product();
         OrderItem createdOrderItem = orderItemService.create(product, request.getPrice(), request.getAmount());
 
@@ -36,7 +36,7 @@ public class OrderItemApiController {
     }
 
     @PostMapping("/orderItems")
-    public ResponseEntity<List<Long>> createOrderDetail(@RequestParam List<OrderItemRequest> requests) {
+    public ResponseEntity<List<Long>> createOrderDetail(@RequestBody List<OrderItemRequest> requests) {
 
         List<Long> orderItemIds = new ArrayList<>();
 
