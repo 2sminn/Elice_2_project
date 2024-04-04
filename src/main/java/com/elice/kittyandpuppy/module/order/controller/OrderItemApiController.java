@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: productService 구현되면 주석처리한 부분 수정해야 함
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -30,7 +31,7 @@ public class OrderItemApiController {
     @PostMapping("/orderItem")
     public ResponseEntity<Long> createOrderDetail(@RequestBody OrderItemRequest request) {
         Product product = /*productService.findById(request.getProductId());*/ new Product();
-        OrderItem createdOrderItem = orderItemService.create(product, request.getPrice(), request.getAmount());
+        OrderItem createdOrderItem = orderItemService.create(product, request.getAmount());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderItem.getId());
     }
@@ -42,7 +43,7 @@ public class OrderItemApiController {
 
         for (OrderItemRequest request : requests) {
             Product product = /*productService.findById(request.getProductId());*/ new Product();
-            OrderItem createdOrderItem = orderItemService.create(product, request.getPrice(), request.getAmount());
+            OrderItem createdOrderItem = orderItemService.create(product, request.getAmount());
             orderItemIds.add(createdOrderItem.getId());
         }
 
