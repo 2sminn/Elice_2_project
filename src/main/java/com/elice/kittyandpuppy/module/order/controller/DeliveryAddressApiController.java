@@ -23,7 +23,7 @@ public class DeliveryAddressApiController {
     private final DeliveryService deliveryService;
 
     @PostMapping("")
-    public ResponseEntity<?> addDelivery(@RequestBody DeliveryAddressRequest request) {
+    public ResponseEntity<Long> addDelivery(@RequestBody DeliveryAddressRequest request) {
         Delivery delivery = deliveryService.create(
                 request.getAddress(), request.getDeliveryName(), request.getDeliveryPhone()
         );
@@ -32,14 +32,14 @@ public class DeliveryAddressApiController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<?> getDelivery(@PathVariable(value = "id") long id) {
+    public ResponseEntity<DeliveryAddressResponse> getDelivery(@PathVariable(value = "id") long id) {
         Delivery delivery = deliveryService.findById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(new DeliveryAddressResponse(delivery));
     }
 
     @PostMapping("{id}")
-    public ResponseEntity<?> updateDelivery(@PathVariable(value = "id") long id,
+    public ResponseEntity<Long> updateDelivery(@PathVariable(value = "id") long id,
                                             @RequestBody DeliveryAddressRequest request) {
         deliveryService.update(
                 id, request.getAddress(), request.getDeliveryName(), request.getDeliveryPhone()
@@ -50,7 +50,7 @@ public class DeliveryAddressApiController {
 
     // TODO: 배송지 정보 삭제가 필요할까? (because Order 삭제시 연쇄 삭제)
     @DeleteMapping("{id}")
-    public ResponseEntity<?> deleteDelivery(@PathVariable(value = "id") long id) {
+    public ResponseEntity<Void> deleteDelivery(@PathVariable(value = "id") long id) {
         deliveryService.deleteById(id);
 
         return ResponseEntity.ok().build();

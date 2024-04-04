@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// TODO: productService 구현되면 주석처리한 부분 수정해야 함
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -28,21 +29,21 @@ public class OrderItemApiController {
 //    private final ProductService productService;
 
     @PostMapping("/orderItem")
-    public ResponseEntity<Long> createOrderDetail(@RequestParam OrderItemRequest request) {
+    public ResponseEntity<Long> createOrderDetail(@RequestBody OrderItemRequest request) {
         Product product = /*productService.findById(request.getProductId());*/ new Product();
-        OrderItem createdOrderItem = orderItemService.create(product, request.getPrice(), request.getAmount());
+        OrderItem createdOrderItem = orderItemService.create(product, request.getAmount());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrderItem.getId());
     }
 
     @PostMapping("/orderItems")
-    public ResponseEntity<List<Long>> createOrderDetail(@RequestParam List<OrderItemRequest> requests) {
+    public ResponseEntity<List<Long>> createOrderDetail(@RequestBody List<OrderItemRequest> requests) {
 
         List<Long> orderItemIds = new ArrayList<>();
 
         for (OrderItemRequest request : requests) {
             Product product = /*productService.findById(request.getProductId());*/ new Product();
-            OrderItem createdOrderItem = orderItemService.create(product, request.getPrice(), request.getAmount());
+            OrderItem createdOrderItem = orderItemService.create(product, request.getAmount());
             orderItemIds.add(createdOrderItem.getId());
         }
 

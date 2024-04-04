@@ -9,13 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class DeliveryAddressRequest {
-    private String zipCode;
-    private String street;
-    private String detail;
+    private Address address;
     private String deliveryName;
     private String deliveryPhone;
-
-    public Address getAddress() {
-        return new Address(zipCode, street, detail);
-    }
 }

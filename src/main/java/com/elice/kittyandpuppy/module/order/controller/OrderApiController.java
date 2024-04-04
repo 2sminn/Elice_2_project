@@ -37,7 +37,7 @@ public class OrderApiController {
     private final MemberService memberService;
 
     @PostMapping("/order")
-    public ResponseEntity<OrderResponse> addOrder(@RequestBody OrderRequest request) {
+    public ResponseEntity<Long> addOrder(@RequestBody OrderRequest request) {
 
         // TODO: memberService 에서 예외를 처리하는게 낫지 않나?
         Member member = memberService.findMemberById(request.getMemberId()).orElseThrow();
@@ -51,16 +51,17 @@ public class OrderApiController {
 
         Order order = orderService.create(member, delivery, orderItems);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderResponse(order));
+        return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
     }
 
     @GetMapping("/orders")
     public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam Long memberId) {
-        List<Order> orders = orderService.findAllByMemberId(memberId);
+        List<OrderResponse> orderResponses = orderService.findAllByMemberId(memberId)
+                .stream()
+                .map(OrderResponse::new)
+                .toList();
 
-        return ResponseEntity.ok().body(orders.stream()
-                                            .map(OrderResponse::new)
-                                            .toList());
+        return ResponseEntity.ok().body(orderResponses);
     }
 
     @GetMapping("/order/{id}")
@@ -72,28 +73,28 @@ public class OrderApiController {
 
     // 주문 상태 관리 로직
     @PutMapping("/order/{id}/status/delivery")
-    public ResponseEntity updateStatusToDelivery(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Void> updateStatusToDelivery(@PathVariable(value = "id") Long id) {
         orderService.delivery(id);
 
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/order/{id}/status/complete")
-    public ResponseEntity updateStatusToComplete(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Void> updateStatusToComplete(@PathVariable(value = "id") Long id) {
         orderService.complete(id);
 
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/order/{id}/status/cancel")
-    public ResponseEntity updateStatusToCancel(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Void> updateStatusToCancel(@PathVariable(value = "id") Long id) {
         orderService.cancle(id);
 
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/order/{id}")
-    public ResponseEntity deleteOrder(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable(value = "id") Long id) {
         orderService.deleteById(id);
 
         return ResponseEntity.ok().build();
