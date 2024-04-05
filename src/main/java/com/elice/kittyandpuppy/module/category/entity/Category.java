@@ -1,10 +1,10 @@
 package com.elice.kittyandpuppy.module.category.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "Category")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@Setter
 public class Category {
 
     @Id
@@ -41,4 +42,5 @@ public class Category {
         this.categoryCode = categoryCode;
         this.categoryBranch = categoryBranch;
     }
-    }
+
+}

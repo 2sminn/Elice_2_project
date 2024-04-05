@@ -27,7 +27,7 @@ public class CategoryDto {
         this.categoryBranch = entity.getCategoryBranch();
 
         if(entity.getParentCategory() == null){
-            this.parentCategoryName = "대분류";
+            this.parentCategoryName = "부모카테고리";
         }else{
             this.parentCategoryName = entity.getParentCategory().getCategoryName();
         }
@@ -36,11 +36,11 @@ public class CategoryDto {
     }
 
     public Category toEntity(){
-        return Category.builder()
-                .categoryBranch(categoryBranch)
-                .categoryName(categoryName)
-                .categoryId(categoryId)
-                .categoryCode(categoryCode)
-                .build();
+        Category category = new Category();
+        category.setCategoryId(categoryId);
+        category.setCategoryName(categoryName);
+        category.setCategoryCode(categoryCode);
+        category.setCategoryBranch(categoryBranch);
+        return category;
     }
 }
