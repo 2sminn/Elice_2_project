@@ -17,14 +17,13 @@ public class OrderItemService {
      * OrderItem 객체를 생성하고, order_Item 테이블에 저장한다.
      *
      * @param product
-     * @param price
      * @param amount
      *
      * @return 생성된 OrderItem 객체
      */
     @Transactional
-    public OrderItem create(Product product, int price, int amount) {
-        return orderItemRepository.save(OrderItem.createOrderItem(product, amount, price));
+    public OrderItem create(Product product, int amount) {
+        return orderItemRepository.save(OrderItem.createOrderItem(product, amount, product.getPrice()));
     }
 
     /**
