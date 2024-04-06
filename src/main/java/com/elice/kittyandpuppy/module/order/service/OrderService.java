@@ -39,7 +39,7 @@ public class OrderService {
      */
     public Order findById(Long id) {
         return orderRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Not Found Order Info By: " + id)));
+                .orElseThrow(() -> new IllegalArgumentException("Not Found Order Info By: " + id));
     }
 
     /**

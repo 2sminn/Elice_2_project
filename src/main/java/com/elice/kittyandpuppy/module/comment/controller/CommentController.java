@@ -31,11 +31,5 @@ public class CommentController {
         commentService.deleteComment(commentId);
         return "댓글 "+commentId+"번 삭제 완료";
     }
-//    게시물을 불러올때 댓글조회가 함께 사용돼서 따로 api를 만들필요가 없을 것 같습니다
-//    @GetMapping("")
-//    @Operation(summary="게시물 ID에 따른 댓글 전체 조회")
-//    public List<Comment> readAll(){
-//        return commentService.findedByPostId()
-//    }
 
 }
