@@ -88,7 +88,7 @@ public class OrderApiController {
 
     @PutMapping("/order/{id}/status/cancel")
     public ResponseEntity<Void> updateStatusToCancel(@PathVariable(value = "id") Long id) {
-        orderService.cancle(id);
+        orderService.cancel(id);
 
         return ResponseEntity.ok().build();
     }
