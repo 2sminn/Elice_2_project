@@ -5,4 +5,125 @@ body {
   margin: 0;
 }
 
+.font-large {
+  font-size: 27px;
+  font-weight: bold;
+
+  margin: 8px;
+}
+
+.font-middle {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 25px;
+}
+
 /* content css */
+.container {
+  padding-left: 10.5vw;
+  padding-right: 10.5vw;
+
+  margin-top: 100px;
+  margin-bottom: 100px;
+
+  /* 좌우 정렬*/
+  display: flex;
+  justify-content: flex-start;
+}
+
+.container .left-box {
+  width: 47vw;
+
+  float:left;
+}
+
+.container .left-box .box {
+  width: 47vw;
+  border: 1px solid #E4E4E6;
+  border-radius: 25px;
+
+  /*!* 좌우 정렬*!*/
+  /*display: flex;*/
+  /*justify-content: flex-start;*/
+}
+
+/*.container .left-box .box .static {*/
+
+/*  float:left;*/
+/*}*/
+
+/*.container .left-box .box .dynamic {*/
+
+/*  margin-left: 0;*/
+/*}*/
+
+.container .left-box .box .column {
+  display: flex;
+
+  position: relative;
+}
+
+.container .left-box .box .item {
+
+  margin: 25px;
+
+  /* 좌우 정렬*/
+  display: flex;
+  justify-content: flex-start;
+
+  /* 수직 정렬 */
+  align-items: center;
+}
+
+.container .left-box .box .item .img {
+  width: 150px;
+  height: 150px;
+  overflow:hidden;
+}
+
+.container .left-box .box .item .img .image-thumbnail {
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.container .right-box {
+  width: 30vw;
+
+  margin-left: auto;
+}
+
+.container .right-box .box {
+  width: 30vw;
+  border: 1px solid #E4E4E6;
+  border-radius: 25px;
+}
+
+.container .right-box .box .order-detail {
+  /* 좌우 정렬 */
+  display: flex;
+  justify-content: space-between;
+}
+
+.container .right-box .box .static {
+}
+
+.container .right-box .box .dynamic {
+}
+
+.container .right-box .box {
+  width: 30vw;
+  border: 1px solid #E4E4E6;
+  border-radius: 25px;
+}
+
+.container .right-box .box .total-price {
+  margin: 25px;
+  /* 좌우 정렬 */
+  display: flex;
+  justify-content: space-between;
+}
+
+.container .right-box .box .total-price p {
+  margin: 0;
+}
