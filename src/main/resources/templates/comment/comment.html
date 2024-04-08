@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="comment-container">
+    <div class="comment-text-container">
+        <div class="comment-count-box">
+            댓글<span class="comment-count">4</span>
+        </div>
+        <div class="comment-text-box">
+            <form method="POST" action="/api/comment">
+                <input type="textarea" name="content" class="c-text">
+                <input type="button" value="사진첨부" class="c-file">
+                <input tpye="submit" value="입력" class="c-btn">
+            </form>
+        </div>
+    </div>
+    <div class="comment-list-container">
+        <div class="comment-content-container">
+            <div class="row-box">
+                <div>냔냔펑치</div>
+                <div>2024.03.09</div>
+            </div>
+            <div class="row-box">
+                <div>냥젤리가 세상을 구한다</div>
+            </div>
+            <div class="row-box">
+                <input type="button" value="댓글" class="reply-btn">
+                <input type="button" valeu="좋아요" class="upvote-btn">
+                <input type="button" valeu="싫어요" class="downvote-btn">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

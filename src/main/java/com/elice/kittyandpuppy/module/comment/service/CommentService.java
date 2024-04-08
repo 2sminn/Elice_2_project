@@ -15,10 +15,10 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
 
-    public Comment save(CommentRequest commentDto) {
+    public Comment save(CommentRequest commentRequest) {
         return Comment.builder()
-                .content(commentDto.getContent())
-                .parent_id(commentDto.getParent_id())
+                .content(commentRequest.getContent())
+                .parent_id(commentRequest.getParentId())
                 .build();
     }
 
@@ -29,17 +29,17 @@ public class CommentService {
         return findComment;
     }
 
-    @Transactional(readOnly = true) // 몰까용 ㅋ
-    public Comment findById(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow();
-    }
-
-    public List<Comment> findedByPostId(Long postId) {
-        return commentRepository.findByPostId(postId);
-    }
-
     public void deleteComment(Long commentId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
         commentRepository.delete(comment);
     }
+
+    public Comment findById(Long commentId) {
+        return commentRepository.findById(commentId).orElseThrow();
+    }
+
+    public List<Comment> findByPost(Long postId) {
+        return commentRepository.findByPostId(postId);
+    }
+
 }

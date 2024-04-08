@@ -2,12 +2,9 @@ package com.elice.kittyandpuppy.module.comment.entity;
 
 
 import com.elice.kittyandpuppy.global.BaseTimeEntity;
-import com.elice.kittyandpuppy.module.comment.repository.response.CommentResponse;
 import com.elice.kittyandpuppy.module.member.entity.Member;
-import com.elice.kittyandpuppy.module.post.entity.Post;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
 
 @Entity
 @Builder
@@ -31,9 +28,9 @@ public class Comment extends BaseTimeEntity{
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "post_id")
+//    private Post post;
 
 //    public CommentResponse fromEntity(Comment comment){
 //
