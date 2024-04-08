@@ -10,8 +10,8 @@ body {
     height: 40px;
     background-color: #F2F2F2;
 
-    padding-left: 7vw;
-    padding-right: 7vw;
+    padding-left: 10.5vw;
+    padding-right: 10.5vw;
 
     /* 좌우 정렬*/
     display: flex;
