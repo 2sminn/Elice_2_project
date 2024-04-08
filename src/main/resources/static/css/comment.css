@@ -1,0 +1,84 @@
+body{
+    box-sizing: border-box;
+    margin: 0px;
+    font-size: 19px;
+    font-family: 'Noto Sans KR', sans-serif;
+    letter-spacing: -1px;
+}
+
+.comment-wrapper{
+
+    display: flex;
+
+    justify-content: center;
+}
+.comment-container{
+
+    width: 1050px;
+}
+.comment-text-container{
+
+}
+.comment-count-box{
+
+    font-weight: 600;
+
+    margin-bottom: 10px;
+
+    margin-left: 10px;
+}
+.comment-count{
+
+    font-weight: 800;
+
+    margin-left: 5px;
+}
+.comment-text-box{
+
+}
+.c-text{
+
+    width: 950px;
+
+    height: 60px;
+
+    border: #E4E4E6 solid 2px;
+
+    border-radius: 11px;
+
+    padding-bottom: 40px;
+}
+.c-file{
+
+    position: relative;
+
+    top: 52px;
+
+    left: -149px;
+}
+.c-btn{
+
+    position: relative;
+
+    top: -37px;
+}
+
+
+.comment-list-container{
+
+}
+.comment-content-container{
+
+}
+.row-box{
+
+}
+.reply-btn{
+
+}
+.upvote-btn{
+
+}
+.downvote-btn{
+
+}
