@@ -5,12 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Table(name = "product")
-
+@Data // getter, setter 등 여러 메소드들을 자동으로 생성
+@Entity // 클래스가 데이터베이스의 테이블과 매핑됨
+@NoArgsConstructor // Lombok 파라미터가 없는 기본 생성자 생성
+@AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자 생성
+@Table(name = "product") // 해당 엔티티가 매핑되는 DB 테이블의 이름 지정
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

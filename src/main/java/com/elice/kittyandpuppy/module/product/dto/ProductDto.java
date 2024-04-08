@@ -21,10 +21,10 @@ public class ProductDto {
     private String modified_at;
 
 
-    // Dto - > product
+    // Dto - > product (DTO 상품 객체 - > 상품 엔티티로 변환)
     public static Product toEntity(ProductDto productDto) {
         Product product = new Product();
-        product.setId(productDto.getId());
+        product.setId(productDto.getId()); // DTO 객체 id 값을 엔티티 객체에 설정
         product.setCategory_id(productDto.getCategory_id());
         product.setProduct_name(productDto.getProduct_name());
         product.setProduct_price(productDto.getProduct_price());
