@@ -8,5 +8,5 @@ import lombok.Setter;
 public class CommentRequest {
     private Long id;
     private String content;
-    private Long parent_id;
+    private Long parentId;
 }
