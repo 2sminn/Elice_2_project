@@ -21,7 +21,7 @@ public class CommentService {
     }
 
     public Comment update(Long commentId, CommentRequest commentDto){
-        Comment findComment = findById(commentId);
+        Comment findComment = commentRepository.findById(commentId).orElseThrow();
         findComment.setContent(commentDto.getContent());
         return findComment;
     }
