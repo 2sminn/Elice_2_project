@@ -59,7 +59,7 @@ public class OrderService {
      *
      * @param id
      */
-    public void cancle(Long id) {
+    public void cancel(Long id) {
         findById(id).cancel();
     }
 
