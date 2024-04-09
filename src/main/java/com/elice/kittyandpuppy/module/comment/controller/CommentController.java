@@ -27,9 +27,10 @@ public class CommentController {
     }
 
     @Operation(summary = "댓글 수정")
-    @PutMapping
-    public ResponseEntity<Comment> updateComment(@RequestBody final CommentRequest commentRequest) {
-        Comment comment = commentService.update(commentRequest.getId(), commentRequest);
+    @PutMapping("/{commentId}")
+    public ResponseEntity<Comment> updateComment(@PathVariable("commentId") Long commentId,
+                                                 @RequestBody final CommentRequest commentRequest) {
+        Comment comment = commentService.update(commentId, commentRequest);
         return ResponseEntity.status(HttpStatus.OK).body(comment);
     }
 

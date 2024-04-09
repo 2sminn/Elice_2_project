@@ -1,5 +1,8 @@
 package com.elice.kittyandpuppy.module.post.service;
 
+import com.elice.kittyandpuppy.module.comment.entity.Comment;
+import com.elice.kittyandpuppy.module.comment.repository.CommentRepository;
+import com.elice.kittyandpuppy.module.comment.service.CommentService;
 import com.elice.kittyandpuppy.module.post.dto.RequestPost;
 import com.elice.kittyandpuppy.module.post.entity.Post;
 import com.elice.kittyandpuppy.module.post.repository.PostRepository;
@@ -12,6 +15,7 @@ import java.util.List;
 @Service
 public class PostService {
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
 
     // Community 관련 서비스
     public List<Post> getCommunityList() {
@@ -19,7 +23,10 @@ public class PostService {
     }
 
     public Post getCommunityDetail(Long id) {
-        return postRepository.findById(id).orElse(null);
+        Post post = postRepository.findById(id).orElse(null);
+        List<Comment> comments = commentRepository.findByPostId(id);
+        post.setComments(comments);
+        return post;
     }
 
     public Post createCommunityDetail(RequestPost requestPost) {
