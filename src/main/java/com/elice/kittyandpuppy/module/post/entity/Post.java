@@ -1,13 +1,11 @@
 package com.elice.kittyandpuppy.module.post.entity;
 
+import com.elice.kittyandpuppy.global.BaseTimeEntity;
 import com.elice.kittyandpuppy.module.comment.entity.Comment;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -17,7 +15,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "post")
-public class Post extends BaseTimeEntity{
+public class Post extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
