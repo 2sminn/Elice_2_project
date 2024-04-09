@@ -26,11 +26,11 @@ public class ProductService {
     public Product createProduct(ProductDto productDto) { // 상품을 생성하는 메서드 상품 DTO를 받아 새로운 상품 엔티티를 생성하고, 이를 저장한 후 반환.
         Product product = new Product(
             productDto.getCategory_id(),
-            productDto.getProduct_name(),
-            productDto.getProduct_price(),
-            productDto.getProduct_stock(),
-            productDto.getProduct_image_url(),
-            productDto.getProduct_desc(),
+            productDto.getName(),
+            productDto.getPrice(),
+            productDto.getStock(),
+            productDto.getImageUrl(),
+            productDto.getDesc(),
             productDto.getCreated_at(),
             productDto.getModified_at()
         );
@@ -61,11 +61,11 @@ public class ProductService {
         Product existingProduct = productRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("죄송합니다. 상품을 찾을 수 없습니다."));
         existingProduct.setCategory_id(updateProductDto.getCategory_id());
-        existingProduct.setProduct_name(updateProductDto.getProduct_name());
-        existingProduct.setProduct_price(updateProductDto.getProduct_price());
-        existingProduct.setProduct_stock(updateProductDto.getProduct_stock());
-        existingProduct.setProduct_image_url(updateProductDto.getProduct_image_url());
-        existingProduct.setProduct_desc(updateProductDto.getProduct_desc());
+        existingProduct.setName(updateProductDto.getName());
+        existingProduct.setPrice(updateProductDto.getPrice());
+        existingProduct.setStock(updateProductDto.getStock());
+        existingProduct.setImageUrl(updateProductDto.getImageUrl());
+        existingProduct.setDesc(updateProductDto.getDesc());
         existingProduct.setCreated_at(updateProductDto.getCreated_at());
         existingProduct.setModified_at(updateProductDto.getModified_at());
         return productRepository.save(existingProduct);

@@ -33,6 +33,8 @@ dependencies {
 	// MapStruct
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
+
 	annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
 
 	// jwt
