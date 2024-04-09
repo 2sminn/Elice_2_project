@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Post {
+public class Post extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id", updatable = false)
@@ -34,13 +34,6 @@ public class Post {
 
     @Column(name = "post_type")
     private int type;
-
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    @Column
-    private LocalDateTime modifiedAt;
 
     public void updatePatch(Post post) {
         if (post.title != null)
