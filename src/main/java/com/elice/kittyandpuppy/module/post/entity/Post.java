@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "post")
-public class Post {
+public class Post extends BaseTimeEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false)
@@ -42,20 +42,12 @@ public class Post {
     @Column(name = "type")
     private int type;
 
-    @CreatedDate
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
-    @LastModifiedDate
-    @Column
-    private LocalDateTime modifiedAt;
 
-    public Post(Long id, String title, String content, int type, LocalDateTime createdAt, LocalDateTime modifiedAt){
+    public Post(Long id, String title, String content, int type){
         this.id = id;
         this.title = title;
         this.content = content;
         this.type = type;
-        this.createdAt = createdAt;
-        this.modifiedAt = modifiedAt;
     }
 
     public void updatePatch(Post post) {
