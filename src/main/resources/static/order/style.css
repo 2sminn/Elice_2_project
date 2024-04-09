@@ -127,3 +127,78 @@ body {
 .container .right-box .box .total-price p {
   margin: 0;
 }
+
+.container .right-box .box .column {
+  height: 60px;
+
+  margin: 25px;
+
+  /* 좌우 정렬 */
+  display: flex;
+  justify-content: space-between;
+}
+
+.container .right-box .box .column .column-box {
+  width: 30%;
+  height: 50px;
+  border: 1px solid #E4E4E6;
+  border-radius: 10px;
+
+  /* 좌우 정렬*/
+  display: flex;
+  justify-content: center;
+
+  /* 수직 정렬 */
+  align-items: center;
+}
+
+.container .right-box .box .column .column-box p {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.container .right-box .box .order-column {
+  margin-top: 35px;
+  margin-bottom: 25px;
+
+  /* 좌우 정렬*/
+  display: flex;
+  justify-content: center;
+
+  /* 수직 정렬 */
+  align-items: center;
+
+  a:link {
+    text-decoration: none;
+  }
+  a:visited {
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  a:active {
+    text-decoration: none;
+  }
+}
+
+.container .right-box .box .order-column .order-button {
+  width: 300px;
+  height: 75px;
+
+  background-color: #F0AB0F;
+  border-radius: 10px;
+
+  /* 좌우 정렬*/
+  display: flex;
+  justify-content: center;
+
+  /* 수직 정렬 */
+  align-items: center;
+}
+
+.container .right-box .box .order-column .order-button p {
+  color: white;
+  font-size: 27px;
+  font-weight: bold;
+}
