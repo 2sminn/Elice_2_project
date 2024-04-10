@@ -74,6 +74,13 @@ public class OrderApiController {
 
     // 주문 상태 관리 로직
     @PutMapping("/order/{id}/status/delivery")
+    public ResponseEntity<Void> updateStatusToOrder(@PathVariable(value = "id") Long id) {
+        orderService.order(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/order/{id}/status/delivery")
     public ResponseEntity<Void> updateStatusToDelivery(@PathVariable(value = "id") Long id) {
         orderService.delivery(id);
 

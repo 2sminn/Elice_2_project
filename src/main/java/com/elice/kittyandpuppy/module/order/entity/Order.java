@@ -64,16 +64,12 @@ public class Order {
     }
 
     public void setDelivery(Delivery delivery) {
+        validateSetDelivery();
         this.delivery = delivery;
         delivery.setOrder(this);
     }
 
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public void setStatus(OrderStatus status) {
+    protected void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -89,14 +85,16 @@ public class Order {
     public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order order = new Order();
         order.setMember(member);
-        order.setDelivery(delivery);
+
+        if (delivery != null) {
+            order.setDelivery(delivery);
+        }
 
         for (OrderItem orderItem : orderItems) {
             order.addOrderItem(orderItem);
         }
 
-        order.setStatus(OrderStatus.ORDER);
-        order.setOrderDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.CREATE);
 
         return order;
     }
@@ -116,6 +114,11 @@ public class Order {
         }
     }
 
+    // 주문 상태로 변경
+    public void order() {
+        this.orderDate = LocalDateTime.now();
+        this.status = OrderStatus.ORDER;
+    }
 
     // 주문 상태 배송중으로 변경
     public void delivery() {
@@ -165,6 +168,17 @@ public class Order {
     private void validateStatusComplete() {
         if (this.status == OrderStatus.COMPLETE) {
             throw new IllegalStateException("이미 배송이 완료된 상품입니다.");
+        }
+    }
+
+    /**
+     * 배송지 변경시 주문 상태 유효성 검사
+     * @throws IllegalArgumentException 배송지 변경 실패<br>
+     *                                  - CREATE or ORDER 상태가 아닌 경우: "배송지 변경이 불가능합니다."
+     */
+    private void validateSetDelivery() {
+        if (status != OrderStatus.CREATE || status != OrderStatus.ORDER) {
+            throw new IllegalArgumentException("배송지 변경이 불가능합니다.");
         }
     }
 
