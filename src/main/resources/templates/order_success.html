@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>구해줘멍냥</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- 아이콘 -->
+    <!-- 폰트 어썸: 아이콘 -->
+    <!-- Daum 주소 API 사용하기 위한 파일 -->
+    <!-- 커스텀 css, js -->
+    <link rel="stylesheet" href="/static/order_success/style.css" />
+    <script src="/static/order_success/order_success.js"></script>
+</head>
+<body>
+  <div id="header"></div>
+
+  <div class="container">
+    <div class="top-content">
+      <p class="font-title">주문이 정상적으로 처리되었습니다.</p>
+    </div>
+
+    <div class="middle-content">
+      <div class="left-box">
+        <p class="font-large">주문내역</p>
+        <div class="box" style="height: 310px;">
+          <div class="column">
+            <p class="font-middle">주문 번호</p>
+            <p class="font-middle" style="position: absolute; left: 100px">2024033101571</p>
+          </div>
+          <div class="column">
+            <p class="font-middle">주문 날짜</p>
+            <p class="font-middle" style="position: absolute; left: 100px">2024-03-31</p>
+          </div>
+          <div class="column">
+            <p class="font-middle">받는 사람</p>
+            <p class="font-middle" style="position: absolute; left: 100px">엘리스</p>
+          </div>
+          <div class="column">
+            <p class="font-middle">연락처</p>
+            <p class="font-middle" style="position: absolute; left: 100px">010-1234-5678</p>
+          </div>
+          <div class="column">
+            <p class="font-middle">주소</p>
+            <p class="font-middle" style="position: absolute; left: 100px">(04799)<br>서울특별시 성동구 성수동2가 280-4 (모터씨티빌딩)<br>2층 프로그래밍 존</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-box">
+        <p class="font-large">결제내역</p>
+        <div class="box">
+          <div class="order-detail">
+            <div class="static">
+              <p class="font-middle">주문 금액</p>
+              <p class="font-middle">결제 상세</p>
+            </div>
+
+            <div class="dynamic">
+              <p class="font-middle">5,000원</p>
+              <p class="font-middle">신용·체크카드</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-content">
+      <div class="column">
+      <article style="margin-top: 100px; width: 100%;">
+        <p class="font-large">주문상품</p>
+        <div class="box">
+          <div class="item">
+            <div class="img">
+              <img class="image-thumbnail" src="/static/order/test_item.png">
+            </div>
+            <div class="detail">
+              <p class="font-middle">삼색리리 안아줘요 캐릭터 엽서</p>
+              <p class="font-middle">수량 1개</p>
+              <p class="font-middle">2,000원</p>
+            </div>
+          </div>
+        </div>
+      </article>
+      </div>
+
+      <div class="column" style="margin-top: 100px">
+        <a class="home-button" href="#">
+          <p>쇼핑 홈 가기</p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer"></div>
+  <script>
+    $(function () {
+      $("#header").load("header.html");
+      $("#footer").load("footer.html");
+    })
+  </script>
+</body>
+</html>
