@@ -73,6 +73,13 @@ public class OrderApiController {
 
     // 주문 상태 관리 로직
     @PutMapping("/order/{id}/status/delivery")
+    public ResponseEntity<Void> updateStatusToOrder(@PathVariable(value = "id") Long id) {
+        orderService.order(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/order/{id}/status/delivery")
     public ResponseEntity<Void> updateStatusToDelivery(@PathVariable(value = "id") Long id) {
         orderService.delivery(id);
 
@@ -89,6 +96,16 @@ public class OrderApiController {
     @PutMapping("/order/{id}/status/cancel")
     public ResponseEntity<Void> updateStatusToCancel(@PathVariable(value = "id") Long id) {
         orderService.cancel(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 배송지 변경
+    @PutMapping("/order/{id}/delivery/{deliveryId}")
+    public ResponseEntity<Void> updateDelivery(@PathVariable(value = "id") Long id,
+                                               @PathVariable(value = "deliveryId") Long deliveryId) {
+        Delivery delivery = deliveryService.findById(deliveryId);
+        orderService.updateDelivery(id, delivery);
 
         return ResponseEntity.ok().build();
     }

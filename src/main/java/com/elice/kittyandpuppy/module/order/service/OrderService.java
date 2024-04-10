@@ -5,6 +5,7 @@ import com.elice.kittyandpuppy.module.order.entity.Delivery;
 import com.elice.kittyandpuppy.module.order.entity.Order;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +66,15 @@ public class OrderService {
     }
 
     /**
+     * id 값에 해당하는 Order 객체의 상태값을 주문으로 변경한다.
+     *
+     * @param id
+     */
+    public void order(Long id) {
+        findById(id).order();
+    }
+
+    /**
      * id 값에 해당하는 Order 객체의 상태값을 취소로 변경한다.
      *
      * @param id
@@ -89,6 +99,18 @@ public class OrderService {
      */
     public void complete(Long id) {
         findById(id).complete();
+    }
+
+    /**
+     * id 값에 해당하는 Order 객체의 배송지 정보를 업데이트 한다.
+     *
+     * @param id
+     * @param delivery
+     */
+    @Transactional
+    public void updateDelivery(Long id, Delivery delivery) {
+        Order order = findById(id);
+        order.setDelivery(delivery);
     }
 }
 

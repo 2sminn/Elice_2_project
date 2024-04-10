@@ -1,0 +1,49 @@
+html,
+body {
+    width: 100%;
+    background: #ffff;
+    margin: 0;
+}
+
+/* footer css */
+.footer {
+    height: 40px;
+    background-color: #F2F2F2;
+
+    padding-left: 10.5vw;
+    padding-right: 10.5vw;
+
+    /* 좌우 정렬*/
+    display: flex;
+    justify-content: flex-start;
+
+    /* 수직 정렬 */
+    align-items: center;
+
+    /* footer a태그 재정의 */
+    a:link {
+        color : black;
+        text-decoration: none;
+    }
+    a:visited {
+        color : black;
+        text-decoration: none;
+    }
+    a:hover {
+        color : gray;
+        text-decoration: none;
+    }
+    a:active {
+        color : gray;
+        text-decoration: none;
+    }
+}
+
+.footer .left-box {
+    float:left;
+}
+
+.footer .right-box {
+    display:inline-block;
+    margin-left: auto;
+}

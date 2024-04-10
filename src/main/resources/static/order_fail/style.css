@@ -1,0 +1,82 @@
+html,
+body {
+    width: 100%;
+    background: #ffff;
+    margin: 0;
+}
+
+.container {
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.container .top-content {
+    height: 70px;
+
+    /* 좌우 정렬*/
+    display: flex;
+    justify-content: center;
+
+    /* 수직 정렬 */
+    align-items: center;
+}
+
+.container .top-content .font-title {
+    font-size: 30px;
+    font-weight: bold;
+    color: black;
+    margin: 0px;
+
+    text-align: center;
+}
+
+.container .bottom-content {
+    height: 75px;
+
+    margin-top: 100px;
+
+    padding-left: 365px;
+    padding-right: 365px;
+
+    /* 좌우 정렬*/
+    display: flex;
+    justify-content: flex-start;
+
+    /* 수직 정렬 */
+    align-items: center;
+
+    /* footer a태그 재정의 */
+    a:link {
+        text-decoration: none;
+    }
+    a:visited {
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: none;
+    }
+    a:active {
+        text-decoration: none;
+    }
+}
+
+.container .bottom-content .button {
+    width: 300px;
+    height: 75px;
+
+    background-color: #F0AB0F;
+    border-radius: 10px;
+
+    /* 좌우 정렬*/
+    display: flex;
+    justify-content: center;
+
+    /* 수직 정렬 */
+    align-items: center;
+}
+
+.container .bottom-content .button p {
+    font-size: 27px;
+    font-weight: bold;
+    color: white;
+}
