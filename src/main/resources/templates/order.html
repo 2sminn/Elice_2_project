@@ -8,8 +8,6 @@
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 아이콘 -->
     <!-- 폰트 어썸: 아이콘 -->
-    <!-- Daum 주소 API 사용하기 위한 파일 -->
-    <!-- 커스텀 css, js -->
     <link rel="stylesheet" href="/static/order/style.css" />
     <script src="/static/order/order.js"></script>
   </head>
@@ -76,8 +74,8 @@
                 <p class="font-middle">할인금액</p>
               </div>
               <div class="dynamic">
-                <p class="font-middle">2,000원</p>
-                <p class="font-middle">3,000원</p>
+                <p class="font-middle" id="totalPrice">2,000원</p>
+                <p class="font-middle">0원</p>
                 <p class="font-middle">0원</p>
               </div>
             </div>
@@ -86,13 +84,10 @@
 
             <div class="total-price">
               <div class="font-large" style="display: flex">
-                <p style="margin-right: 10px;">총 </p>
-                <p style="color: #F0AB0F; margin-right: 5px;">1</p>
-                <p>건</p>
+                <p style="margin-right: 10px;">총 <p style="color: #F0AB0F;" id="orderItemCount">1</p>건</p>
               </div>
               <div class="font-large" style="display: flex">
-                <p style="color: #F0AB0F; margin-right: 5px;">5,000</p>
-                <p>원</p>
+                <p><p style="color: #F0AB0F;" id="resultPrice">2,000</p>원</p>
               </div>
             </div>
           </div>
@@ -103,33 +98,37 @@
           <p class="font-large">결제방법</p>
           <div class="box">
             <div class="column">
-              <div class="column-box">
-                <p>신용·체크카드</p>
-              </div>
-              <div class="column-box">
-                <p>계좌이체</p>
-              </div>
-              <div class="column-box">
-                <p>무통장입금</p>
-              </div>
+              <label>
+                <input type="radio" name="payBy" value="card">
+                <div>신용·체크카드</div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="accountTransfer">
+                <div>계좌이체</div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="BankTransfer">
+                <div>무통장입금</div>
+              </label>
             </div>
 
             <div class="column">
-              <div class="column-box">
-                <p>휴대폰</p>
-              </div>
-              <div class="column-box">
-                <img style="width: 65px;" src="/static/img/naver_pay.png">
-              </div>
-              <div class="column-box">
-                <img style="width: 123px" src="/static/img/kakao_pay.png">
-              </div>
+              <label>
+                <input type="radio" name="payBy" value="phone">
+                <div>휴대폰</div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="naver">
+                <div><img style="width: 65px;" src="/static/img/naver_pay.png"></div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="kakao">
+                <div><img style="width: 123px" src="/static/img/kakao_pay.png"></div>
+              </label>
             </div>
 
             <div class="order-column">
-              <a class="order-button" href="#">
-                <p>결제하기</p>
-              </a>
+              <input type="button" class="order-button" onclick="order()" value="결제하기">
             </div>
           </div>
         </article>

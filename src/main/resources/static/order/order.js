@@ -44,3 +44,13 @@ function execDaumPostcode() {
 function getMemberInfo() {
 
 }
+
+function order() {
+    try {
+        const payBy = document.querySelector('input[name="payBy"]:checked').value;
+    } catch (err) {
+        alert("결제 방식을 선택해주세요.");
+    }
+
+    location.replace("/order/success");
+}
