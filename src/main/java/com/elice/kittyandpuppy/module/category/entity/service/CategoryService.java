@@ -29,9 +29,9 @@ public class CategoryService {
             }
             Category topCategory = categoryRepository.findByBranchAndName(categoryDto.getCategoryBranch(), "TOP")
                     .orElse(new Category());
-            topCategory.setCategoryName("TOP");
-            topCategory.setCategoryCode("TOP");
-            topCategory.setCategoryBranch(categoryDto.getCategoryBranch());
+            topCategory.setName("TOP");
+            topCategory.setCode("TOP");
+            topCategory.setBranch(categoryDto.getCategoryBranch());
 
             if (!categoryRepository.existsByBranchAndName(categoryDto.getCategoryBranch(), "TOP")) {
                 categoryRepository.save(topCategory);
@@ -63,22 +63,22 @@ public class CategoryService {
 
         if(category.getSubCategory().size() == 0){
             Category parentCategory = findCategory(category.getParentCategory().getCategoryId());
-            if(!parentCategory.getCategoryName().equals("TOP")){
+            if(!parentCategory.getName().equals("TOP")){
                 parentCategory.getSubCategory().remove(category);
             }
             categoryRepository.deleteById(category.getCategoryId());
         }else{
             Category parentCategory = findCategory(category.getParentCategory().getCategoryId());
-            if(!parentCategory.getCategoryName().equals("TOP")){
+            if(!parentCategory.getName().equals("TOP")){
                 parentCategory.getSubCategory().remove(category);
             }
-            category.setCategoryName("삭제된 카테고리입니다.");
+            category.setName("삭제된 카테고리입니다.");
         }
         }
 
         public Long updateCategory (Long categoryId, CategoryDto categoryDto) {
             Category category = findCategory(categoryId);
-            category.setCategoryName(categoryDto.getCategoryName());
+            category.setName(categoryDto.getCategoryName());
             return category.getCategoryId();
         }
 

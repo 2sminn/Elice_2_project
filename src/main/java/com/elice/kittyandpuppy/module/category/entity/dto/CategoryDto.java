@@ -22,25 +22,25 @@ public class CategoryDto {
     public CategoryDto(Category entity){
 
         this.categoryId = entity.getCategoryId();
-        this.categoryName = entity.getCategoryName();
-        this.categoryCode = entity.getCategoryCode();
-        this.categoryBranch = entity.getCategoryBranch();
+        this.categoryName = entity.getName();
+        this.categoryCode = entity.getCode();
+        this.categoryBranch = entity.getBranch();
 
         if(entity.getParentCategory() == null){
             this.parentCategoryName = "부모카테고리";
         }else{
-            this.parentCategoryName = entity.getParentCategory().getCategoryName();
+            this.parentCategoryName = entity.getParentCategory().getName();
         }
         this.childCategory = entity.getSubCategory() == null ? null :
-                entity.getSubCategory().stream().collect(Collectors.toMap(Category::getCategoryCode, CategoryDto::new));
+                entity.getSubCategory().stream().collect(Collectors.toMap(Category::getCode, CategoryDto::new));
     }
 
     public Category toEntity(){
         Category category = new Category();
         category.setCategoryId(categoryId);
-        category.setCategoryName(categoryName);
-        category.setCategoryCode(categoryCode);
-        category.setCategoryBranch(categoryBranch);
+        category.setName(categoryName);
+        category.setCode(categoryCode);
+        category.setBranch(categoryBranch);
         return category;
     }
 }
