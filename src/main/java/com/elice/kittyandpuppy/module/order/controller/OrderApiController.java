@@ -1,6 +1,5 @@
 package com.elice.kittyandpuppy.module.order.controller;
 
-import com.elice.kittyandpuppy.global.Address;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
 import com.elice.kittyandpuppy.module.order.dto.order.OrderResponse;
