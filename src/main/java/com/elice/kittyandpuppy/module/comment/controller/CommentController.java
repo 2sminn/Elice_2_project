@@ -17,7 +17,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/comment")
 public class CommentController {
-
     private final CommentService commentService;
     @Operation(summary = "댓글 작성")
     @PostMapping
@@ -25,7 +24,6 @@ public class CommentController {
         Comment comment = commentService.save(commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(comment);
     }
-
     @Operation(summary = "댓글 수정")
     @PutMapping("/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable("commentId") Long commentId,
@@ -33,19 +31,11 @@ public class CommentController {
         Comment comment = commentService.update(commentId, commentRequest);
         return ResponseEntity.status(HttpStatus.OK).body(comment);
     }
-
     @Operation(summary = "댓글 삭제")
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Long> deleteComment(@PathVariable("commentId") Long commentId) {
         commentService.deleteComment(commentId);
         return ResponseEntity.ok().body(commentId);
-    }
-
-    @Operation(summary = "댓글 조회", description = "게시물 ID에 따라서 댓글 조회")
-    @PostMapping("/{postId}")
-    public ResponseEntity<List<Comment>> findByPost(@PathVariable Long postId){
-        List<Comment> comments = commentService.findByPost(postId);
-        return ResponseEntity.status(HttpStatus.OK).body(comments);
     }
 
 }
