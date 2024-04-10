@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>구해줘멍냥</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 아이콘 -->
     <!-- 폰트 어썸: 아이콘 -->
     <!-- Daum 주소 API 사용하기 위한 파일 -->
@@ -20,29 +21,28 @@
         <!-- 배송지 -->
         <article>
           <p class="font-large">배송지</p>
-          <div class="box" style="height: 265px;">
-            <div class="column">
-              <p class="font-middle">받는 사람</p>
-              <p class="font-middle" style="position: absolute; left: 100px">엘리스</p>
-            </div>
-            <div class="column">
-              <p class="font-middle">연락처</p>
-              <p class="font-middle" style="position: absolute; left: 100px">010-1234-5678</p>
-            </div>
-            <div class="column">
-              <p class="font-middle">주소</p>
-              <p class="font-middle" style="position: absolute; left: 100px">(04799)<br>서울특별시 성동구 성수동2가 280-4 (모터씨티빌딩)<br>2층 프로그래밍 존</p>
-            </div>
-<!--            <div class="static">-->
-<!--              <p class="font-middle">받는 사람</p>-->
-<!--              <p class="font-middle">연락처</p>-->
-<!--              <p class="font-middle">주소</p>-->
-<!--            </div>-->
-<!--            <div class="dynamic">-->
-<!--              <p class="font-middle">엘리스</p>-->
-<!--              <p class="font-middle">010-1234-5678</p>-->
-<!--              <p class="font-middle">(04799)<br>서울특별시 성동구 성수동2가 280-4 (모터씨티빌딩)<br>2층 프로그래밍 존</p>-->
-<!--            </div>-->
+          <div class="box">
+            <table style="border:none;">
+              <tr>
+                <td><p class="font-middle">받는 사람</p></td>
+                <td style="display: flex; justify-content: flex-start;">
+                  <input type="text" class="font-middle" id="receiverName" placeholder="엘리스">
+                  <input type="button" class="font-middle" style="" onclick="getMemberInfo()" value="주소 불러오기">
+                </td>
+              </tr>
+              <tr>
+                <td><p class="font-middle" style="margin-top: 0;">연락처</p></td>
+                <td><input type="text" class="font-middle" id="receiverPhone" style="margin-top: 0;" placeholder="010-0000-0000"></td>
+              </tr>
+              <tr>
+                <td style="vertical-align: top;"><p class="font-middle" style="margin-top: 0;">주소</p></td>
+                <td>
+                  <input type="text" class="font-middle" style="margin-top:0px" id="zipCode" placeholder="우편번호" readonly>
+                  <input type="button" class="font-middle" style="margin-top:0px; background-color: #F0AB0F; border-radius: 5px; color: white;" onclick="execDaumPostcode()" value="주소 찾기"><br>
+                  <input type="text" class="font-middle" style="width: 450px; margin-top:0px" id="street" placeholder="도로주소" readonly><br>
+                  <input type="text" class="font-middle" style="width: 450px; margin-top:0px" id="detail" placeholder="상세주소">
+              </tr>
+            </table>
           </div>
         </article>
 
