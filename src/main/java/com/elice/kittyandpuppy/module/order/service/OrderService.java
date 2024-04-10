@@ -5,6 +5,7 @@ import com.elice.kittyandpuppy.module.order.entity.Delivery;
 import com.elice.kittyandpuppy.module.order.entity.Order;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -89,5 +90,11 @@ public class OrderService {
      */
     public void complete(Long id) {
         findById(id).complete();
+    }
+
+    @Transactional
+    public void updateDelivery(Long id, Delivery delivery) {
+        Order order = findById(id);
+        order.setDelivery(delivery);
     }
 }

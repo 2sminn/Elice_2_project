@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.order.controller;
 
+import com.elice.kittyandpuppy.global.Address;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
 import com.elice.kittyandpuppy.module.order.dto.order.OrderResponse;
@@ -89,6 +90,16 @@ public class OrderApiController {
     @PutMapping("/order/{id}/status/cancel")
     public ResponseEntity<Void> updateStatusToCancel(@PathVariable(value = "id") Long id) {
         orderService.cancel(id);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 배송지 변경
+    @PutMapping("/order/{id}/delivery/{deliveryId}")
+    public ResponseEntity<Void> updateDelivery(@PathVariable(value = "id") Long id,
+                                               @PathVariable(value = "deliveryId") Long deliveryId) {
+        Delivery delivery = deliveryService.findById(deliveryId);
+        orderService.updateDelivery(id, delivery);
 
         return ResponseEntity.ok().build();
     }
