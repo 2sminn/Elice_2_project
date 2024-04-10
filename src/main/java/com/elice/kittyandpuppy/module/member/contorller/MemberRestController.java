@@ -12,15 +12,16 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/members")
-public class MemberController {
+@RequestMapping("/api")
+public class MemberRestController {
     private final MemberService memberService;
     private final MemberMapper memberMapper;
 
-    @GetMapping("/{id}")
+    @GetMapping("/members/{id}")
     public ResponseEntity<Member> findById(@PathVariable Long id) {
         Member member = memberService.findMemberById(id).orElse(null);
         if (member == null) {
@@ -29,7 +30,7 @@ public class MemberController {
         return new ResponseEntity<>(member, HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping("/member")
     public ResponseEntity<Member> joinMember(@RequestBody @Valid MemberSaveDto memberSaveDto, BindingResult bindingResult) {
         Member member = memberMapper.MemberDTOToMember(memberSaveDto);
         Member savedMember = memberService.join(member);
@@ -37,21 +38,21 @@ public class MemberController {
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping("/members")
     public ResponseEntity<List<Member>> findAllMember() {
         List<Member> members = memberService.findAll();
         return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/edit")
+    @PutMapping("/member/{id}")
     public ResponseEntity<Member> editMember(@PathVariable Long id, @RequestBody @Valid MemberSaveDto memberSaveDto) {
         Member member = memberMapper.MemberDTOToMember(memberSaveDto);
         Member editedMember = memberService.editMember(id, member);
         return new ResponseEntity<>(editedMember, HttpStatus.OK);
     }
 
-    @PostMapping("/email")
-    public ResponseEntity<Boolean> checkEmail(@RequestBody String email){
+    @GetMapping("/member/validation/email")
+    public ResponseEntity<Boolean> checkEmail(@RequestParam("email") String email){
         boolean result;
 
         if(email.trim().isEmpty()){
@@ -62,8 +63,8 @@ public class MemberController {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
-    @PostMapping("/name")
-    public ResponseEntity<Boolean> checkName(@RequestBody String name){
+    @GetMapping("/member/validation/name")
+    public ResponseEntity<Boolean> checkName(@RequestParam("name") String name){
         boolean result;
 
         if(name.trim().isEmpty()){
@@ -73,4 +74,16 @@ public class MemberController {
         }
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
+
+    @PostMapping("/member/login")
+    public ResponseEntity<Member> login(@RequestBody Map<String,String> map){
+        String email = map.get("email");
+        String password = map.get("password");
+        Member member = memberService.loginMember(email, password);
+        if(member==null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(member,HttpStatus.OK);
+    }
+
 }
