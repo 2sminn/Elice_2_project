@@ -1,7 +1,7 @@
-package com.elice.kittyandpuppy.module.category.entity.controller;
+package com.elice.kittyandpuppy.module.category.controller;
 
-import com.elice.kittyandpuppy.module.category.entity.dto.CategoryDto;
-import com.elice.kittyandpuppy.module.category.entity.service.CategoryService;
+import com.elice.kittyandpuppy.module.category.dto.CategoryDto;
+import com.elice.kittyandpuppy.module.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

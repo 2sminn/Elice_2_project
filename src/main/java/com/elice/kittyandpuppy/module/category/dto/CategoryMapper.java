@@ -1,4 +1,4 @@
-package com.elice.kittyandpuppy.module.category.entity.dto;
+package com.elice.kittyandpuppy.module.category.dto;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
 import org.mapstruct.Mapper;

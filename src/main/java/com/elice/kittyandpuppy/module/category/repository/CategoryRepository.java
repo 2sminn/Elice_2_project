@@ -1,4 +1,4 @@
-package com.elice.kittyandpuppy.module.category.entity.repository;
+package com.elice.kittyandpuppy.module.category.repository;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;

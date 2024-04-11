@@ -1,9 +1,9 @@
-package com.elice.kittyandpuppy.module.category.entity.service;
+package com.elice.kittyandpuppy.module.category.service;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
-import com.elice.kittyandpuppy.module.category.entity.dto.CategoryDto;
-import com.elice.kittyandpuppy.module.category.entity.dto.CategoryMapper;
-import com.elice.kittyandpuppy.module.category.entity.repository.CategoryRepository;
+import com.elice.kittyandpuppy.module.category.dto.CategoryDto;
+import com.elice.kittyandpuppy.module.category.dto.CategoryMapper;
+import com.elice.kittyandpuppy.module.category.repository.CategoryRepository;
 import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
