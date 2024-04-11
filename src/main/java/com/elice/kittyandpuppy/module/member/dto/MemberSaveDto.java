@@ -16,7 +16,7 @@ public class MemberSaveDto {
     private String email;
 
     @NotNull
-    @Size(min = 2, max = 8)
+    @Size(min = 2, max = 10)
     private String name;
 
     @NotNull
