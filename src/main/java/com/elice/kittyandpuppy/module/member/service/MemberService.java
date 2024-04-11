@@ -15,10 +15,11 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private String key = "elice";
     @Transactional
     public Member join(Member member) {
         // password encoding
-        String password = passwordEncoder.encode(member.getPassword()+"elice");
+        String password = passwordEncoder.encode(member.getPassword()+key);
 
         member.setPassword(password);
         Member savedMember = memberRepository.save(member);
@@ -41,7 +42,7 @@ public class MemberService {
     public Member loginMember(String email,String password){
         Member member = memberRepository.findByEmail(email).orElse(null);
         if(member!=null){
-            if(passwordEncoder.matches(password+"elice",member.getPassword())){
+            if(passwordEncoder.matches(password+key,member.getPassword())){
                 return member;
             }
         }
