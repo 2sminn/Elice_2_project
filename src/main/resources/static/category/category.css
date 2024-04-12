@@ -1,0 +1,146 @@
+/* Basic reset for styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    color: #333;
+}
+
+/* Search bar styling */
+.search-section {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.search-bar {
+    position: relative;
+    width: 60%;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+
+.search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+/* Section divider styling */
+.section-divider {
+    border: 0;
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 20px 0;
+}
+
+.parent_categorys {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.parent_category {
+    border: none;
+    background-color: #f7f7f7;
+    border-radius: 20px;
+    padding: 10px 30px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+.parent_category.selected {
+    background-color: #f0e68c; /* 클릭 시 노란색으로 변경 */
+}
+
+/* Category buttons styling */
+.category-section {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.category {
+    background-color: #f0e68c;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.category:hover {
+    background-color: #e6e6fa;
+}
+
+/* Product items styling */
+.product-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.product-item {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    width: calc(25% - 20px);
+    text-align: center;
+}
+
+.product-item img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+}
+
+.product-name {
+    margin: 10px 0;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.product-price {
+    font-size: 1em;
+    color: #666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .search-bar {
+        width: 80%;
+    }
+
+    .product-item {
+        width: calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .product-item {
+        width: calc(100% - 20px);
+    }
+
+    .category {
+        padding: 5px 10px;
+    }
+}

@@ -13,18 +13,18 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class CategoryDto {
     private Long categoryId;
-    private String categoryName;
-    private String categoryCode;
-    private String categoryBranch;
+    private String name;
+    private String code;
+    private String branch;
     private String parentCategoryName;
     private Map<String, CategoryDto> childCategory;
 
     public CategoryDto(Category entity){
 
         this.categoryId = entity.getCategoryId();
-        this.categoryName = entity.getName();
-        this.categoryCode = entity.getCode();
-        this.categoryBranch = entity.getBranch();
+        this.name = entity.getName();
+        this.code = entity.getCode();
+        this.branch = entity.getBranch();
 
         if(entity.getParentCategory() == null){
             this.parentCategoryName = "부모카테고리";
@@ -38,9 +38,9 @@ public class CategoryDto {
     public Category toEntity(){
         Category category = new Category();
         category.setCategoryId(categoryId);
-        category.setName(categoryName);
-        category.setCode(categoryCode);
-        category.setBranch(categoryBranch);
+        category.setName(name);
+        category.setCode(code);
+        category.setBranch(branch);
         return category;
     }
 }
