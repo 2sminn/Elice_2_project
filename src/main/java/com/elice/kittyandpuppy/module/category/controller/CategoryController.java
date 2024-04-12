@@ -8,28 +8,29 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class CategoryController {
     private final CategoryService categoryService;
 
-    @PostMapping("/categories")
+    @PostMapping("api/categories")
     @ResponseBody
     public Long saveCategory(@RequestBody CategoryDto categoryDto){
         return categoryService.saveCategory(categoryDto);
     }
-    @GetMapping("/categories/{branch}")
+    @GetMapping("api/categories/{branch}")
     @ResponseBody
     public Map<String, CategoryDto> getCategoryByBranch(@PathVariable String branch){
         return categoryService.getCategoryByBranch(branch);
     }
 
-    @PutMapping("/categories/{categoryId}")
+    @PutMapping("api/categories/{categoryId}")
     public Long updateCategory (@PathVariable Long categoryId, @RequestBody CategoryDto categoryDto) {
         return categoryService.updateCategory(categoryId, categoryDto);
     }
 
-    @DeleteMapping ("/categories/{categoryId}")
+    @DeleteMapping ("api/categories/{categoryId}")
     public void deleteCategory (@PathVariable Long categoryId) {
         categoryService.deleteCategory(categoryId);
     }

@@ -37,12 +37,12 @@ public class Category {
     private List<Category> subCategory = new ArrayList<>();
 
     @Builder
-    public Category(Long categoryId, String categoryBranch, String categoryName, Category parentCategory, String categoryCode){
+    public Category(Long categoryId, String branch, String name, Category parentCategory, String code){
         this.categoryId = categoryId;
-        this.name = categoryName;
+        this.name = name;
         this.parentCategory = parentCategory;
-        this.code = categoryCode;
-        this.branch = categoryBranch;
+        this.code = code;
+        this.branch = branch;
     }
 
 }
