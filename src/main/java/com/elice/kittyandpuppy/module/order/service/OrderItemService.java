@@ -3,9 +3,10 @@ package com.elice.kittyandpuppy.module.order.service;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderItemRepository;
 import com.elice.kittyandpuppy.module.product.entity.Product;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service

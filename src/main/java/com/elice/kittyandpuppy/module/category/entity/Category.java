@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Category")
+@Table(name = "category")
 @Getter
 @NoArgsConstructor
 @Setter
@@ -20,12 +20,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
-    @Column(nullable = false)
-    private String categoryBranch;
+    @Column(name = "branch", nullable = false)
+    private String branch;
 
-    private String categoryName;
+    @Column(name = "name")
+    private String name;
 
-    private String categoryCode;
+    @Column(name = "code")
+    private String code;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parentId")
@@ -37,10 +39,10 @@ public class Category {
     @Builder
     public Category(Long categoryId, String categoryBranch, String categoryName, Category parentCategory, String categoryCode){
         this.categoryId = categoryId;
-        this.categoryName = categoryName;
+        this.name = categoryName;
         this.parentCategory = parentCategory;
-        this.categoryCode = categoryCode;
-        this.categoryBranch = categoryBranch;
+        this.code = categoryCode;
+        this.branch = categoryBranch;
     }
 
 }

@@ -48,7 +48,6 @@ public class DeliveryAddressApiController {
         return ResponseEntity.status(HttpStatus.OK).body(id);
     }
 
-    // TODO: 배송지 정보 삭제가 필요할까? (because Order 삭제시 연쇄 삭제)
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteDelivery(@PathVariable(value = "id") long id) {
         deliveryService.deleteById(id);
