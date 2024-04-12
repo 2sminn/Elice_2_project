@@ -30,7 +30,7 @@ input{
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 545px;
+    width: 530px;
     overflow: hidden;
     /* align-content: flex-start; */
 }
@@ -42,13 +42,12 @@ input{
 }
 .search-box{
     /* display: flex; */
-    /* flex-direction: column; */
 }
 
 
 
 .search-text{
-    width: 530px;
+    width: 421px;
     height: 40px;
     border-radius: 25px;
     border: #6D6045 solid 3px;
@@ -57,7 +56,6 @@ input{
     font-family: 'Noto Sans KR', sans-serif;
     padding-left: 52px;
     padding-right: 51px;
-}
 }
 
 .search-submit-btn{
@@ -71,12 +69,10 @@ input{
     left: -44px;
 
     top: -44px;
-
-    cursor: pointer;
 }
 .search-img{
 
-    width: 35px;
+    width: 38px;
 }
 .cancel-img{
 
@@ -90,9 +86,7 @@ input{
 
     position: relative;
 
-    top: -45px;
+    right: -480px;
 
-    left: 490px;
-
-    cursor: pointer;
+    top: -47px;
 }
