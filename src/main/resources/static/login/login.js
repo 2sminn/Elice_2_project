@@ -20,7 +20,7 @@ function login() {
         dataType : 'json',
         success : function(data) {
             if(data){
-                localStorage.setItem("jwtToken",url.getResponseHeader("token"));
+                localStorage.setItem("token",url.getResponseHeader("token"));
                 alert("로그인에 성공하였습니다!!");
                 window.location.href="/";
             }else{
