@@ -55,6 +55,9 @@ input{
     padding: 3px;
     font-size: 22px;
     font-family: 'Noto Sans KR', sans-serif;
+    padding-left: 52px;
+    padding-right: 51px;
+}
 }
 
 .search-submit-btn{
