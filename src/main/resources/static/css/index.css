@@ -4,32 +4,92 @@ body{
     font-family: 'Noto Sans KR', sans-serif;
     letter-spacing: -1px;
 }
+input{
+    font-family: 'Noto Sans KR', sans-serif;
+}
 
-#aricle {
+#content {
     height: 83vh;
     padding-left: 10.5vw;
     padding-right: 10.5vw;
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    flex-direction: column;
 }
 
-.logo-imga{
+.logo-box{
 
 }
 
 .logo-img{
-
+    width: 180px;
 }
 
-.search-form{
-
+.main-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 545px;
+    overflow: hidden;
+    /* align-content: flex-start; */
 }
+.empty{
+
+    height: 17vh;
+
+    width: 17px;
+}
+.search-box{
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+
+
 
 .search-text{
-
+    width: 530px;
+    height: 40px;
+    border-radius: 25px;
+    border: #6D6045 solid 3px;
+    padding: 3px;
+    font-size: 22px;
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
 .search-submit-btn{
 
+    border: 0px;
+
+    background-color: transparent;
+
+    position: relative;
+
+    left: -44px;
+
+    top: -44px;
+
+    cursor: pointer;
+}
+.search-img{
+
+    width: 35px;
+}
+.cancel-img{
+
+    width: 35px;
+}
+.search-cancel{
+
+    border: 0px;
+
+    background-color: transparent;
+
+    position: relative;
+
+    top: -45px;
+
+    left: 490px;
+
+    cursor: pointer;
 }
