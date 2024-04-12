@@ -1,12 +1,16 @@
 package com.elice.kittyandpuppy.module.member.service;
 
+import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
+import com.elice.kittyandpuppy.module.member.entity.MemberDetails;
+import com.elice.kittyandpuppy.module.member.repository.MemberDetailRepository;
 import com.elice.kittyandpuppy.module.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +18,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
+    private final MemberDetailRepository memberDetailRepository;
+    private final TokenProvider tokenProvider;
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private String key = "elice";
     @Transactional
@@ -23,6 +29,9 @@ public class MemberService {
 
         member.setPassword(password);
         Member savedMember = memberRepository.save(member);
+        MemberDetails memberDetails = new MemberDetails(savedMember);
+        memberDetailRepository.save(memberDetails);
+
         return savedMember;
     }
 
@@ -39,11 +48,12 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
-    public Member loginMember(String email,String password){
+    public String loginMember(String email,String password){
         Member member = memberRepository.findByEmail(email).orElse(null);
         if(member!=null){
             if(passwordEncoder.matches(password+key,member.getPassword())){
-                return member;
+                String jwt = tokenProvider.generateToken(member, Duration.ofHours(1));
+                return jwt;
             }
         }
         return null;
