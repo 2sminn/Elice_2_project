@@ -24,22 +24,22 @@ public class CategoryService {
         Category category = categoryMapper.toEntity(categoryDto);
 
         if (categoryDto.getParentCategoryName() == null) {
-            if (categoryRepository.existsByBranchAndName(categoryDto.getCategoryBranch(), categoryDto.getCategoryName())) {
+            if (categoryRepository.existsByBranchAndName(categoryDto.getBranch(), categoryDto.getName())) {
                 throw new RuntimeException("categoryBranch와 categoryName이 같을 수 없습니다.");
             }
-            Category topCategory = categoryRepository.findByBranchAndName(categoryDto.getCategoryBranch(), "TOP")
+            Category topCategory = categoryRepository.findByBranchAndName(categoryDto.getBranch(), "TOP")
                     .orElse(new Category());
             topCategory.setName("TOP");
             topCategory.setCode("TOP");
-            topCategory.setBranch(categoryDto.getCategoryBranch());
+            topCategory.setBranch(categoryDto.getBranch());
 
-            if (!categoryRepository.existsByBranchAndName(categoryDto.getCategoryBranch(), "TOP")) {
+            if (!categoryRepository.existsByBranchAndName(categoryDto.getBranch(), "TOP")) {
                 categoryRepository.save(topCategory);
             }
             category.setParentCategory(topCategory);
         } else {
             String parentCategoryName = categoryDto.getParentCategoryName();
-            Category parentCategory = categoryRepository.findByBranchAndName(categoryDto.getCategoryBranch(), parentCategoryName)
+            Category parentCategory = categoryRepository.findByBranchAndName(categoryDto.getBranch(), parentCategoryName)
                     .orElseThrow(() -> new IllegalArgumentException("top카테고리 없음"));
             category.setParentCategory(parentCategory);
             parentCategory.getSubCategory().add(category);
@@ -54,7 +54,7 @@ public class CategoryService {
         CategoryDto categoryDto = new CategoryDto(category);
 
         Map<String, CategoryDto> data = new HashMap<>();
-        data.put(categoryDto.getCategoryName(), categoryDto);
+        data.put(categoryDto.getName(), categoryDto);
         return data;
     }
 
@@ -78,7 +78,7 @@ public class CategoryService {
 
         public Long updateCategory (Long categoryId, CategoryDto categoryDto) {
             Category category = findCategory(categoryId);
-            category.setName(categoryDto.getCategoryName());
+            category.setName(categoryDto.getName());
             return category.getCategoryId();
         }
 

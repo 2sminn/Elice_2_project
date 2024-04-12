@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
-    Optional<Category> findByName(String categoryName);
-    Optional<Category> findByBranchAndName(String categoryBranch, String categoryName);
+    Optional<Category> findByName(String name);
+    Optional<Category> findByBranchAndName(String branch, String name);
 
-    Boolean existsByBranchAndName(String categoryBranch, String categoryName);
+    Boolean existsByBranchAndName(String branch, String name);
 }
