@@ -4,8 +4,10 @@ import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.dto.MemberSaveDto;
 import com.elice.kittyandpuppy.module.member.mapper.MemberMapper;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
+import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -76,14 +78,17 @@ public class MemberRestController {
     }
 
     @PostMapping("/member/login")
-    public ResponseEntity<Member> login(@RequestBody Map<String,String> map){
+    public ResponseEntity<Boolean> login(@RequestBody Map<String,String> map){
         String email = map.get("email");
         String password = map.get("password");
-        Member member = memberService.loginMember(email, password);
-        if(member==null){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        String jwt = memberService.loginMember(email, password);
+        if(jwt==null){
+            return new ResponseEntity<>(false,HttpStatus.OK);
         }
-        return new ResponseEntity<>(member,HttpStatus.OK);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("token",jwt);
+        return new ResponseEntity<>(true,headers,HttpStatus.OK);
     }
 
 }
