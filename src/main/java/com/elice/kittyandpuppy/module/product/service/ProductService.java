@@ -3,7 +3,7 @@ package com.elice.kittyandpuppy.module.product.service;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.repository.ProductRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class ProductService {
     }
 
 
-
+    @Transactional
     public Product createProduct(ProductDto productDto) { // 상품을 생성하는 메서드 상품 DTO를 받아 새로운 상품 엔티티를 생성하고, 이를 저장한 후 반환.
         Product product = new Product(
             productDto.getCategory_id(),
