@@ -3,9 +3,9 @@ package com.elice.kittyandpuppy.module.order.service;
 import com.elice.kittyandpuppy.global.Address;
 import com.elice.kittyandpuppy.module.order.entity.Delivery;
 import com.elice.kittyandpuppy.module.order.repository.DeliveryRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -65,6 +65,7 @@ public class DeliveryService {
      *
      * @param id
      */
+    @Transactional
     public void deleteById(long id) {
         // 해당하는 정보가 존재하는지 확인
         findById(id);

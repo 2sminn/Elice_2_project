@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/footer/style.css"/>
+    <link rel="stylesheet" href="/header/style.css"/>
+    <link rel="stylesheet" href="/css/index.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        $(function () {
+            $("#header").load("/header/header.html #header-fragment");
+            $("#footer").load("/footer/footer.html #footer-fragment");
+        });
+    </script>
+</head>
+<body>
+<div class="index-container">
+
+</div>
+<div id="header"></div>
+<div id="content">
+    <div class="empty"></div>
+    <div class="main-container">
+        <div class="logo-box">
+            <img src="/img/logo.png" class="logo-img">
+        </div>
+        <div class="search-box">
+            <input type="text" class="search-text">
+            <button class=search-cancel>
+                <img src="/img/cancel1-img.png" class="cancel-img">
+            </button>
+            <button class=search-submit-btn>
+                <img src="/img/search1-img.png" class="search-img">
+            </button>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

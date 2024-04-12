@@ -5,6 +5,8 @@ body {
   margin: 0;
 }
 
+input[type=radio] {display: none; margin:10px;}
+
 .font-large {
   font-size: 27px;
   font-weight: bold;
@@ -138,8 +140,8 @@ body {
   justify-content: space-between;
 }
 
-.container .right-box .box .column .column-box {
-  width: 30%;
+label>div {
+  width: 8vw;
   height: 50px;
   border: 1px solid #E4E4E6;
   border-radius: 10px;
@@ -150,11 +152,20 @@ body {
 
   /* 수직 정렬 */
   align-items: center;
-}
 
-.container .right-box .box .column .column-box p {
   font-size: 16px;
   font-weight: bold;
+}
+
+label>input {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+label>input:checked+div {
+  border: 1px solid #F0AB0F;
 }
 
 .container .right-box .box .order-column {
@@ -189,15 +200,15 @@ body {
   background-color: #F0AB0F;
   border-radius: 10px;
 
+  border:none;
+
   /* 좌우 정렬*/
   display: flex;
   justify-content: center;
 
   /* 수직 정렬 */
   align-items: center;
-}
 
-.container .right-box .box .order-column .order-button p {
   color: white;
   font-size: 27px;
   font-weight: bold;
