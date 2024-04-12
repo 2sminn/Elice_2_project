@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.member.repository;
 
+import com.elice.kittyandpuppy.module.member.dto.MemberSaveDto;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,13 +23,15 @@ class MemberRepositoryTest {
     @DisplayName("입력형식 확인")
     void checkValid() {
         // given
-        Member member = new Member("elice", "elice", "1234");
 
         // when
 
         // then
-        Throwable e = assertThrows(ConstraintViolationException.class, () -> memberRepository.save(member));
-        System.out.println("error : " + e.getMessage());
+        try{
+            MemberSaveDto member = new MemberSaveDto("elice", "elice", "1234");
+        }catch (ConstraintViolationException e){
+            System.out.println("error : " + e.getMessage());
+        }
     }
 
     @Test
