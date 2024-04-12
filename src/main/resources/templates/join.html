@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>구해줘멍냥 : 회원가입</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+    />
+<!--    <link href="../css/bootstrap.min.css" rel="stylesheet">-->
+    <style>
+        .container {
+            max-width: 560px;
+        }
+        .btn-form{
+            background-color: #6D6045E6 ;
+            --bs-btn-border-color: #6D6045;
+            --bs-btn-hover-bg:#6D6045;
+            --bs-btn-hover-border-color:#6D6045;
+            --bs-btn-hover-color:#FFFFFF;
+            --bs-btn-color: #fff;
+            --bs-btn-active-border-color: #6D6045E6;
+            --bs-btn-active-bg: #6D6045E6;
+        }
+        .id-form{
+            width: 90%;
+            margin-left: 40px
+        }
+        .check-button{
+            margin-right: 70px
+        }
+        .password-form{
+            width: 80%;
+            margin-left: 40px;
+        }
+        .label-form{
+            margin-left: 40px;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/join/join.js" type="module" defer></script>
+</head>
+<body>
+
+<div class="container border border-2 rounded-3 mt-4" style="--bs-border-color:#6D6045;">
+    <div class="pt-4">
+        <img src="/img/logo.svg" class="rounded mx-auto d-block" alt="logo">
+    </div>
+    <div class="py-4 text-center">
+        <h2>회원 가입</h2>
+    </div>
+
+    <div class="form-group">
+        <div class="row g-3 mb-4">
+            <div class="col" id="eamil-form">
+                <label for="email" class="visually-hidden">email</label>
+                <input type="text" class="form-control border-2 id-form" id="email" placeholder="elice@example.com" maxlength="25" required>
+            </div>
+            <div class="col-auto check-button">
+                <button type="button" id="emailCheck" class="btn btn-primary mb-1 btn-form">중복 확인</button>
+            </div>
+            <div class="row">
+                <label id="email-label" class="label-form col-form-label-sm visually-hidden"></label>
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col" id="name-form">
+                <label for="name" class="visually-hidden"></label>
+                <input type="text" class="form-control border-2 id-form" id="name" placeholder="닉네임" maxlength="10" required>
+            </div>
+            <div class="col-auto check-button">
+                <button type="button" id="nameCheck" class="btn btn-primary mb-1 btn-form">중복 확인</button>
+            </div>
+            <div class="row">
+                <label id="name-label" class="label-form col-form-label-sm visually-hidden"></label>
+            </div>
+        </div>
+
+        <div class="col mb-4" id="password-form">
+            <input type="password" id="password" class="form-control border-2 password-form" placeholder="비밀번호" required>
+            <label id="password-label" class="label-form col-form-label-sm visually-hidden"></label>
+        </div>
+
+        <div class="mb-4" id="password-check-form">
+            <input type="password" id="password-check" class="form-control border-2 password-form" placeholder="비밀번호 확인" required>
+            <label id="password-check-label" class="label-form col-form-label-sm visually-hidden"></label>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="row mb-4">
+            <div class="col">
+                <button type="submit" id="join" class="w-100 btn btn-lg btn-form">회원 가입</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="py-2 text-center">
+    </div>
+
+</div> <!-- /container -->
+</body>
+</html>

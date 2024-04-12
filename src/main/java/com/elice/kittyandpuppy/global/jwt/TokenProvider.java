@@ -44,10 +44,10 @@ public class TokenProvider {
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                 .setIssuer(jwtProperties.getIssuer())
-                .setIssuedAt(now)
-                .setExpiration(expiry)
-                .setSubject(member.getEmail())
-                .claim("id", member.getId())
+                .setIssuedAt(now)      // 발급 시간
+                .setExpiration(expiry)  // 토큰 만료 시간
+                .setSubject(member.getEmail())  // 토큰 용도 명시
+                .claim("id", member.getId())    // Playload에 담길 Claim 값
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
@@ -75,7 +75,7 @@ public class TokenProvider {
      * @param token
      * @return memberId
      */
-    public Long getMemberrId(String token) {
+    public Long getMemberId(String token) {
         Claims claims = getClaims(token);
         return claims.get("id", Long.class);
     }

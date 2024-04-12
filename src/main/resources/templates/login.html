@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>구해줘멍냥 : 로그인</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+    />
+    <!--    <link href="../css/bootstrap.min.css" rel="stylesheet">-->
+    <style>
+        .container {
+            max-width: 540px;
+        }
+        .btn-form{
+            background-color: #6D6045E6 ;
+            --bs-btn-border-color: #6D6045;
+            --bs-btn-hover-bg:#6D6045;
+            --bs-btn-hover-border-color:#6D6045;
+            --bs-btn-hover-color:#FFFFFF;
+            --bs-btn-color: #FFFFFF;
+            --bs-btn-active-color:#FFFFFF;
+            --bs-btn-active-border-color: #6D6045E6;
+            --bs-btn-active-bg: #6D6045E6;
+        }
+        .a{
+            text-decoration: none;
+            color: black;
+        }
+        .naver-login-form{
+            background-color: #09aa5c ;
+            --bs-btn-border-color: #09aa5c;
+            --bs-btn-hover-bg:#09aa5cF5;
+            --bs-btn-hover-border-color:#09aa5cF5;
+            --bs-btn-hover-color:#FFFFFF;
+            --bs-btn-color: #FFFFFF;
+            --bs-btn-active-color:#FFFFFF;
+            --bs-btn-active-border-color: #09aa5c;
+            --bs-btn-active-bg: #09aa5c;
+        }
+
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/login/login.js" type="module" defer></script>
+</head>
+<body>
+    <div class="container border border-2 rounded-3 mt-4" style="--bs-border-color:#6D6045;">
+        <div class="pt-4">
+            <img src="/img/logo.svg" class="rounded mx-auto d-block" alt="logo">
+        </div>
+        <div class="pt-3 text-center">
+            <h2>로그인</h2>
+            <p id="error" class="visually-hidden text-danger" style="font-size:13px;"><strong>이메일</strong> 혹은 <strong>비밀번호</strong>가 잘못 됬습니다.</p>
+        </div>
+        <div class="form-group row d-flex justify-content-center">
+            <div class="row col-8 mb-4" id="email-form">
+                <input type="text" id="email" class="form-control border-2" placeholder="이메일" maxlength="25" required>
+                <label id="email-label" class="col-form-label-sm visually-hidden"></label>
+            </div>
+            <div class="row col-8 mb-4" id="password-form">
+                <input type="password" id="password" class="form-control border-2" placeholder="비밀번호" required>
+                <label id="password-label" class="col-form-label-sm visually-hidden"></label>
+            </div>
+            <div class="hstack gap-3 justify-content-center">
+                <div>
+                    <a href="javascript:void(0);" class="a">비밀번호 찾기</a>
+                </div>
+                <div class="vr" style="height: 30px;"></div>
+                <div style="margin-right: 10px;">
+                    <a href="/static" class="a">회원 가입</a>
+                </div>
+            </div>
+
+            <div class="row my-4" style="width: 80%" >
+                <div class="col">
+                    <button type="button" id="login" class="w-100 btn btn-lg btn-form">로그인</button>
+                </div>
+            </div>
+            <hr class="mb-4 " style="width: 80%">
+            <div class="pt-3 text-center">
+                <p class="" style="font-size:13px;"><small>간편하게 SNS 로그인</small></p>
+            </div>
+            <!--      소셜 로그인 버튼      -->
+            <div class="row mt-1 mb-4" style="width: 80%" >
+                <div class="col">
+                    <button type="button" id="naver" class="w-100 btn btn-lg naver-login-form">네이버로 로그인</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
