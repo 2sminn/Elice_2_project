@@ -55,6 +55,8 @@ dependencies {
 
 	// assertj
 	testImplementation 'org.assertj:assertj-core:3.21.0'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
