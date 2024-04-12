@@ -45,7 +45,7 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Delivery delivery;
 
-    @Column(name = "order_date", nullable = false)
+    @Column(name = "order_date")
     private LocalDateTime orderDate;
 
     @Enumerated(EnumType.STRING)
@@ -177,7 +177,7 @@ public class Order {
      *                                  - CREATE or ORDER 상태가 아닌 경우: "배송지 변경이 불가능합니다."
      */
     private void validateSetDelivery() {
-        if (status != OrderStatus.CREATE || status != OrderStatus.ORDER) {
+        if (status == OrderStatus.DELIVERY || status == OrderStatus.COMPLETE || status == OrderStatus.CANCEL) {
             throw new IllegalArgumentException("배송지 변경이 불가능합니다.");
         }
     }
