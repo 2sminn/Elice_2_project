@@ -6,19 +6,19 @@ document.addEventListener('DOMContentLoaded', () => {
             parentCategoryButtons.forEach(btn => btn.classList.remove('selected'));
             event.target.classList.add('selected');
 
-            const animalType = event.target.textContent;
-            loadCategories(animalType);
+            const categoryType = event.target.textContent;
+            loadCategories(categoryType);
         });
     });
 });
 
-function loadCategories(animalType) {
+function loadCategories(categoryType) {
     const categorySection = document.querySelector('.category-section');
     while (categorySection.firstChild) {
         categorySection.removeChild(categorySection.firstChild);
     }
 
-    fetch(`/api/categories/${animalType}`)
+    fetch(`/api/categories/${categoryType}`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
