@@ -12,15 +12,28 @@
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script>
         $(function() {
-            $("#header").load("/header/header.html #header_fragment");
-            $("#footer").load("/footer/footer.html #footer_fragment");
+            $("#header").load("/header/header.html #header-fragment");
+            $("#footer").load("/footer/footer.html #footer-fragment");
         });
     </script>
 </head>
 <body>
+<div class="index-container">
+
+</div>
 <div id="header"></div>
 <div id="aricle">
-    본문입니당.
+    <div class="main-container">
+        <div class="logo-img">
+            <img src="/img/logo.png">
+        </div>
+        <div class="logo-img">
+            <form method="POST" action="/api/search" class="search-form" >
+                <input type="text" class="search-text">
+                <input type="submit" class=search-submit-btn>
+            </form>
+        </div>
+    </div>
 </div>
 <div id="footer"></div>
 </body>

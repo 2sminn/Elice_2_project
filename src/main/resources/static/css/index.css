@@ -4,3 +4,32 @@ body{
     font-family: 'Noto Sans KR', sans-serif;
     letter-spacing: -1px;
 }
+
+#aricle {
+    height: 83vh;
+    padding-left: 10.5vw;
+    padding-right: 10.5vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.logo-imga{
+
+}
+
+.logo-img{
+
+}
+
+.search-form{
+
+}
+
+.search-text{
+
+}
+
+.search-submit-btn{
+
+}
