@@ -5,57 +5,60 @@ import com.elice.kittyandpuppy.module.post.entity.Post;
 import com.elice.kittyandpuppy.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class PostService {
     private final PostRepository postRepository;
 
     // Community 관련 서비스
+    @Transactional(readOnly = true)
     public List<Post> getCommunityList() {
         return postRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Post getCommunityDetail(Long id) {
         return postRepository.findById(id).orElse(null);
     }
 
+
     public Post createCommunityDetail(RequestPost requestPost) {
-        Post post = requestPost.toEntity();
-        if (post.getId() != null) {
+        Post entity = requestPost.toEntity(requestPost);
+
+        if (entity.getId() != null) {
             return null;
         }
-        return postRepository.save(post);
+        return postRepository.save(entity);
     }
 
     public Post updateCommunityDetail(Long id, RequestPost requestPost) {
-        Post post = requestPost.toEntity();
 
-        Post target = postRepository.findById(id).orElse(null);
+        // id 로 해당 게시글이 있는지 찾기
+        Post entity = postRepository.findById(id).orElse(null);
 
-        // 잘못된 요청 처리하기
-        if (target == null || id != post.getId()) {
+        // entity 가 있으면 수정하고 저장
+        if (entity != null) {
+            entity.updatePatch(requestPost.toEntity(requestPost));
+//            return postRepository.save(entity);
+            return entity;
+        } else {
             return null;
         }
-
-        target.updatePatch(post);
-        Post updated = postRepository.save(post);
-        return updated;
     }
 
-    public Post deleteCommunity(Long id) {
-        // 1. 대상 찾기
+    public void deleteCommunity(Long id) {
+        // 대상 찾기
         Post target = postRepository.findById(id).orElse(null);
 
-        // 2. 잘못된 요청 처리하기
-        if (target == null) {
-            return null;
+        // 삭제하고자 하는 엔티티자 존재하면 삭제
+        if (target != null) {
+            postRepository.delete(target);
         }
 
-        // 3. 대상 삭제하기
-        postRepository.delete(target);
-        return target;
     }
 }

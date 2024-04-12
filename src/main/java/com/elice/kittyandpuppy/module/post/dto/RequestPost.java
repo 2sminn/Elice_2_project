@@ -1,20 +1,27 @@
 package com.elice.kittyandpuppy.module.post.dto;
 
 import com.elice.kittyandpuppy.module.post.entity.Post;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class RequestPost {
-    private Long id;
+
     private String title;
     private String content;
     private int type;
 
-    public Post toEntity() {
-        return new Post(id, title, content, 1, LocalDateTime.now(), LocalDateTime.now());
+    public Post toEntity(RequestPost requestPost) {
+        return Post.builder()
+                .title(requestPost.getTitle())
+                .content(requestPost.getContent())
+                .type(requestPost.getType())
+                .build();
     }
 }

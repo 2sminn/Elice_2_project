@@ -12,7 +12,9 @@ import javax.swing.text.html.parser.Entity;
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+//@RequestMapping("/products")
+@RequestMapping("/product")
+
 public class ProductController {
 
     private final ProductService productService;
@@ -36,7 +38,7 @@ public class ProductController {
         List<Product> products = productService.findAll();
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-    // all 상품 조회
+    // 특정 id 상품 조회
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
         Product product = productService.findProductById(id);

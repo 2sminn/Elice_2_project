@@ -2,6 +2,7 @@ package com.elice.kittyandpuppy.module.post.controller;
 
 
 import com.elice.kittyandpuppy.module.post.dto.RequestPost;
+import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
 import com.elice.kittyandpuppy.module.post.entity.Post;
 import com.elice.kittyandpuppy.module.post.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -13,19 +14,27 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/api")
 public class PostController {
     private final PostService postService;
 
     // Community 관련 컨트롤러
     // GET
-    @GetMapping("/community")
-    public List<Post> getCommunityList() {
-        return postService.getCommunityList();
+    @GetMapping("/communities")
+    public ResponseEntity<List<ResponsePost>> getCommunityList() {
+        List<ResponsePost> responsePostList = postService.getCommunityList()
+                .stream()
+                .map(ResponsePost::new)
+                .toList();
+
+        return ResponseEntity.ok().body(responsePostList);
     }
 
     @GetMapping("/community/{id}")
-    public Post getCommunityDetail(@PathVariable Long id) {
-        return postService.getCommunityDetail(id);
+    public ResponseEntity<ResponsePost> getCommunityDetail(@PathVariable Long id) {
+        Post post = postService.getCommunityDetail(id);
+
+        return ResponseEntity.ok().body(new ResponsePost(post));
     }
 
     // POST
@@ -33,11 +42,11 @@ public class PostController {
     public ResponseEntity<Post> createCommunityDetail(@RequestBody RequestPost requestPost) {
         Post created = postService.createCommunityDetail(requestPost);
         return (created != null) ?
-                ResponseEntity.status(HttpStatus.OK).body(created) :
+                ResponseEntity.status(HttpStatus.CREATED).body(created) :
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    // PUT, 게시글 수정이 잘 동작하지 않아서 수정이 필요함..
+    // PUT, 수정 완료
     @PutMapping("/community/post/{id}")
     public ResponseEntity<Post> updateCommunityDetail(@PathVariable Long id, @RequestBody RequestPost requestPost) {
         Post updated = postService.updateCommunityDetail(id, requestPost);
@@ -48,10 +57,8 @@ public class PostController {
 
     // DELETE
     @DeleteMapping("/community/post/{id}")
-    public ResponseEntity<Post> delete(@PathVariable Long id) {
-        Post deleted = postService.deleteCommunity(id);
-        return (deleted != null) ?
-                ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        postService.deleteCommunity(id);
+        return ResponseEntity.ok().build();
     }
 }
