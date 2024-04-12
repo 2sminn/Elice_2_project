@@ -5,9 +5,9 @@ import com.elice.kittyandpuppy.module.order.entity.Delivery;
 import com.elice.kittyandpuppy.module.order.entity.Order;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +25,7 @@ public class OrderService {
      * @param orderItems
      * @return 생성된 Order 객체
      */
+    @Transactional
     public Order create(Member member, Delivery delivery, List<OrderItem> orderItems) {
         Order createdOrder = Order.createOrder(member, delivery, orderItems);
 
@@ -58,6 +59,7 @@ public class OrderService {
      * 삭제시 Cascade 설정으로 인해 해당하는 OrderItem, Delivery 정보들도 자동으로 삭제된다.
      * @param id
      */
+    @Transactional
     public void deleteById(long id) {
         // 해당하는 정보가 존재하는지 확인
         findById(id);
@@ -70,6 +72,7 @@ public class OrderService {
      *
      * @param id
      */
+    @Transactional
     public void order(Long id) {
         findById(id).order();
     }
@@ -79,6 +82,7 @@ public class OrderService {
      *
      * @param id
      */
+    @Transactional
     public void cancel(Long id) {
         findById(id).cancel();
     }
@@ -88,6 +92,7 @@ public class OrderService {
      *
      * @param id
      */
+    @Transactional
     public void delivery(Long id) {
         findById(id).delivery();
     }
@@ -97,6 +102,7 @@ public class OrderService {
      *
      * @param id
      */
+    @Transactional
     public void complete(Long id) {
         findById(id).complete();
     }
