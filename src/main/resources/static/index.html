@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/footer/style.css" />
+    <link rel="stylesheet" href="/header/style.css" />
+    <link rel="stylesheet" href="/css/index.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        $(function() {
+            $("#header").load("/header/header.html #header_fragment");
+            $("#footer").load("/footer/footer.html #footer_fragment");
+        });
+    </script>
+</head>
+<body>
+<div id="header"></div>
+<div id="aricle">
+    본문입니당.
+</div>
+<div id="footer"></div>
+</body>
+</html>
