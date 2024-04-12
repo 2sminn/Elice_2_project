@@ -69,10 +69,12 @@ input{
     left: -44px;
 
     top: -44px;
+
+    cursor: pointer;
 }
 .search-img{
 
-    width: 38px;
+    width: 35px;
 }
 .cancel-img{
 
@@ -86,7 +88,9 @@ input{
 
     position: relative;
 
-    right: -480px;
+    right: -478px;
 
-    top: -47px;
+    top: -45px;
+
+    cursor: pointer;
 }
