@@ -14,7 +14,6 @@ import lombok.*;
 @Getter @Setter
 @Table(name = "comment")
 public class Comment extends BaseTimeEntity{
-
     @Id
     @GeneratedValue
     @Column(name="id")
@@ -34,8 +33,5 @@ public class Comment extends BaseTimeEntity{
     @JoinColumn(name = "post_id")
     private Post post;
 
-//    public CommentResponse fromEntity(Comment comment){
-//        re
-//    }
 
 }
