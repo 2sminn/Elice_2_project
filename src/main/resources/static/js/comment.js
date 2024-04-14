@@ -80,8 +80,6 @@ function displayComments(comments) {
 
 //댓글 수정 버튼 클릭
 $(document).on('click', '.comment_edit', function() {
-    // 댓글 ID 가져오기
-    let commentId = $(this).data('comment_id');
     // 댓글 내용 가져오기
     let commentContent = $(this).closest('.comment-content-container').find('.comment_detail').text();
     // 수정을 위해 댓글 내용을 textarea로 변경
@@ -90,48 +88,36 @@ $(document).on('click', '.comment_edit', function() {
             .append(`<div class="comment_edit_box"><textarea class="comment_edit_textarea" cols="30" rows="3">${commentContent}</textarea>
                    <button class="comment_edit_btn">등록</button></div>`);
     }else{
-        $(this).closest('.comment-content-container').find('.comment_edit_box').empty();
+        $(this).closest('.comment-content-container').find('.comment_edit_box').remove();
     }
-
-
 });
 
-// function comment_edit(commentId) {
-//     const postId = window.location.pathname.split('/').pop();
-//     let data = {content : $('#comment_content').val()}
-//     $.ajax({
-//         url: '/api/comment' + commentId,
-//         type: 'PUT',
-//         dataType: 'text',
-//         contentType: "application/json",
-//         data: JSON.stringify(data),
-//         success: function (data) {
-//             alert("댓글이 수정되었습니다");
-//             location.href = '/community/' + postId;
-//         }
-//     });
-// }
+// 댓글 저장 버튼 클릭
+$(document).on('click', '.comment_edit_btn', function() {
+    // 댓글 ID 가져오기
+    let commentId = $(this).closest('.comment-content-container').find('.comment_edit').data('comment_id');
+    // textarea에서 새로운 댓글 내용 가져오기
+    let newCommentContent = $(this).closest('.comment-article').find('.comment_edit_textarea').val();
+    // textarea를 댓글 내용으로 변경
+    $(this).closest('.comment-article').find('.comment_edit_textarea').replaceWith(`<div class="comment_detail">${newCommentContent}</div>`);
+    //수정박스를 삭제
+    $(this).closest('.comment-content-container').find('.comment_edit_box').remove();
+    // AJAX를 통해 변경 내용을 저장하기 위해 editComment 함수 호출
+    comment_edit(commentId, newCommentContent);
+});
 
-//
-// //댓글 수정
-// $(document).on('click', '.comment_edit', function() {
-//     let commentId = $(this).data('comment_id');
-//     comment_edit(commentId);
-// });
-// function comment_edit() {
-//     const postId = window.location.pathname.split('/').pop();
-//     let data = {content : $('#comment_content').val()}
-//     $.ajax({
-//         url: '/api/comment' + commentId,
-//         type: 'PUT',
-//         dataType: 'text',
-//         contentType: "application/json",
-//         data: JSON.stringify(data),
-//         success: function (data) {
-//             alert("댓글이 수정되었습니다");
-//             location.href = '/community/' + postId;
-//         }
-//     });
-// }
-
-
+function comment_edit(commentId, newCommentContent) {
+    const postId = window.location.pathname.split('/').pop();
+    let data = {content : newCommentContent}
+    $.ajax({
+        url: '/api/comment/' + commentId,
+        type: 'PUT',
+        dataType: 'text',
+        contentType: "application/json",
+        data: JSON.stringify(data),
+        success: function (data) {
+            alert("댓글이 수정되었습니다");
+            location.href = '/community/' + postId;
+        }
+    });
+}
