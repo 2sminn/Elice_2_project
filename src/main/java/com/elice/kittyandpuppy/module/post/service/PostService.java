@@ -1,9 +1,15 @@
 package com.elice.kittyandpuppy.module.post.service;
 
+import com.elice.kittyandpuppy.module.comment.entity.Comment;
+import com.elice.kittyandpuppy.module.comment.repository.CommentRepository;
+import com.elice.kittyandpuppy.module.comment.service.CommentService;
 import com.elice.kittyandpuppy.module.post.dto.RequestPost;
+import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
 import com.elice.kittyandpuppy.module.post.entity.Post;
 import com.elice.kittyandpuppy.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +23,8 @@ public class PostService {
 
     // Community 관련 서비스
     @Transactional(readOnly = true)
-    public List<Post> getCommunityList() {
-        return postRepository.findAll();
+    public Page<ResponsePost> getCommunityList(Pageable pageable) {
+        return postRepository.findAll(pageable).map(ResponsePost::new);
     }
 
     @Transactional(readOnly = true)
