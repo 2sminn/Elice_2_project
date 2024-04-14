@@ -1,0 +1,37 @@
+
+/* 부트스트랩 커뮤니티 검색 CSS 적용 */
+.research_container {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.research_container .d-flex {
+    width: 1000px;
+    height: 40px;
+}
+
+/* Community list CSS 적용 */
+.community_list_container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.community_list_container .table {
+    width: 1200px;
+    border: 1px solid #ddd;
+}
+
+.community_list_container th,
+td {
+    text-align: center;
+}
+
+/* 부트스트랩 페이지네이션 CSS 적용 */
+.page_nation_container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
