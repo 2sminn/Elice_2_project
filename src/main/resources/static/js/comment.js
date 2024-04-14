@@ -5,12 +5,6 @@ $(document).ready(function () {
     $("#comment_submit").click(function () {
         comment_create(postId);
     });
-    //댓글 수정
-    $("#comment_edit").click(function () {
-        comment_edit(comment.id);
-        $('#comment_content').val(comment.content)
-    });
-
     //댓글 조회
     const postId = window.location.pathname.split('/').pop();
     $.ajax({
@@ -47,6 +41,7 @@ function displayComments(comments) {
     let commentList = $('#comment_list');
     commentList.empty();
     comments.forEach(function(comment) {
+        let formattedDate = formatDate(comment.modifiedAt);
         let commentElement = $(`
             <div class="comment-content-container"> <!-- 댓글 1개-->
                 <div class="row-box comment-header">
@@ -54,7 +49,7 @@ function displayComments(comments) {
                         <img src ="/static/img/miao.jpg" class="comment-profile">
                         <span class="commnet-name">냔냔펑치</span>
                     </div>
-                    <div class="comment-day">${comment.modifiedAt}</div>
+                    <div class="comment-day">${formattedDate}</div>
                     <img src="/static/img/comment-edit2.png" class="comment_edit" >
                     <img src="/static/img/comment-delete2.png" class="comment_delete">
                 </div>
@@ -120,4 +115,41 @@ function comment_edit(commentId, newCommentContent) {
             location.href = '/community/' + postId;
         }
     });
+}
+
+//댓글 삭제 버튼 클릭
+$(document).on('click', '.comment_delete', function() {
+    // 댓글 ID 가져오기
+    let commentId = $(this).closest('.comment-content-container').find('.comment_delete').data('comment_id');
+    // 삭제 함수 호출
+    if(confirm("댓글을 삭제하시겠습니까?")){
+        comment_delete(commentId);
+    }
+});
+//댓글 삭제
+function comment_delete(commentId){
+    const postId = window.location.pathname.split('/').pop();
+    $.ajax(
+        {
+            url: '/api/comment/' + commentId,
+            type: 'DELETE',
+            dataType: 'text',
+            success: function (response) {
+                alert("댓글이 삭제되었습니다.");
+                location.href = '/community/' + postId;
+            }
+        }
+    );
+}
+
+
+
+//날짜 포매팅
+function formatDate(timestamp) {
+    let year = timestamp[0];
+    let month = String(timestamp[1]).padStart(2, '0');
+    let day = String(timestamp[2]).padStart(2, '0');
+    let hour = String(timestamp[3]).padStart(2, '0');
+    let minute = String(timestamp[4]).padStart(2, '0');
+    return `${year}.${month}.${day} ${hour}:${minute}`;
 }
