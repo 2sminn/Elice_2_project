@@ -18,4 +18,8 @@ public class MemberController {
     public String loginForm(){
         return "login";
     }
+    @GetMapping("/mypage")
+    public String mypageForm(){
+        return "mypage";
+    }
 }

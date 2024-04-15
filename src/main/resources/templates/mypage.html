@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>구해줘멍냥 : MyPage</title>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+    />
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="/static/mypage/mypage.js" type="module" defer></script>
+    <style>
+        .thread{
+            --bs-table-bg: #FFF5CE;
+            text-align: center;
+            width: 165px;
+        }
+        .box{
+            width: 60%;
+            margin-top: 100px;
+        }
+        .btn-form{
+            height: 40px;
+            background-color: #6D6045E6 ;
+            --bs-btn-border-color: #6D6045;
+            --bs-btn-hover-bg:#6D6045;
+            --bs-btn-hover-border-color:#6D6045;
+            --bs-btn-hover-color:#FFFFFF;
+            --bs-btn-color: #FFFFFF;
+            --bs-btn-active-color:#FFFFFF;
+            --bs-btn-active-border-color: #6D6045E6;
+            --bs-btn-active-bg: #6D6045E6;
+        }
+        .input-form{
+            width: 80%;
+            padding: .375rem .75rem;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.5;
+            border-radius:0.3rem;
+            appearance: none;
+            border: 1px solid #dee2e6;
+            margin-bottom: 1.5vh;
+        }
+        .visible{
+            opacity: 0%;
+            --bs-btn-disabled-opacity: 0%;
+        }
+    </style>
+</head>
+<body>
+<div class="container box" >
+    <div style="margin-left: 10vw">
+        <p style="font-size: 35px">ABOUT ME</p>
+    </div>
+    <div class="" style="width: 65%; margin-left: 10vw">
+        <table class="table table-bordered" style="line-height:2.5;">
+            <tr>
+                <th class="thread" scope="row">Email</th>
+                <td id="emailTag" style="padding-left: 15px;">
+                    <p id="email" style="margin-bottom: 0"></p>
+                </td>
+            </tr>
+            <tr>
+                <th class="thread" scope="row" style="padding-top: 2vh">NickName</th>
+                <td id="nickNameTag" style="padding-left: 15px;">
+                    <div style="display: flex; justify-content: space-between" >
+                        <input class="input-form" id="nickname" style="margin-top: 1vh; width: 50%" placeholder="닉네임" readonly>
+                        <button class="btn btn-form" type="button" id="nicknameChange" style="margin-top: 1vh">변경</button>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th class="thread" scope="row" style="padding-top: 2vh">Name</th>
+                <td id="nameTag" style="padding-left: 15px;">
+                    <input class="input-form" id="name" style="margin-top: 1vh; width: 50%" placeholder="이름" readonly>
+                </td>
+            </tr>
+            <tr>
+                <th class="thread" scope="row" style="padding-top: 2vh">연락처</th>
+                <td colspan="2" id="phone-numbwer" style="padding-left: 15px;">
+                    <input class="input-form" id="phone" type="text" style="width: 50%; margin-top:1vh" placeholder="전화 번호" readonly>
+                </td>
+            </tr>
+            <tr>
+                <th class="thread" scope="row" style="padding-top: 70px">주소</th>
+                <td class="" colspan="2" id="addressTag" style="padding-top: 15px;padding-left: 15px;">
+                    <div class="" style="display: flex; justify-content: space-between">
+                        <input id="zipCode" class="input-form" type="text" style="width: 50%" placeholder="우편 번호" readonly>
+                        <button id="execPostcode" class="btn btn-form btn-sm visible" type="button" disabled>주소 찾기</button>
+                    </div>
+                    <input id="street" class="input-form" type="text" placeholder="주소" readonly>
+                    <input class="input-form" id="detail" type="text" style="width:80%" placeholder="상세 주소" readonly>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="margin-left: 20vw">
+        <button id="change-info" class="btn btn-form" type="button" style="width: 50%">회원 정보 변경</button>
+    </div>
+    <div id="error" class="visible" style="margin-left: 25vw">
+        <p style="font-size: 15px; color: red">
+            닉네임: 사용할 수 없는 닉네임 입니다. 다른 닉네임을 입력해 주세요.
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>

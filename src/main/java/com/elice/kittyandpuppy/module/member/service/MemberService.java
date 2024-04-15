@@ -60,9 +60,9 @@ public class MemberService {
     }
 
     @Transactional
-    public Member editMember(Long id, Member member) {
+    public Member editMember(Long id, String name) {
         Member findMember = memberRepository.findById(id).get();
-        findMember.setName(member.getName());
+        findMember.setName(name);
         return findMember;
     }
 

@@ -42,16 +42,7 @@ public class OrderService {
     public Order findById(Long id) {
         return orderRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Not Found Order Info By: " + id));
-    }
 
-    /**
-     * Member id 값으로 연관된 모든 Order 객체를 조회한다.
-     *
-     * @param memberId
-     * @return 찾은 Order List
-     */
-    public List<Order> findAllByMemberId(Long memberId) {
-        return orderRepository.findAllByMember_Id(memberId);
     }
 
     /**
