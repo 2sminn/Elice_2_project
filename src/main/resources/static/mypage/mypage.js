@@ -11,9 +11,10 @@ function execPostcode() {
             var addr = ''; // 주소 변수
             var extraAddr = ''; // 참고항목 변수
 
+            //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                 addr = data.roadAddress;
-            } else {                            // 사용자가 지번 주소를 선택했을 경우(J)
+            } else { // 사용자가 지번 주소를 선택했을 경우(J)
                 addr = data.jibunAddress;
             }
 
@@ -32,16 +33,11 @@ function execPostcode() {
                 if (extraAddr !== '') {
                     extraAddr = ' (' + extraAddr + ')';
                 }
-                // 조합된 참고항목을 해당 필드에 넣는다.
-                // document.getElementById("extraAddress").value = extraAddr;
-
-            } else {
-                document.getElementById("extraAddress").value = '';
             }
 
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             $('#zipCode').val(data.zonecode);
-            $('#street').val(addr);
+            $('#street').val(addr+extraAddr);
         }
     }).open();
 }
