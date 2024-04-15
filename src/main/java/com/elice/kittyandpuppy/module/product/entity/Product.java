@@ -1,6 +1,11 @@
 package com.elice.kittyandpuppy.module.product.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자 생성
 @Table(name = "product") // 해당 엔티티가 매핑되는 DB 테이블의 이름 지정
 public class Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -53,4 +59,3 @@ public class Product {
     }
 
 }
-
