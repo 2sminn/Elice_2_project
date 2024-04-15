@@ -1,10 +1,10 @@
 package com.elice.kittyandpuppy.module.member.contorller;
 
+import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.dto.MemberSaveDto;
 import com.elice.kittyandpuppy.module.member.mapper.MemberMapper;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
-import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +22,7 @@ import java.util.Map;
 public class MemberRestController {
     private final MemberService memberService;
     private final MemberMapper memberMapper;
+    private final TokenProvider tokenProvider;
 
     @GetMapping("/members/{id}")
     public ResponseEntity<Member> findById(@PathVariable Long id) {
@@ -46,11 +47,16 @@ public class MemberRestController {
         return new ResponseEntity<>(members, HttpStatus.OK);
     }
 
-    @PutMapping("/member/{id}")
-    public ResponseEntity<Member> editMember(@PathVariable Long id, @RequestBody @Valid MemberSaveDto memberSaveDto) {
-        Member member = memberMapper.MemberDTOToMember(memberSaveDto);
-        Member editedMember = memberService.editMember(id, member);
-        return new ResponseEntity<>(editedMember, HttpStatus.OK);
+    @PutMapping("/member")
+    public ResponseEntity<Member> editMember(@RequestBody Map<String,String> map) {
+        String name = map.get("name");
+        String token = map.get("token");
+        if(tokenProvider.validToken(token)) {
+            Long id = tokenProvider.getMemberId(token);
+            Member editedMember = memberService.editMember(id, name);
+            return new ResponseEntity<>(editedMember, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/member/validation/email")
