@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>구해줘멍냥</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://pay.nicepay.co.kr/v1/js/"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 아이콘 -->
+    <!-- 폰트 어썸: 아이콘 -->
+    <link rel="stylesheet" href="/static/order/style.css" />
+    <script src="/static/order/order.js"></script>
+  </head>
+  <body>
+    <div id="header"></div>
+
+    <div class="container">
+      <div class="left-box">
+        <!-- 배송지 -->
+        <article>
+          <p class="font-large">배송지</p>
+          <div class="box">
+            <table style="border:none;">
+              <tr>
+                <td><p class="font-middle">받는 사람</p></td>
+                <td style="display: flex; justify-content: flex-start;">
+                  <input type="text" class="font-middle" id="receiverName" placeholder="엘리스">
+                  <div style="display: flex; align-items: center;">
+                    <input type="checkbox" class="font-middle" id="deliveryCheckbox" style="margin-right: 10px" checked>
+                    <p style="font-weight: bold;">기본 배송지로 지정</p>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td><p class="font-middle" style="margin-top: 0;">연락처</p></td>
+                <td><input type="text" class="font-middle" id="receiverPhone" style="margin-top: 0;" placeholder="010-0000-0000"></td>
+              </tr>
+              <tr>
+                <td style="vertical-align: top;"><p class="font-middle" style="margin-top: 0;">주소</p></td>
+                <td>
+                  <input type="text" class="font-middle" style="margin-top:0px" id="zipCode" placeholder="우편번호" readonly>
+                  <input type="button" class="font-middle" style="margin-top:0px; background-color: #F0AB0F; border-radius: 5px; color: white;" onclick="execDaumPostcode()" value="주소 찾기"><br>
+                  <input type="text" class="font-middle" style="width: 450px; margin-top:0px" id="street" placeholder="도로주소" readonly><br>
+                  <input type="text" class="font-middle" style="width: 450px; margin-top:0px" id="detail" placeholder="상세주소">
+              </tr>
+            </table>
+          </div>
+        </article>
+
+        <!-- 주문 상품 -->
+        <article style="margin-top: 100px">
+          <p class="font-large">주문상품</p>
+          <div class="box" id="orderItemBox">
+          </div>
+        </article>
+      </div>
+
+      <div class="right-box">
+        <!-- 총 결제 금액 -->
+        <article>
+          <p class="font-large">총 결제금액</p>
+          <div class="box">
+            <div class="order-detail" style="margin-bottom: 60px">
+              <div class="static">
+                <p class="font-middle">총 상품 금액</p>
+                <p class="font-middle">배송비</p>
+                <p class="font-middle">할인금액</p>
+              </div>
+              <div class="dynamic">
+                <div id="totalPrice">
+                </div>
+                <p class="font-middle">0원</p>
+                <p class="font-middle">0원</p>
+              </div>
+            </div>
+
+            <hr style="border: solid 1px; color: #E4E4E6; margin-left: 25px; margin-right: 25px">
+
+            <div class="total-price">
+              <div class="font-large" style="display: flex" id="count">
+              </div>
+              <div class="font-large" style="display: flex" id="result">
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 결제 방법 -->
+        <article style="margin-top: 100px">
+          <p class="font-large">결제방법</p>
+          <div class="box">
+            <div class="column">
+              <label>
+                <input type="radio" name="payBy" value="card">
+                <div>신용·체크카드</div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="accountTransfer">
+                <div>계좌이체</div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="BankTransfer">
+                <div>무통장입금</div>
+              </label>
+            </div>
+
+            <div class="column">
+              <label>
+                <input type="radio" name="payBy" value="phone">
+                <div>휴대폰</div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="naver">
+                <div><img style="width: 65px;" src="/static/img/naver_pay.png"></div>
+              </label>
+              <label>
+                <input type="radio" name="payBy" value="kakao">
+                <div><img style="width: 123px" src="/static/img/kakao_pay.png"></div>
+              </label>
+            </div>
+
+            <div class="order-column">
+              <input type="button" class="order-button" onclick="order()" value="결제하기">
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div id="footer"></div>
+  <script>
+    $(function () {
+      $("#header").load("header.html");
+      $("#footer").load("footer.html");
+    })
+  </script>
+  </body>
+</html>
