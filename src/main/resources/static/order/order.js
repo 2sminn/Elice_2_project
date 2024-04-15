@@ -219,7 +219,7 @@ function order() {
             type: 'POST',
             async: false,
             data: JSON.stringify({
-                memberId: 1,
+                token: token,
                 orderId: orderId
             }),
             contentType: 'application/json',
@@ -232,16 +232,29 @@ function order() {
             }
         });
     }
-
+    // if (payBy === "card") {
+    //     AUTHNICE.requestPay({
+    //         clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
+    //         method: 'card',
+    //         orderId: '000000000000001',
+    //         amount: 1000000,
+    //         goodsName: '테스트-상품',
+    //         returnUrl: 'http://localhost:8080/nicepayView', //API를 호출할 Endpoint 입력
+    //         fnError: function (result) {
+    //             alert('개발자확인용 : ' + result.errorMsg + '')
+    //         }
+    //     });
+    // }
 }
 
 // 결제 승인창에서 정상 결제시 메세지를 전송함
 window.addEventListener("message", receiveMessage, false);
 function receiveMessage(event) {
-    var receivedData = event.data;
-    // if (receivedData === '결제 실패') {
-    //     location.replace("/order/fail" + "?orderId=" + orderId);
-    // } else {
-    //     location.replace("/order/success" + "?orderId=" + orderId);
-    // }
+    var receivedData = JSON.parse(event.data);
+    var message = receivedData.message;
+    if (message === '결제 실패') {
+        location.replace("/order/fail" + "?orderId=" + orderId);
+    } else if (message === '결제 성공'){
+        location.replace("/order/success" + "?orderId=" + orderId);
+    }
 }
