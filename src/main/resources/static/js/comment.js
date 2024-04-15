@@ -70,6 +70,7 @@ function displayComments(comments) {
         commentElement.find('.comment_delete').data('comment_id', comment.id);
         // 댓글 요소를 목록에 추가
         commentList.append(commentElement);
+
         });
 }
 

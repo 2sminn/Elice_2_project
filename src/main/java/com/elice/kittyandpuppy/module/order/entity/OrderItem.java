@@ -60,6 +60,11 @@ public class OrderItem {
     public void setOrder(Order order) {
         this.order = order;
     }
+    
+    //재고관리를 위해 임시 추가
+    public void setProductAmount(Long amount) {
+        this.productAmount = productAmount;
+    }
 
     /**
      * 주문이 취소된 경우 재고를 복구한다.
