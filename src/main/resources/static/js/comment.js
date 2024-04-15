@@ -143,7 +143,6 @@ function comment_delete(commentId){
 }
 
 
-
 //날짜 포매팅
 function formatDate(timestamp) {
     let year = timestamp[0];

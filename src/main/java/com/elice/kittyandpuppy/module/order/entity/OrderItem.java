@@ -53,7 +53,6 @@ public class OrderItem {
         orderItem.setProductPrice(productPrice);
 
         // TODO: 상품 재고 감소 로직 작성
-
         return orderItem;
     }
 
