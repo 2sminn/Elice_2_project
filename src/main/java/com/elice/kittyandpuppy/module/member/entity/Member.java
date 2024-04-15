@@ -32,9 +32,17 @@ public class Member {
     @NotNull
     private String deleted = "N";
 
+    // TODO: redis를 사용해서 일시적으로 저장하고 삭제하도록 변경해야 함
+    @Column(name = "tid")
+    private String tid;
+
     public Member(String name, String email, String password) {
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public void updateTid(String tid) {
+        this.tid = tid;
     }
 }
