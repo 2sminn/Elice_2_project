@@ -48,9 +48,7 @@ function displayOrderItems(orders) {
                         </div>
                         <div><span class="detail-price">${orderItem.price}</span>원</div>
                     </div>
-                    <div class="product-delete">
-                    [삭제]
-                    </div>
+                    <img src="/static/img/comment-delete2.png" class="product-delete">
                 </div>
             </div>
         `);
@@ -69,8 +67,7 @@ $(document).on('click', '.product-delete', function() {
             type: 'DELETE',
             dataType: 'text',
             success: function (response) {
-                alert("댓글이 삭제되었습니다.");
-                location.href = '/cart';
+                loadCartList();
             }
         }
     );

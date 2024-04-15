@@ -156,4 +156,8 @@ body{
     margin-bottom: 100px;
 }
 
-
+.product-delete{
+    width: 17px;
+    margin-left: 5px;
+    margin-top: 3px;
+}
