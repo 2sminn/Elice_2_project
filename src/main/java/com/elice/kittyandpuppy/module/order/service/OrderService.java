@@ -46,6 +46,16 @@ public class OrderService {
     }
 
     /**
+     * Member id 값으로 연관된 모든 Order 객체를 조회한다.
+     *
+     * @param memberId
+     * @return 찾은 Order List
+     */
+    public List<Order> findAllByMemberId(Long memberId) {
+        return orderRepository.findAllByMember_Id(memberId);
+    }
+
+    /**
      * Order 객체를 삭제한다.<br>
      * 삭제시 Cascade 설정으로 인해 해당하는 OrderItem, Delivery 정보들도 자동으로 삭제된다.
      * @param id
