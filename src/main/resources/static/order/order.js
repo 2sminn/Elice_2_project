@@ -212,6 +212,27 @@ function order() {
         }
     });
 
+    // 카카오 페이 결제
+    if (payBy === "kakao") {
+        $.ajax({
+            url: '/payment/ready',
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                memberId: 1,
+                orderId: orderId
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                var payment = response.next_redirect_pc_url;
+                window.open(payment, '_blank');
+            },
+            error: function (xhr, status, error) {
+                console.error('API 호출 실패:', status, error);
+            }
+        });
+    }
+
 }
 
 // 결제 승인창에서 정상 결제시 메세지를 전송함
