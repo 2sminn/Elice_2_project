@@ -1,3 +1,4 @@
+var token; // 사용자 token
 var orderItemsId; // 주문 상품 Ids
 var deliveryId; // 배송지 Id
 var orderId; // 주문 Id
@@ -6,55 +7,11 @@ var payBy; // 결제 방법
 // 주문 페이지 전환 후 자동으로 사용자 주소 가져오기
 $(document).ready(function () {
 
+    token = localStorage.getItem("token");
     // orderItemsId = JSON.parse(localStorage.getItem('orderItemsId'));
     orderItemsId = [1, 2, 3]
-    let resultHTML = "";
-    let orderTotalPrice = 0;
-    let requestsCompleted = 0;
-
-    // orderItemsId가 존재하고 비어 있지 않은 경우에만 요청을 보냄
-    if (orderItemsId && orderItemsId.length > 0) {
-        orderItemsId.forEach(function (orderItemId) {
-            // 서버에 GET 요청 보내기
-            $.ajax({
-                url: '/api/orderItem/' + orderItemId,
-                type: 'GET',
-                async: false,
-                success: function (data) {
-                    // 성공적으로 데이터를 받아온 경우 처리
-                    var item = data; // 받아온 데이터
-
-                    resultHTML += `<div class="item">
-                         <div class="img">
-                           <img class="image-thumbnail" src="${item.imageUrl}">
-                         </div>
-                         <div class="detail">
-                           <p class="font-middle">${item.name}</p>
-                           <p class="font-middle">수량 ${new Intl.NumberFormat("ko-KR").format(item.amount)}개</p>
-                           <p class="font-middle">${item.totalPrice}원</p>
-                         </div>
-                       </div>`
-
-                    requestsCompleted++;
-                    orderTotalPrice += item.totalPrice;
-
-                    // 모든 요청이 완료되었을 때 결과를 출력합니다.
-                    if (requestsCompleted === orderItemsId.length) {
-                        document.querySelector("#orderItemBox").innerHTML = resultHTML;
-                        document.querySelector("#totalPrice").innerHTML = `<p class="font-middle">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}원</p>`;
-                        document.querySelector("#count").innerHTML = `<p style="margin-right: 10px;">총 <p style="color: #F0AB0F;" id="orderItemCount">${requestsCompleted}</p>건</p>`;
-                        document.querySelector("#result").innerHTML = `<p><p style="color: #F0AB0F;" id="resultPrice">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}</p>원</p>`;
-                    }
-                },
-                error: function (xhr, status, error) {
-                    // 요청이 실패한 경우 콘솔에 오류 메시지 출력
-                    console.error('GET 요청 실패:', status, error);
-                }
-            });
-        });
-    } else {
-        console.log('orderItemsId가 존재하지 않거나 비어 있습니다.');
-    }
+    getOrderItems();
+    getMemberInfo();
 
 });
 
@@ -103,8 +60,75 @@ function execDaumPostcode() {
 }
 
 // 사용자 정보 불러오기
+// TODO: memberAddress API 구현이 끝나면 수정 필요
 function getMemberInfo() {
+    $.ajax({
+        url: '/api/address/member',
+        type: 'GET',
+        async: false,
+        headers: {
+            'Authorization': 'Bearer ' + token
+        },
+        contentType: 'application/json',
+        success: function (response) {
+            document.getElementById('zipCode').value = response.address.zipCode;
+            document.getElementById('street').value = response.address.street;
+            document.getElementById('detail').value = response.address.detail;
+            document.getElementById('receiverName').value = response.deliveryName;
+            document.getElementById('receiverPhone').value = response.deliveryPhone;
+        }
+    });
+}
 
+// 주문 상품 불러오기
+function getOrderItems() {
+    let resultHTML = "";
+    let orderTotalPrice = 0;
+    let requestsCompleted = 0;
+
+    // orderItemsId가 존재하고 비어 있지 않은 경우에만 요청을 보냄
+    if (orderItemsId && orderItemsId.length > 0) {
+        orderItemsId.forEach(function (orderItemId) {
+            // 서버에 GET 요청 보내기
+            $.ajax({
+                url: '/api/orderItem/' + orderItemId,
+                type: 'GET',
+                async: false,
+                success: function (data) {
+                    // 성공적으로 데이터를 받아온 경우 처리
+                    var item = data; // 받아온 데이터
+
+                    resultHTML += `<div class="item">
+                         <div class="img">
+                           <img class="image-thumbnail" src="${item.imageUrl}">
+                         </div>
+                         <div class="detail">
+                           <p class="font-middle">${item.name}</p>
+                           <p class="font-middle">수량 ${new Intl.NumberFormat("ko-KR").format(item.amount)}개</p>
+                           <p class="font-middle">${item.totalPrice}원</p>
+                         </div>
+                       </div>`
+
+                    requestsCompleted++;
+                    orderTotalPrice += item.totalPrice;
+
+                    // 모든 요청이 완료되었을 때 결과를 출력합니다.
+                    if (requestsCompleted === orderItemsId.length) {
+                        document.querySelector("#orderItemBox").innerHTML = resultHTML;
+                        document.querySelector("#totalPrice").innerHTML = `<p class="font-middle">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}원</p>`;
+                        document.querySelector("#count").innerHTML = `<p style="margin-right: 10px;">총 <p style="color: #F0AB0F;" id="orderItemCount">${requestsCompleted}</p>건</p>`;
+                        document.querySelector("#result").innerHTML = `<p><p style="color: #F0AB0F;" id="resultPrice">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}</p>원</p>`;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // 요청이 실패한 경우 콘솔에 오류 메시지 출력
+                    console.error('GET 요청 실패:', status, error);
+                }
+            });
+        });
+    } else {
+        console.log('orderItemsId가 존재하지 않거나 비어 있습니다.');
+    }
 }
 
 // 결제하기
@@ -117,6 +141,34 @@ function order() {
         alert("결제 방식을 선택해주세요.");
         return;
     }
+
+    // TODO: 체크박스가 체크되어 있으면 회원 배송지 정보 업데이트 하기
+    // let checkbox = document.getElementById("deliveryCheckbox");
+    //
+    // if (checkbox.checked) {
+    //     $.ajax({
+    //         url: '/api/address/member',
+    //         type: 'POST',
+    //         async: false,
+    //         data: JSON.stringify({
+    //             address: {
+    //                 zipCode: document.getElementById('zipCode').value,
+    //                 street: document.getElementById('street').value,
+    //                 detail: document.getElementById('detail').value
+    //             },
+    //             deliveryName: document.getElementById('receiverName').value,
+    //             deliveryPhone: document.getElementById('receiverPhone').value,
+    //             token: token
+    //         }),
+    //         contentType: 'application/json',
+    //         success: function (response) {
+    //             deliveryId = response;
+    //         },
+    //         error: function (xhr, status, error) {
+    //             console.error('API 호출 실패:', status, error);
+    //         }
+    //     });
+    // }
 
     // 배송지 정보 저장
     $.ajax({
@@ -140,7 +192,6 @@ function order() {
             console.error('API 호출 실패:', status, error);
         }
     });
-    console.log(deliveryId);
 
     // 주문 정보 저장
     $.ajax({
@@ -161,6 +212,49 @@ function order() {
         }
     });
 
-    // 페이지 전환
-    // location.replace("/order/success?orderId=" + orderId);
+    // 카카오 페이 결제
+    if (payBy === "kakao") {
+        $.ajax({
+            url: '/payment/ready',
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                token: token,
+                orderId: orderId
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                var payment = response.next_redirect_pc_url;
+                window.open(payment, '_blank');
+            },
+            error: function (xhr, status, error) {
+                console.error('API 호출 실패:', status, error);
+            }
+        });
+    }
+    // if (payBy === "card") {
+    //     AUTHNICE.requestPay({
+    //         clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
+    //         method: 'card',
+    //         orderId: '000000000000001',
+    //         amount: 1000000,
+    //         goodsName: '테스트-상품',
+    //         returnUrl: 'http://localhost:8080/nicepayView', //API를 호출할 Endpoint 입력
+    //         fnError: function (result) {
+    //             alert('개발자확인용 : ' + result.errorMsg + '')
+    //         }
+    //     });
+    // }
+}
+
+// 결제 승인창에서 정상 결제시 메세지를 전송함
+window.addEventListener("message", receiveMessage, false);
+function receiveMessage(event) {
+    var receivedData = JSON.parse(event.data);
+    var message = receivedData.message;
+    if (message === '결제 실패') {
+        location.replace("/order/fail" + "?orderId=" + orderId);
+    } else if (message === '결제 성공'){
+        location.replace("/order/success" + "?orderId=" + orderId);
+    }
 }
