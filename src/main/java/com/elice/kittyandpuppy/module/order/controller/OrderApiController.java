@@ -54,9 +54,10 @@ public class OrderApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
     }
     
-    
-    //Cart에서 수량 변경후 주문하기 버튼을 누르면 사용되는 메소드
+
+    //Cart에서 수량 변경후 주문하기 버튼을 누르면 사용되는 메소드 -> 사용X
     @PutMapping("/order/{orderId}")
+    @Deprecated
     public ResponseEntity<Long> updateOrder(@PathVariable(value="orderId") Long orderId,
                                             @RequestBody OrderRequest request) {
         List<OrderItem> orderItems = new ArrayList<>();

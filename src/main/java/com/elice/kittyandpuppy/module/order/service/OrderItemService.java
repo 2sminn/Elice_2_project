@@ -58,7 +58,7 @@ public class OrderItemService {
     }
 
     @Transactional
-    public OrderItem update(Long id, Long amount) {
+    public OrderItem update(Long id, int amount) {
         OrderItem orderItem = orderItemRepository.findById(id).orElseThrow();
         orderItem.setProductAmount(amount);
         return orderItemRepository.save(orderItem);

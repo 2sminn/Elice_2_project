@@ -47,8 +47,8 @@ public class OrderItemApiController {
     //orderItem 수량 조절을 위한 수정 메소드 추가
     //TODO 본인스타일대로 수정하실거면 수정하십쇼~!~!
     @PutMapping("/orderItem/{id}") ResponseEntity<OrderItemResponse> updateOrderItem(@PathVariable(value = "id") long id,
-                                                                                     @RequestBody long amount){
-        OrderItem orderItem = orderItemService.update(id, amount);
+                                                                                     @RequestBody OrderItemRequest orderItemRequest){
+        OrderItem orderItem = orderItemService.update(id, orderItemRequest.getAmount());
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
     }
 

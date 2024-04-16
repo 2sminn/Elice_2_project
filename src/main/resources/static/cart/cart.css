@@ -112,6 +112,7 @@ body{
 }
 .product-plus{padding: 5px 10px;border: 0px;background-color: transparent;cursor: pointer;}
 .detail-price{
+    margin-right: 2px;
 }
 .product-order{
 

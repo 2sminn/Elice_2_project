@@ -60,12 +60,6 @@ public class OrderItem {
     public void setOrder(Order order) {
         this.order = order;
     }
-    
-    //재고관리를 위해 임시 추가
-    public void setProductAmount(Long amount) {
-        this.productAmount = productAmount;
-    }
-
     /**
      * 주문이 취소된 경우 재고를 복구한다.
      */
@@ -88,7 +82,9 @@ public class OrderItem {
         this.product = product;
     }
 
-    private void setProductAmount(int productAmount) {
+
+    //Cart 수량조절을 위해 private에서 public으로 변경
+    public void setProductAmount(int productAmount) {
         this.productAmount = productAmount;
     }
 
