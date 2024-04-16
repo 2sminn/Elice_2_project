@@ -38,3 +38,39 @@ function loadCategories(categoryType) {
             console.error('Error fetching data:', error);
         });
 }
+
+function loadProducts(categoryName) {
+    const productSection = document.querySelector('.product-section');
+    while (productSection.firstChild) {
+        productSection.removeChild(productSection.firstChild);
+    }
+
+    fetch(`/api/products/${categoryName}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(products => {
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product-item';
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <p class="product-name">${product.name}</p>
+                    <p class="product-price">${product.price}</p>
+                `;
+                productSection.appendChild(productDiv);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+}
+
+document.addEventListener('click', function(event) {
+    if (event.target.className === 'category') {
+        loadProducts(event.target.textContent);
+    }
+});
