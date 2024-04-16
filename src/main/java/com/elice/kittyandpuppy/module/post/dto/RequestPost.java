@@ -16,12 +16,14 @@ public class RequestPost {
     private String title;
     private String content;
     private int type;
+    private int views;
 
     public Post toEntity(RequestPost requestPost) {
         return Post.builder()
                 .title(requestPost.getTitle())
                 .content(requestPost.getContent())
                 .type(requestPost.getType())
+                .views(requestPost.getViews())
                 .build();
     }
 }

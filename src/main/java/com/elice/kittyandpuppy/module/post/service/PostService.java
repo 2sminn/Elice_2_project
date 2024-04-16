@@ -1,8 +1,5 @@
 package com.elice.kittyandpuppy.module.post.service;
 
-import com.elice.kittyandpuppy.module.comment.entity.Comment;
-import com.elice.kittyandpuppy.module.comment.repository.CommentRepository;
-import com.elice.kittyandpuppy.module.comment.service.CommentService;
 import com.elice.kittyandpuppy.module.post.dto.RequestPost;
 import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
 import com.elice.kittyandpuppy.module.post.entity.Post;
@@ -12,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -65,6 +60,15 @@ public class PostService {
         if (target != null) {
             postRepository.delete(target);
         }
+
+    }
+
+    @Transactional
+    public Post incrementViews(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+        post.incrementViewCount();
+        return postRepository.save(post);
 
     }
 }

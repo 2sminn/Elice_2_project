@@ -8,13 +8,36 @@ $(document).ready(function() {
         type: 'GET',
         dataType: 'json',
         success: function(post) {
-            $('#post-title').text(post.title);
-            $('#post-content').text(post.content);
-            $('#post-created').text(formatDate(post.createdAt));
-            $('#post-modifiedAt').text(formatDate(post.modifiedAt));
+            $('#post-title').html(post.title);
+            $('#post-content').html(post.content);
+            $('#post-views').html(post.views);
+            $('#post-created').html(formatDate(post.createdAt));
+            $('#post-modifiedAt').html(formatDate(post.modifiedAt));
         },
         error: function() {
             alert('게시글을 불러오는데 실패했습니다.');
+        }
+    });
+
+    // 수정 버튼 클릭 이벤트 핸들러 추가
+    $('#editBtn').click(function() {
+        window.location.href = `/community/update/${postId}`; // 수정 페이지로 리디렉션
+    });
+
+    // 삭제 버튼 클릭 이벤트 핸들러 추가
+    $('#deleteBtn').click(function() {
+        if (confirm('이 게시글을 삭제하시겠습니까?')) {
+            $.ajax({
+                url: `/api/community/post/${postId}`,
+                type: 'DELETE',
+                success: function() {
+                    alert('게시글이 삭제되었습니다.');
+                    window.location.href = '/communities'; // 삭제 후 이동할 페이지
+                },
+                error: function() {
+                    alert('게시글 삭제에 실패했습니다.');
+                }
+            });
         }
     });
 });

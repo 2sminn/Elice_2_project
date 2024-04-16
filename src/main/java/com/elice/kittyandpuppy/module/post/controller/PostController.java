@@ -17,4 +17,14 @@ public class PostController {
     public String communityDetailForm(@PathVariable Long id) {
         return "community_detail";
     }
+
+    @GetMapping("/community/create")
+    public String communityCreateForm() {
+        return "community_write";
+    }
+
+    @GetMapping("/community/update/{id}")
+    public String communityUpdateForm(@PathVariable Long id) {
+        return "community_update";
+    }
 }

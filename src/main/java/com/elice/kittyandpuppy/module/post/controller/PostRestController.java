@@ -62,4 +62,11 @@ public class PostRestController {
         postService.deleteCommunity(id);
         return ResponseEntity.ok().build();
     }
+
+    // 조회수 증가를 위한 컨트롤러
+    @PostMapping("/community/{postId}/increment-views")
+    public ResponseEntity<Void> incrementPostViews(@PathVariable Long postId) {
+        postService.incrementViews(postId);
+        return ResponseEntity.ok().build(); // 성공적으로 처리되면 OK 상태 코드 반환
+    }
 }
