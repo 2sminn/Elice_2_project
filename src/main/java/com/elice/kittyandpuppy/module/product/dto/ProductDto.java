@@ -11,28 +11,28 @@ import lombok.*;
 
 public class ProductDto {
     private Long id;
-    private Long category_id;
+    private Long categoryId;
     private String name;
     private int price;
     private int stock;
     private String imageUrl;
-    private String desc;
-    private String created_at;
-    private String modified_at;
+    private String description;
+    private String createdAt;
+    private String modifiedAt;
 
 
     // Dto - > product (DTO 상품 객체 - > 상품 엔티티로 변환)
     public static Product toEntity(ProductDto productDto) {
         Product product = new Product();
         product.setId(productDto.getId()); // DTO 객체 id 값을 엔티티 객체에 설정
-        product.setCategory_id(productDto.getCategory_id());
+        product.setCategoryId(productDto.getCategoryId());
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setStock(productDto.getStock());
         product.setImageUrl(productDto.getImageUrl());
-        product.setDesc(productDto.getDesc());
-        product.setCreated_at(productDto.getCreated_at());
-        product.setModified_at(productDto.getModified_at());
+        product.setDescription(productDto.getDescription());
+        product.setCreatedAt(productDto.getCreatedAt());
+        product.setModifiedAt(productDto.getModifiedAt());
 
         return product;
 
@@ -46,14 +46,14 @@ public class ProductDto {
     public static ProductDto fromDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
-        productDto.setCategory_id(product.getCategory_id());
+        productDto.setCategoryId(product.getCategoryId());
         productDto.setName(product.getName());
         productDto.setPrice(product.getPrice());
         productDto.setStock(product.getStock());
         productDto.setImageUrl(product.getImageUrl());
-        productDto.setDesc(product.getDesc());
-        productDto.setCreated_at(product.getCreated_at());
-        productDto.setModified_at(product.getModified_at());
+        productDto.setDescription(product.getDescription());
+        productDto.setCreatedAt(product.getCreatedAt());
+        productDto.setModifiedAt(product.getModifiedAt());
 
         return productDto;
     }
