@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<script>
+    // URL에서 쿼리 매개변수를 가져오는 함수
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    $(document).ready(function () {
+        var memberId = getUrlParameter('memberId');
+        var orderId =  getUrlParameter('orderId');
+        var pgToken =  getUrlParameter('pg_token');
+        $.ajax({
+            url: '/payment/success?'+'memberId='+memberId+'&orderId='+orderId+'&pg_token='+pgToken,
+            async: false,
+            contentType: 'application/json',
+            success: function (response) {
+                window.opener.postMessage(response, '*');
+                window.close();
+            },
+            error: function (xhr, status, error) {
+                console.error('API 호출 실패:', status, error);
+                window.opener.postMessage("결제 실패", '*');
+                window.close();
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -46,6 +46,7 @@
     <script src="/static/login/login.js" type="module" defer></script>
 </head>
 <body>
+    <div id="header"></div>
     <div class="container border border-2 rounded-3 mt-4" style="--bs-border-color:#6D6045;">
         <div class="pt-4">
             <img src="/static/img/logo.svg" class="rounded mx-auto d-block" alt="logo">
@@ -69,7 +70,7 @@
                 </div>
                 <div class="vr" style="height: 30px;"></div>
                 <div style="margin-right: 10px;">
-                    <a href="/static" class="a">회원 가입</a>
+                    <a href="/signup" class="a">회원 가입</a>
                 </div>
             </div>
 
@@ -90,5 +91,12 @@
             </div>
         </div>
     </div>
+    <div id="footer"></div>
+    <script>
+        $(function () {
+            $("#header").load("header.html");
+            $("#footer").load("footer.html");
+        })
+    </script>
 </body>
 </html>

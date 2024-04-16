@@ -18,6 +18,11 @@ public class OrderViewController {
         return "order_success";
     }
 
+    @GetMapping("/order/fail")
+    public String orderFail() {
+        return "order_fail";
+    }
+
     @GetMapping("/footer.html")
     public String footer() {
         return"footer";

@@ -4,7 +4,6 @@ $(document).ready(function () {
     });
 });
 
-// 회원 가입 요청
 function login() {
     let data = {
         email : $("#email").val(),

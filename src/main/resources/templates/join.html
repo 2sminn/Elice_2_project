@@ -44,7 +44,7 @@
     <script src="/static/join/join.js" type="module" defer></script>
 </head>
 <body>
-
+<div id="header"></div>
 <div class="container border border-2 rounded-3 mt-4" style="--bs-border-color:#6D6045;">
     <div class="pt-4">
         <img src="/static/img/logo.svg" class="rounded mx-auto d-block" alt="logo">
@@ -55,7 +55,7 @@
 
     <div class="form-group">
         <div class="row g-3 mb-4">
-            <div class="col" id="eamil-form">
+            <div class="col" id="email-form">
                 <label for="email" class="visually-hidden">email</label>
                 <input type="text" class="form-control border-2 id-form" id="email" placeholder="elice@example.com" maxlength="25" required>
             </div>
@@ -100,7 +100,13 @@
 
     <div class="py-2 text-center">
     </div>
-
 </div> <!-- /container -->
+<div id="footer"></div>
+<script>
+    $(function () {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+    })
+</script>
 </body>
 </html>

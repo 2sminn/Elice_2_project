@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>구해줘멍냥</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://pay.nicepay.co.kr/v1/js/"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <!-- 아이콘 -->
     <!-- 폰트 어썸: 아이콘 -->
@@ -25,7 +26,10 @@
                 <td><p class="font-middle">받는 사람</p></td>
                 <td style="display: flex; justify-content: flex-start;">
                   <input type="text" class="font-middle" id="receiverName" placeholder="엘리스">
-                  <input type="button" class="font-middle" style="" onclick="getMemberInfo()" value="주소 불러오기">
+                  <div style="display: flex; align-items: center;">
+                    <input type="checkbox" class="font-middle" id="deliveryCheckbox" style="margin-right: 10px" checked>
+                    <p style="font-weight: bold;">기본 배송지로 지정</p>
+                  </div>
                 </td>
               </tr>
               <tr>

@@ -18,8 +18,8 @@ public class MemberDetails {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone")
+    private String phone;
 
     @Embedded
     private Address address;
