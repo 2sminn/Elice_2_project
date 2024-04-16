@@ -1,8 +1,10 @@
-var token; // 사용자 token
-var orderItemsId; // 주문 상품 Ids
-var deliveryId; // 배송지 Id
-var orderId; // 주문 Id
-var payBy; // 결제 방법
+let token; // 사용자 token
+let orderItemsId; // 주문 상품 Ids
+let deliveryId; // 배송지 Id
+let orderId; // 주문 Id
+let payBy; // 결제 방법
+let orderTotalPrice = 0; // 총 금액
+let requestsCompleted = 0; // 총 주문 건수
 
 // 주문 페이지 전환 후 자동으로 사용자 주소 가져오기
 $(document).ready(function () {
@@ -83,8 +85,6 @@ function getMemberInfo() {
 // 주문 상품 불러오기
 function getOrderItems() {
     let resultHTML = "";
-    let orderTotalPrice = 0;
-    let requestsCompleted = 0;
 
     // orderItemsId가 존재하고 비어 있지 않은 경우에만 요청을 보냄
     if (orderItemsId && orderItemsId.length > 0) {
@@ -201,7 +201,8 @@ function order() {
         data: JSON.stringify({
             memberId: 1,
             deliveryId: deliveryId,
-            orderItemIds: orderItemsId
+            orderItemIds: orderItemsId,
+            payment: payBy
         }),
         contentType: 'application/json',
         success: function (response) {
@@ -232,19 +233,20 @@ function order() {
             }
         });
     }
-    // if (payBy === "card") {
-    //     AUTHNICE.requestPay({
-    //         clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
-    //         method: 'card',
-    //         orderId: '000000000000001',
-    //         amount: 1000000,
-    //         goodsName: '테스트-상품',
-    //         returnUrl: 'http://localhost:8080/nicepayView', //API를 호출할 Endpoint 입력
-    //         fnError: function (result) {
-    //             alert('개발자확인용 : ' + result.errorMsg + '')
-    //         }
-    //     });
-    // }
+
+    if (payBy === "card") {
+        AUTHNICE.requestPay({
+            clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
+            method: 'card',
+            orderId: orderId,
+            amount: orderTotalPrice,
+            goodsName: '구해줘멍냥',
+            returnUrl: 'http://localhost:8080/nicepay', //API를 호출할 Endpoint 입력
+            fnError: function (result) {
+                alert('개발자확인용 : ' + result.errorMsg + '')
+            }
+        });
+    }
 }
 
 // 결제 승인창에서 정상 결제시 메세지를 전송함
