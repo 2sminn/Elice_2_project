@@ -15,6 +15,8 @@ public class OrderResponse {
     private final DeliveryAddressResponse deliveryAddress;
     private final LocalDateTime date;
     private final String status;
+    private final int totalPrice;
+    private final String payment;
 
     public OrderResponse(Order order) {
         this.id = order.getId();
@@ -25,5 +27,7 @@ public class OrderResponse {
         this.deliveryAddress = new DeliveryAddressResponse(order.getDelivery());
         this.date = order.getOrderDate();
         this.status = order.getStatus().name();
+        this.totalPrice = order.getTotalPrice();
+        this.payment = order.getPayment();
     }
 }
