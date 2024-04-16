@@ -1,0 +1,165 @@
+body{
+    box-sizing: border-box;
+    margin: 0px;
+    letter-spacing: -1px;
+}
+.cart-wrapper{
+
+}
+.cart-wrapper .name{
+
+    font-size: 21px;
+
+    font-weight: 600;
+
+    margin: 15px 0px 14px 10px;
+}
+.cart-container{
+
+    padding-left: 10.5vw;
+
+    padding-right: 10.5vw;
+
+    /* display: flex; */
+
+    /* flex-direction: column; */
+}
+.check-all{
+
+    margin-left: 11px;
+
+    font-weight: 600;
+}
+.product-container{
+
+    border: #E4E4E6 solid 1px;
+
+    border-radius: 10px;
+
+    margin: 13px 6px 15px 0px;
+}
+.product-box{
+
+    /* border: #E4E4E6 solid 1px; */
+
+    /* border-radius: 10px; */
+}
+.product-item{
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: flex-start;
+
+    padding: 20px 14px;
+
+    /* border: #E4E4E6 solid 1px; */
+
+    /* border-radius: 10px; */
+
+    /* margin: 13px 6px 15px 0px; */
+}
+.product-check{
+
+    margin-right: 10px;
+}
+.product-img{
+
+    width: 110px;
+}
+.product-detail-box{
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin-left: 14px;
+}
+.detail-name{
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+}
+.detail-checkbox{
+
+    display: flex;
+
+    margin-bottom: 5px;
+
+    width: 78px;
+
+    border: #E4E4E6 solid 1px;
+
+    border-radius: 6px;
+}
+.product-minus{
+
+    font-weight: 600;
+
+    padding: 5px 10px;
+
+    border: 0px;
+
+    background-color: transparent;
+
+    cursor: pointer;
+}
+.product-count{
+
+    padding: 1px 9px;
+}
+.product-plus{padding: 5px 10px;border: 0px;background-color: transparent;cursor: pointer;}
+.detail-price{
+    margin-right: 2px;
+}
+.product-order{
+
+    background-color: #F0AB0F;
+
+    border-radius: 11px;
+
+    padding: 14px 63px;
+
+    border: 0px;
+
+    color: white;
+
+    font-weight: 600;
+
+    font-size: 20px;
+
+    margin-right: 7px;
+}
+.product-cancel{
+
+    color: #F0AB0F;
+
+    background-color: transparent;
+
+    border-radius: 11px;
+
+    padding: 14px 63px;
+
+    border: #F0AB0F solid 1px;
+
+    font-weight: 600;
+
+    font-size: 20px;
+}
+.product-btn-box{
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 100px;
+}
+
+.product-delete{
+    width: 17px;
+    margin-left: 5px;
+    margin-top: 3px;
+    cursor: pointer;
+}

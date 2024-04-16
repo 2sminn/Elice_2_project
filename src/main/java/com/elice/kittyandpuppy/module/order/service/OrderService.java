@@ -119,5 +119,20 @@ public class OrderService {
         Order order = findById(id);
         order.setDelivery(delivery);
     }
+
+    //updateOrder 생성
+
+    /**
+     * orderItems들을 수량 변경 후에 저장하는 메소드이다.
+     * @param orderId
+     * @param orderItems
+     * @return Order
+     */
+    @Transactional
+    public Order updateOrder(Long orderId, List<OrderItem> orderItems) {
+        Order findOrder = findById(orderId);
+        findOrder.setOrderItems(orderItems);
+        return orderRepository.save(findOrder);
+    }
 }
 

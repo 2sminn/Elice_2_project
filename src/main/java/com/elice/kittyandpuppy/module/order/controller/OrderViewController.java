@@ -20,7 +20,11 @@ public class OrderViewController {
 
     @GetMapping("/order/fail")
     public String orderFail() {
-        return "order_fail";
+        return "order_fail";}
+
+    @GetMapping("/cart")
+    public String cart() {
+        return "cart";
     }
 
     @GetMapping("/footer.html")

@@ -53,9 +53,23 @@ public class OrderApiController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
     }
+    
 
-    @GetMapping("/orders")
-    public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam Long memberId) {
+    //Cart에서 수량 변경후 주문하기 버튼을 누르면 사용되는 메소드 -> 사용X
+    @PutMapping("/order/{orderId}")
+    @Deprecated
+    public ResponseEntity<Long> updateOrder(@PathVariable(value="orderId") Long orderId,
+                                            @RequestBody OrderRequest request) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (Long orderItemId : request.getOrderItemIds()) {
+            orderItems.add(orderItemService.findById(orderItemId));
+        }
+        Order order = orderService.updateOrder(orderId, orderItems);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
+    }
+
+    @GetMapping("/orders/{memberId}")
+    public ResponseEntity<List<OrderResponse>> findOrders(@PathVariable(value="memberId") Long memberId) {
         List<OrderResponse> orderResponses = orderService.findAllByMemberId(memberId)
                 .stream()
                 .map(OrderResponse::new)
