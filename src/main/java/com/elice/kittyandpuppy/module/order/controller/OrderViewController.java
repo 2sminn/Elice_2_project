@@ -18,6 +18,11 @@ public class OrderViewController {
         return "order_success";
     }
 
+    @GetMapping("/cart")
+    public String cart() {
+        return "cart";
+    }
+
     @GetMapping("/footer.html")
     public String footer() {
         return"footer";

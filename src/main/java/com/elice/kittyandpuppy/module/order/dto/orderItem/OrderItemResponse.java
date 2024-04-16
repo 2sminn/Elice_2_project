@@ -6,6 +6,7 @@ import lombok.Getter;
 @Getter
 public class OrderItemResponse {
 
+    private final Long id;
     private final String imageUrl;
     private final String name;
     private final int amount;
@@ -13,6 +14,7 @@ public class OrderItemResponse {
     private final int totalPrice;
 
     public OrderItemResponse(OrderItem orderItem) {
+        this.id = orderItem.getId();
         this.imageUrl = orderItem.getProduct().getImageUrl();
         this.name = orderItem.getProduct().getName();
         this.amount = orderItem.getProductAmount();

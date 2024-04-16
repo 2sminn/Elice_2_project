@@ -17,7 +17,7 @@
     <!-- 제이쿼리 CDN 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/community/community_detail.js"></script>
-    <script src="/js/comment.js"></script>
+    <script src="/static/js/comment.js"></script>
 
 </head>
 <body>
@@ -51,8 +51,6 @@
     </div>
 </div>
 
-
-
 <div class="comment-wrapper">
     <div class="comment-container">
         <div class="comment-text-container">
@@ -62,58 +60,25 @@
             <div class="comment-text-box">
                 <div class="context-text-form">
                     <textarea name="content" class="c-text" cols="30" rows="5"
+                              id = "comment_content"
                               placeholder="댓글을 입력하세요"></textarea>
                     <button class="c-file"><img src="/static/img/camera_img.png" class="camera-img">사진첨부</button>
-                    <button class="c-btn">등록</button>
+                    <button class="c-btn" id="comment_submit">등록</button>
                 </div>
             </div>
         </div>
-        <div class="comment-list-container">
-            <div class="comment-content-container">
-                <div class="row-box comment-header">
-                    <div class="commnet-name-box">
-                        <img src ="/static/img/miao.jpg" class="comment-profile">
-                        <span class="commnet-name">냔냔펑치</span>
-                    </div>
-                    <div class="comment-day">2024.03.09</div>
-                </div>
-                <div class="row-box comment-article" >
-                    <div>냥젤리가 세상을 구한다</div>
-                </div>
-                <div class="row-box comment-footer">
-                    <input type="button" value="댓글" class="reply-btn">
-                    <input type="button" value="좋아요" class="upvote-btn">
-                    <input type="button" value="싫어요" class="downvote-btn">
-                </div>
-            </div>
-            <div class="comment-content-container">
-                <div class="row-box comment-header">
-                    <div class="commnet-name-box">
-                        <img src ="/static/img/lucy.png" class="comment-profile">
-                        <span class="commnet-name">LUCY</span>
-                    </div>
-                    <div class="comment-day">2024.03.09</div>
-                </div>
-                <div class="row-box comment-article" >
-                    <div>악기가 제 반려동물이에요</div>
-                </div>
-                <div class="row-box comment-footer">
-                    <input type="button" value="댓글" class="reply-btn">
-                    <input type="button" value="좋아요" class="upvote-btn">
-                    <input type="button" value="싫어요" class="downvote-btn">
-                </div>
-            </div>
+        <div class="comment-list-container" id="comment_list"> <!-- 댓글 리스트 -->
         </div>
     </div>
 </div>
 
 
-    <div id="footer"></div>
+<div id="footer"></div>
 <script>
     $(function () {
         $("#header").load("header.html");
         $("#footer").load("footer.html");
-    })
+    });
 </script>
 </body>
 </html>

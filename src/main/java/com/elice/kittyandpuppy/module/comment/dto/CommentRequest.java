@@ -1,4 +1,4 @@
-package com.elice.kittyandpuppy.module.comment.repository.request;
+package com.elice.kittyandpuppy.module.comment.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CommentRequest {
-    private Long id;
     private String content;
-    private Long parentId;
+    private Long postId;
 }

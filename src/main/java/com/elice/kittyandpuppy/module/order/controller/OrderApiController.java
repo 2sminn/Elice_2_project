@@ -54,8 +54,8 @@ public class OrderApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
     }
 
-    @GetMapping("/orders")
-    public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam Long memberId) {
+    @GetMapping("/orders/{memberId}")
+    public ResponseEntity<List<OrderResponse>> findOrders(@PathVariable(value="memberId") Long memberId) {
         List<OrderResponse> orderResponses = orderService.findAllByMemberId(memberId)
                 .stream()
                 .map(OrderResponse::new)
