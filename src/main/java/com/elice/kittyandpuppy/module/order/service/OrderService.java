@@ -26,8 +26,8 @@ public class OrderService {
      * @return 생성된 Order 객체
      */
     @Transactional
-    public Order create(Member member, Delivery delivery, List<OrderItem> orderItems) {
-        Order createdOrder = Order.createOrder(member, delivery, orderItems);
+    public Order create(Member member, Delivery delivery, List<OrderItem> orderItems, String payment) {
+        Order createdOrder = Order.createOrder(member, delivery, orderItems, payment);
 
         return orderRepository.save(createdOrder);
     }
@@ -118,6 +118,12 @@ public class OrderService {
     public void updateDelivery(Long id, Delivery delivery) {
         Order order = findById(id);
         order.setDelivery(delivery);
+    }
+
+    @Transactional
+    public void updatePayment(Long id, String payment) {
+        Order order = findById(id);
+        order.setPayment(payment);
     }
 }
 

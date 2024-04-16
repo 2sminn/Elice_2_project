@@ -15,4 +15,5 @@ public class OrderRequest {
     private Long memberId;
     private Long deliveryId;
     private List<Long> orderItemIds;
+    private String payment;
 }

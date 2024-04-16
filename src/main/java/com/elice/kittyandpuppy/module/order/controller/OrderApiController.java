@@ -49,7 +49,7 @@ public class OrderApiController {
             orderItems.add(orderItemService.findById(orderItemId));
         }
 
-        Order order = orderService.create(member, delivery, orderItems);
+        Order order = orderService.create(member, delivery, orderItems, request.getPayment());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
     }
@@ -106,6 +106,15 @@ public class OrderApiController {
                                                @PathVariable(value = "deliveryId") Long deliveryId) {
         Delivery delivery = deliveryService.findById(deliveryId);
         orderService.updateDelivery(id, delivery);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 배송지 변경
+    @PutMapping("/order/{id}/payment/{payment}")
+    public ResponseEntity<Void> updatePayment(@PathVariable(value = "id") Long id,
+                                               @PathVariable(value = "payment") String payment) {
+        orderService.updatePayment(id, payment);
 
         return ResponseEntity.ok().build();
     }

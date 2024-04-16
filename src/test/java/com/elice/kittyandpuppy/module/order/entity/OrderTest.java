@@ -19,6 +19,7 @@ public class OrderTest {
     private static Member member;
     private static List<OrderItem> orderItems;
     private static Delivery delivery;
+    private static String payment;
 
     @BeforeAll
     public static void setup() {
@@ -33,6 +34,8 @@ public class OrderTest {
 
         Address address = new Address("12345", "서울로 123", "상세주소");
         delivery = Delivery.createDelivery(address, "받는사람", "010-0000-0000");
+
+        payment = "card";
     }
 
     @DisplayName("주문 객체 생성 테스트")
@@ -40,7 +43,7 @@ public class OrderTest {
     public void addOrderTest() {
 
         // when
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
 
         // then
         assertEquals(order.getMember(), member);
@@ -55,7 +58,7 @@ public class OrderTest {
     public void orderStatusCancelTest(){
 
         // given
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
 
         // when
         order.cancel();
@@ -68,7 +71,7 @@ public class OrderTest {
     @Test
     public void orderStatusCancelFailTest1(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.delivery();
 
         assertThatThrownBy(() -> order.cancel())
@@ -79,7 +82,7 @@ public class OrderTest {
     @Test
     public void orderStatusCancelFailTest2(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.complete();
 
         assertThatThrownBy(() -> order.cancel())
@@ -90,7 +93,7 @@ public class OrderTest {
     @Test
     public void orderStatusCancelFailTest3(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.cancel();
 
         assertThatThrownBy(() -> order.cancel())
@@ -103,7 +106,7 @@ public class OrderTest {
     public void orderStatusDeliveryTest(){
 
         // given
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
 
         // when
         order.delivery();
@@ -116,7 +119,7 @@ public class OrderTest {
     @Test
     public void orderStatusDeliveryFailTest1(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.delivery();
 
         assertThatThrownBy(() -> order.delivery())
@@ -127,7 +130,7 @@ public class OrderTest {
     @Test
     public void orderStatusDeliveryFailTest2(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.cancel();
 
         assertThatThrownBy(() -> order.delivery())
@@ -138,7 +141,7 @@ public class OrderTest {
     @Test
     public void orderStatusDeliveryFailTest3(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.cancel();
 
         assertThatThrownBy(() -> order.delivery())
@@ -151,7 +154,7 @@ public class OrderTest {
     public void orderStatusCompleteTest(){
 
         // given
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.delivery();
 
         // when
@@ -165,7 +168,7 @@ public class OrderTest {
     @Test
     public void orderStatusCompleteFailTest1(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.cancel();
 
         assertThatThrownBy(() -> order.complete())
@@ -176,7 +179,7 @@ public class OrderTest {
     @Test
     public void orderStatusCompleteFailTest2(){
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         order.complete();
 
         assertThatThrownBy(() -> order.complete())
@@ -187,7 +190,7 @@ public class OrderTest {
     @Test
     public void totalPriceTest() {
 
-        Order order = Order.createOrder(member, delivery, orderItems);
+        Order order = Order.createOrder(member, delivery, orderItems, payment);
         int totalPrice = orderItems.stream()
                 .mapToInt(OrderItem::getTotalPrice)
                 .sum();

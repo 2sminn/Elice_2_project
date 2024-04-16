@@ -45,6 +45,9 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Delivery delivery;
 
+    @Column(name = "payment")
+    private String payment;
+
     @Column(name = "order_date")
     private LocalDateTime orderDate;
 
@@ -73,6 +76,12 @@ public class Order {
         this.status = status;
     }
 
+    public void setPayment(String payment) {
+        if (this.status != OrderStatus.CREATE) {
+            throw new IllegalStateException("결제가 완료된 주문입니다.");
+        }
+    }
+
     // 객체 생성 로직
     /**
      * Order 객체를 생성
@@ -82,7 +91,7 @@ public class Order {
      * @param orderItems
      * @return 저장된 Order 객체
      */
-    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems, String payment) {
         Order order = new Order();
         order.setMember(member);
 
@@ -95,6 +104,8 @@ public class Order {
         }
 
         order.setStatus(OrderStatus.CREATE);
+
+        order.setPayment(payment);
 
         return order;
     }
