@@ -157,7 +157,7 @@ function join() {
         success : function(data) {
             if(data){
                 alert("회원 가입에 성공하였습니다!!");
-                window.location.href="/member/login";
+                window.location.href="/login";
             }else{
                 alert("회원 가입에 실패하였습니다...");
             }
