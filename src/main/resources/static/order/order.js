@@ -104,8 +104,8 @@ function getOrderItems() {
                          </div>
                          <div class="detail">
                            <p class="font-middle">${item.name}</p>
-                           <p class="font-middle">수량 ${new Intl.NumberFormat("ko-KR").format(item.amount)}개</p>
-                           <p class="font-middle">${item.totalPrice}원</p>
+                           <p class="font-middle">수량 ${item.amount}개</p>
+                           <p class="font-middle">${new Intl.NumberFormat("ko-KR").format(item.totalPrice)}원</p>
                          </div>
                        </div>`
 
