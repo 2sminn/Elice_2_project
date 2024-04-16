@@ -80,6 +80,7 @@ public class Order {
         if (this.status != OrderStatus.CREATE) {
             throw new IllegalStateException("결제가 완료된 주문입니다.");
         }
+        this.payment = payment;
     }
 
     // 객체 생성 로직
