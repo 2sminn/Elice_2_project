@@ -27,7 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
 	// Swagger
-	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.0.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.7'
 
 	// MapStruct
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
