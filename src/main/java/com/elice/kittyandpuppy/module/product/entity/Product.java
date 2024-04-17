@@ -42,10 +42,8 @@ public class Product {
 
     @Column(name = "created_at")
     private String createdAt;
-
     @Column(name = "modified_at")
     private String modifiedAt;
-
     public Product(Long categoryId, String name, int price, int stock, String imageUrl,
                    String description, String createdAt, String modifiedAt) {
         this.categoryId = categoryId;
@@ -57,5 +55,4 @@ public class Product {
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
     }
-
 }
