@@ -5,6 +5,7 @@ let page = parseInt(urlParams.get('page'));
 let buttons;
 const maxButton= 5;
 const maxPage = Math.ceil(12 / totalCount);
+let response;
 
 $(document).ready(function () {
     if (isNaN(page) || page < 1 || page > maxPage) {
@@ -69,33 +70,48 @@ function renderAnimal() {
         dataType: 'xml',
         async: false,
         success: function (xml) {
-            let response = removeText(xmlToJson(xml));
+            response = removeText(xmlToJson(xml));
             let items = response.response.body.items.item;
             totalCount = response.response.body.totalCount;
-            console.log(totalCount);
-            items.forEach(function(item) {
+            items.forEach(function(item, index) {
 
-                resultHTML += `<div class="box">
+                const kind = item.kindCd.replace(/^\[.*?\]\s*/, '');
+
+                let age;
+                const yearPattern = /\d{4}/g; // 4자리 연도 패턴
+                const matches = item.age.match(yearPattern); // 연도 추출
+
+                if (matches && matches.length > 0) {
+                    const birthYear = parseInt(matches[0]); // 출생 연도 추출
+                    age = `${2024 - birthYear + 1}살`;
+                } else if (item.age.includes("(60일미만)")) {
+                    age = "신생아";
+                } else {
+                    age = "나이 정보 없음";
+                }
+
+                const sex = function() {
+                    if (item.sexCd === 'F') {
+                        return "여아";
+                    } else {
+                        return "남아";
+                    }
+                }
+
+                resultHTML += `<div class="box" onclick="goToDetailPage(${index})">
                        <div class="item">
                          <div class="img">
                            <img class="image-thumbnail" src="${item.filename}">
                          </div>
                          <div class="detail">
-                           <p class="font-middle">품종: ${item.kindCd}</p>
+                           <p class="font-middle">품종: ${kind}</p>
                            <p class="font-middle">색상: ${item.colorCd}</p>
-                           <p class="font-middle">성별: ${item.sexCd}</p>
-                           <p class="font-middle">나이: ${item.age}</p>
+                           <p class="font-middle">성별: ${sex()}</p>
+                           <p class="font-middle">나이: ${age}</p>
                          </div>
                        </div>
                        <hr style="border: solid 0.5px; color: #E4E4E6; margin: 15px">
                        <span class="font-middle" style="color: gray;">지역: ${item.orgNm}</span></div>`
-
-
-                $("#item-box").on("click", ".item", function() {
-                    const index = $(this).index();
-                    const animal = items[index];
-                    goToDetailPage(animal);
-                });
             });
 
         },
@@ -171,8 +187,8 @@ function removeText(jsonObj) {
     return jsonObj;
 }
 
-function goToDetailPage(animal) {
-    const animalString = encodeURIComponent(JSON.stringify(animal));
+function goToDetailPage(index) {
+    const animalString = encodeURIComponent(JSON.stringify(response.response.body.items.item[index]));
     window.location.href = `/animal/detail?animal=${animalString}`;
 }
 
