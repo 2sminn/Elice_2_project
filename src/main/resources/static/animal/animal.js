@@ -80,13 +80,13 @@ function renderAnimal() {
                 let age;
                 const yearPattern = /\d{4}/g; // 4자리 연도 패턴
                 const matches = item.age.match(yearPattern); // 연도 추출
-
-                if (matches && matches.length > 0) {
+                console.log(item.age);
+                if (item.age.includes("(60일미만)")) {
+                    age = "신생아";
+                } else if (matches && matches.length > 0) {
                     const birthYear = parseInt(matches[0]); // 출생 연도 추출
                     age = `${2024 - birthYear + 1}살`;
-                } else if (item.age.includes("(60일미만)")) {
-                    age = "신생아";
-                } else {
+                } else{
                     age = "나이 정보 없음";
                 }
 
