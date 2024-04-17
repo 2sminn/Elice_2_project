@@ -3,48 +3,42 @@ package com.elice.kittyandpuppy.module.category.controller;
 import com.elice.kittyandpuppy.module.category.dto.CategoryDto;
 import com.elice.kittyandpuppy.module.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 
 import java.util.Map;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/api")
-@Tag(name = "Category", description = "카테고리 관련 API")
+@RequestMapping("/api/categories")
 public class CategoryController {
     private final CategoryService categoryService;
-
-    @PostMapping("/categories")
-    @Operation(summary = "카테고리 생성", description = "새로운 카테고리를 생성합니다.")
-    @ApiResponse(responseCode = "200", description = "생성된 카테고리의 ID를 반환합니다.", content = @Content(schema = @Schema(implementation = Long.class)))
-    public Long saveCategory(@RequestBody CategoryDto categoryDto){
-        return categoryService.saveCategory(categoryDto);
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
-    @GetMapping("/categories/{branch}")
-    @Operation(summary = "지점별 카테고리 조회", description = "특정 지점에 해당하는 카테고리 정보를 조회합니다.")
-    @ApiResponse(responseCode = "200", description = "지점별 카테고리 정보를 반환합니다.", content = @Content(schema = @Schema(implementation = Map.class)))
-    public Map<String, CategoryDto> getCategoryByBranch(@PathVariable String branch){
-        return categoryService.getCategoryByBranch(branch);
+    @PostMapping
+    public ResponseEntity<Long> saveCategory(@RequestBody CategoryDto categoryDto) {
+        Long categoryId = categoryService.saveCategory(categoryDto);
+        return new ResponseEntity<>(categoryId, HttpStatus.CREATED);
     }
 
-    @PutMapping("/categories/{categoryId}")
-    @Operation(summary = "카테고리 업데이트", description = "지정된 ID의 카테고리 정보를 업데이트합니다.")
-    @ApiResponse(responseCode = "200", description = "업데이트된 카테고리의 ID를 반환합니다.", content = @Content(schema = @Schema(implementation = Long.class)))
-    public Long updateCategory (@PathVariable Long categoryId, @RequestBody CategoryDto categoryDto) {
-        return categoryService.updateCategory(categoryId, categoryDto);
+    @GetMapping("/branch/{branch}")
+    public ResponseEntity<CategoryDto> getCategoryByBranch(@PathVariable String branch) {
+        CategoryDto category = categoryService.getFullCategoryTreeByBranch(branch);
+        return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
-    @DeleteMapping ("/categories/{categoryId}")
-    @Operation(summary = "카테고리 삭제", description = "지정된 ID의 카테고리를 삭제합니다.")
-    @ApiResponse(responseCode = "200", description = "카테고리가 성공적으로 삭제되었습니다.")
-    public void deleteCategory (@PathVariable Long categoryId) {
-        categoryService.deleteCategory(categoryId);
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Long> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryDto categoryDto) {
+        Long updatedCategoryId = categoryService.updateCategory(categoryId, categoryDto);
+        return new ResponseEntity<>(updatedCategoryId, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId,
+                                               @RequestParam(required = false, defaultValue = "false") boolean deleteSubcategories) {
+        categoryService.deleteCategory(categoryId, deleteSubcategories);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

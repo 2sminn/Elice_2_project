@@ -4,6 +4,7 @@ import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemRequest;
 import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemResponse;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.service.OrderItemService;
+import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import com.elice.kittyandpuppy.module.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
