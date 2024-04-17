@@ -116,8 +116,8 @@ function getOrderItems() {
                     if (requestsCompleted === orderItemsId.length) {
                         document.querySelector("#orderItemBox").innerHTML = resultHTML;
                         document.querySelector("#totalPrice").innerHTML = `<p class="font-middle">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}원</p>`;
-                        document.querySelector("#count").innerHTML = `<p style="margin-right: 10px;">총 <p style="color: #F0AB0F;" id="orderItemCount">${requestsCompleted}</p>건</p>`;
-                        document.querySelector("#result").innerHTML = `<p><p style="color: #F0AB0F;" id="resultPrice">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}</p>원</p>`;
+                        document.querySelector("#count").innerHTML = `<p style="margin-right: 10px;">총 <span style="color: #F0AB0F;" id="orderItemCount">${requestsCompleted}</span>건</p>`;
+                        document.querySelector("#result").innerHTML = `<p><span style="color: #F0AB0F;" id="resultPrice">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}</span>원</p>`;
                     }
                 },
                 error: function (xhr, status, error) {
