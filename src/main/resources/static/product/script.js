@@ -12,6 +12,8 @@ function loadProduct(){
         dataType: 'json',
         success: function (product) {
             displayProduct(product);
+            //상품 ID 로컬스토리지 저장
+            window.localStorage.setItem("productId", product.id);
         }
     });
 }
