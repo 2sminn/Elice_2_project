@@ -18,8 +18,13 @@ public class PostService {
 
     // Community 관련 서비스
     @Transactional(readOnly = true)
-    public Page<ResponsePost> getCommunityList(Pageable pageable) {
-        return postRepository.findAll(pageable).map(ResponsePost::new);
+    public Page<ResponsePost> getCommunityList(String search, Pageable pageable) {
+        if (search != null && !search.isEmpty()) {
+            return postRepository.findByTitleContaining(search, pageable)
+                    .map(ResponsePost::new);  // 검색 결과를 ResponsePost DTO로 변환
+        } else {
+            return postRepository.findAll(pageable).map(ResponsePost::new);  // 모든 게시물 반환
+        }
     }
 
     @Transactional(readOnly = true)

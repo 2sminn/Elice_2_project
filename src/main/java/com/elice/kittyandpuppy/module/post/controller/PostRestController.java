@@ -25,9 +25,10 @@ public class PostRestController {
     // Community 관련 컨트롤러
     // GET
     @GetMapping("/communities")
-    public ResponseEntity<Page<ResponsePost>> getCommunityList(@PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC)
-                                                               Pageable pageable) {
-        Page<ResponsePost> responsePosts = postService.getCommunityList(pageable);
+    public ResponseEntity<Page<ResponsePost>> getCommunityList(
+            @RequestParam(value = "search", required = false) String search,
+            @PageableDefault(size = 13, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<ResponsePost> responsePosts = postService.getCommunityList(search, pageable);
         return ResponseEntity.ok().body(responsePosts);
     }
 
