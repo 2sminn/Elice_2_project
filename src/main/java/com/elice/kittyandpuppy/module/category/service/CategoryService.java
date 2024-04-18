@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class CategoryService {
     }
     // 주어진 branch의 최상위 카테고리 및 모든 하위 카테고리 가져오기
     public CategoryDto getFullCategoryTreeByBranch(String branch) {
-        Category topCategory = categoryRepository.findByBranchAndName(branch, "TOP")
+        Category topCategory = categoryRepository.findByBranch(branch)
                 .orElseThrow(() -> new IllegalArgumentException("해당 branch의 최상위 카테고리를 찾을 수 없습니다: " + branch));
         return buildCategoryDtoWithSubcategories(topCategory);
     }
@@ -64,6 +65,19 @@ public class CategoryService {
         categoryDto.setProducts(products);
         return categoryDto;
     }
+    // 특정 카테고리의 정보와 해당 카테고리의 모든 하위 카테고리 및 상품 가져오기
+    public CategoryDto getCategoryById(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
+        return buildCategoryDtoWithSubcategories(category);
+    }
+
+    // 특정 카테고리에 속한 상품들만 가져오기
+    public List<ProductDto> getCategoryProducts(Long categoryId) {
+        return productService.findByCategoryId(categoryId).stream()
+                .map(productService.getProductMapper()::toDto)
+                .collect(Collectors.toList());
+    }
     // 주어진 부모 카테고리의 모든 하위 카테고리 가져오기
     public List<CategoryDto> getSubCategories(Long parentCategoryId) {
         List<Category> subCategories = categoryRepository.findByParentCategoryId(parentCategoryId);
@@ -72,10 +86,10 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
     // 카테고리 삭제 (하위 카테고리를 선택적으로 함께 삭제)
-    public void deleteCategory(Long categoryId, boolean deleteSubcategories) {
+    public void deleteCategory(Long categoryId, boolean deleteSubcategory) {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
-        if (deleteSubcategories) {
+        if (deleteSubcategory) {
             category.getSubCategory().forEach(subCategory -> deleteCategory(subCategory.getId(), true));
         }
         categoryRepository.deleteById(categoryId);
