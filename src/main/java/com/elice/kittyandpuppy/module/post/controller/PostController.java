@@ -18,7 +18,7 @@ public class PostController {
         return "community_detail";
     }
 
-    @GetMapping("/community/create")
+    @GetMapping("/community-create")
     public String communityCreateForm() {
         return "community_write";
     }
