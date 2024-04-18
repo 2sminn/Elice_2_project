@@ -36,11 +36,10 @@ public class ProductController {
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
     // 특정 id 상품 조회
-    @GetMapping("/{productId}")
-    public ResponseEntity<ProductDto> getProductById(@PathVariable(value="productId") Long productId) {
-        ProductDto product = productService.getProductById(productId);
-        return ResponseEntity.status(HttpStatus.OK).body(product);
-
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
+        ProductDto product = productService.getProductById(id);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
     // 특정 id 상품 수정
     @PutMapping("/{id}")
