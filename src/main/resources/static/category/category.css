@@ -1,4 +1,4 @@
-/* Basic reset for styling */
+/* 기본 스타일 리셋 */
 * {
     margin: 0;
     padding: 0;
@@ -9,9 +9,18 @@ body {
     font-family: Arial, sans-serif;
     background-color: #fff;
     color: #333;
+    width: 100%;
+    margin: 0;
+    overflow-x: hidden;
 }
 
-/* Search bar styling */
+/* 컨텐츠 영역에 패딩 적용 */
+.content-wrapper {
+    padding-left: 10.5vw;
+    padding-right: 10.5vw;
+}
+
+/* 검색 바 스타일링 */
 .search-section {
     display: flex;
     justify-content: center;
@@ -41,14 +50,15 @@ body {
     cursor: pointer;
 }
 
-/* Section divider styling */
+/* 섹션 구분을 위한 수평선 스타일링 */
 .section-divider {
-    border: 0;
+    border: none;
     height: 1px;
     background-color: #e0e0e0;
     margin: 20px 0;
 }
 
+/* 부모 카테고리 스타일링 */
 .parent_categories {
     display: flex;
     justify-content: center;
@@ -65,11 +75,12 @@ body {
     transition: all 0.3s ease;
     font-size: 16px;
 }
+
 .parent_category.selected {
-    background-color: #f0e68c; /* 클릭 시 노란색으로 변경 */
+    background-color: #f0e68c; /* 선택 시 노란색으로 변경 */
 }
 
-/* Category buttons styling */
+/* 카테고리 버튼 스타일링 */
 .category-section {
     text-align: center;
     padding: 20px 0;
@@ -89,7 +100,7 @@ body {
     background-color: #e6e6fa;
 }
 
-/* Product items styling */
+/* 상품 아이템 스타일링 */
 .product-section {
     display: flex;
     flex-wrap: wrap;
@@ -97,50 +108,25 @@ body {
     padding: 20px;
 }
 
-.product-item {
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
-    width: calc(25% - 20px);
-    text-align: center;
-}
-
-.product-item img {
-    width: 100%;
-    height: auto;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 10px;
-}
-
-.product-name {
-    margin: 10px 0;
-    font-size: 1.1em;
-    font-weight: bold;
-}
-
-.product-price {
-    font-size: 1em;
-    color: #666;
-}
-
-/* Responsive design */
+/* 반응형 디자인 */
 @media (max-width: 768px) {
     .search-bar {
         width: 80%;
     }
 
-    .product-item {
-        width: calc(50% - 20px);
+    .content-wrapper {
+        padding-left: 5vw;
+        padding-right: 5vw;
     }
 }
 
 @media (max-width: 480px) {
-    .product-item {
-        width: calc(100% - 20px);
-    }
-
     .category {
         padding: 5px 10px;
+    }
+
+    .content-wrapper {
+        padding-left: 3vw;
+        padding-right: 3vw;
     }
 }
