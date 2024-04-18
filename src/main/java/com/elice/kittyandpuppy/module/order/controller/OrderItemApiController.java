@@ -45,13 +45,7 @@ public class OrderItemApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderItemIds);
     }
 
-    //orderItem 수량 조절을 위한 수정 메소드 추가
-    //TODO 본인스타일대로 수정하실거면 수정하십쇼~!~!
-    @PutMapping("/orderItem/{id}") ResponseEntity<OrderItemResponse> updateOrderItem(@PathVariable(value = "id") long id,
-                                                                                     @RequestBody OrderItemRequest orderItemRequest){
-        OrderItem orderItem = orderItemService.update(id, orderItemRequest.getAmount());
-        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
-    }
+
 
     @GetMapping("/orderItem/{id}")
     public ResponseEntity<OrderItemResponse> getOrderDetail(@PathVariable(value = "id") long id) {
@@ -66,4 +60,29 @@ public class OrderItemApiController {
 
         return ResponseEntity.ok().build();
     }
+
+
+    /**
+     * 상품들을 카트에 담는 코드
+     * @author Lazycat
+     * @param productId
+     * @return
+     */
+    @PostMapping("/orderItem/{productId}")
+    public ResponseEntity<OrderItemResponse> createOrderItem(@PathVariable(value="productId") Long productId){
+        OrderItem orderItem = orderItemService.create(productId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
+    }
+    /**
+     * 카트에 담긴 상품을 view로 보여주는 코드
+     * @author Lazycat
+     * @param cartList
+     * @return
+     */
+    @GetMapping("/cart")
+    public ResponseEntity<List<OrderItemResponse>> getCartById(@RequestParam("cartList") int[] cartList) {
+        List<OrderItemResponse> orderItems = orderItemService.getCart(cartList);
+        return new ResponseEntity<>(orderItems, HttpStatus.OK);
+    }
+
 }

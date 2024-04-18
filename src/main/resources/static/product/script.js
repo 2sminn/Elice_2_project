@@ -31,12 +31,24 @@ function displayProduct(product){
 
 //장바구니 버튼을 눌렀을 때
 function addToCart(productId){
-    if(localStorage.getItem('cartList')!= null){
-        let cartList = JSON.parse(localStorage.cartList);
-        cartList.push(productId);
-        localStorage.setItem('cartList',JSON.stringify(cartList));
+    if(localStorage.getItem('orderItems')!= null){
+        let orderItems = JSON.parse(localStorage.orderItems);
+        orderItems.push(productId);
+        localStorage.setItem('orderItems',JSON.stringify(orderItems));
+
     } else{
-        localStorage.setItem('cartList',JSON.stringify([productId]));
+        localStorage.setItem('orderItems',JSON.stringify([productId]));
     }
-    console.log(window.localStorage.getItem("cartList"));
+    $.ajax({
+        url:`/api/orderItem/${productId}`,
+        type: 'POST',
+        dataType: 'text',
+        success: function(orderItem){
+            alert("장바구니에 담겼습니다");
+        },
+        error: function(xhr, status, error) {
+            console.error('장바구니를 담는 중 오류 발생:', status, error);
+        }
+    });
+    console.log(window.localStorage.getItem("orderItems"));
 }
