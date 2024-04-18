@@ -27,37 +27,37 @@ public class CategoryController {
     }
 
     @GetMapping("/branch/{branch}")
-    public ResponseEntity<CategoryDto> getCategoryByBranch(@PathVariable String branch) {
+    public ResponseEntity<CategoryDto> getCategoryByBranch(@PathVariable("branch") String branch) {
         CategoryDto category = categoryService.getFullCategoryTreeByBranch(branch);
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     // 강아지, 고양이 카테고리 정보 가져오기
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> getCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<CategoryDto> getCategory(@PathVariable("categoryId") Long categoryId) {
         return new ResponseEntity<>(categoryService.getCategoryById(categoryId), HttpStatus.OK);
     }
 
     // 최상위 카테고리(강아지,고양이) 아래의 하위 카테고리 정보 가져오기
     @GetMapping("/{parentId}/subcategories")
-    public ResponseEntity<List<CategoryDto>> getSubCategories(@PathVariable Long parentId) {
+    public ResponseEntity<List<CategoryDto>> getSubCategories(@PathVariable("parentId") Long parentId) {
         return new ResponseEntity<>(categoryService.getSubCategories(parentId), HttpStatus.OK);
     }
 
     // 특정 카테고리(하위 카테고리)의 상품 정보 가져오기
     @GetMapping("/{categoryId}/products")
-    public ResponseEntity<List<ProductDto>> getCategoryProducts(@PathVariable Long categoryId) {
+    public ResponseEntity<List<ProductDto>> getCategoryProducts(@PathVariable("categoryId") Long categoryId) {
         return new ResponseEntity<>(categoryService.getCategoryProducts(categoryId), HttpStatus.OK);
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<Long> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<Long> updateCategory(@PathVariable("categoryId") Long categoryId, @RequestBody CategoryDto categoryDto) {
         Long updatedCategoryId = categoryService.updateCategory(categoryId, categoryDto);
         return new ResponseEntity<>(updatedCategoryId, HttpStatus.OK);
     }
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId,
+    public ResponseEntity<Void> deleteCategory(@PathVariable("categoryId") Long categoryId,
                                                @RequestParam(required = false, defaultValue = "false") boolean deleteSubcategories) {
         categoryService.deleteCategory(categoryId, deleteSubcategories);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
