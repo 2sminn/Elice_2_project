@@ -31,7 +31,7 @@ public class Category {
     private Category parentCategory;
 
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
-    private List<Category> subCategories = new ArrayList<>();
+    private List<Category> subCategory = new ArrayList<>();
 
     @Builder
     public Category(Long id, String branch, String name, Category parentCategory, String code){

@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>구해줘멍냥</title>
-    <link rel="stylesheet" href="/static/category/category.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="/static/category/category.css" />
+    <script src="/static/category/category.js"></script>
 </head>
+<!DOCTYPE html>
 <body>
-<!-- 헤더 섹션 -->
-<div id="header"></div>
-
 <div class="search-section">
     <div class="search-bar">
         <input type="text" placeholder="검색">
@@ -18,39 +16,67 @@
     </div>
 </div>
 
-<hr class="section-divider">
+<hr class="section-divider"> <!-- 섹션 구분을 위한 수평선 추가 -->
 
-<div class="content-wrapper">
 <div class="parent_categories">
-    <button class="parent_category dog selected">강아지</button>
+    <button class="parent_category dog">강아지</button>
     <button class="parent_category cat">고양이</button>
 </div>
 
-<hr class="section-divider">
+<hr class="section-divider"> <!-- 섹션 구분을 위한 수평선 추가 -->
 
 <div class="category-section">
-    <button class="category selected" data-category-id="1">간식</button>
-    <button class="category" data-category-id="2">매트</button>
-    <button class="category" data-category-id="3">사료</button>
-    <button class="category" data-category-id="4">패션</button>
-    <button class="category" data-category-id="5">장난감</button>
+    <button class="category">간식</button>
+    <button class="category">매트</button>
+    <button class="category">사료</button>
+    <button class="category">패션</button>
+    <button class="category">장난감</button>
 </div>
 
-<hr class="section-divider">
+<hr class="section-divider"> <!-- 섹션 구분을 위한 수평선 추가 -->
 
 <div class="product-section">
-    <!-- 상품 아이템이 여기에 추가됩니다 -->
+    <!-- Product items will go here -->
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
+    <div class="product-item">
+        <img src="path-to-product-image.jpg" alt="Product Name">
+        <p class="product-name">Product Name</p>
+        <p class="product-price">Price</p>
+    </div>
 </div>
-</div>
-<!-- 푸터 섹션 -->
-<div id="footer"></div>
-
-<script>
-    $(function () {
-        $("#header").load("/templates/header.html");
-        $("#footer").load("/templates/footer.html");
-    })
-</script>
-<script src="/static/category/category.js"></script>
 </body>
 </html>

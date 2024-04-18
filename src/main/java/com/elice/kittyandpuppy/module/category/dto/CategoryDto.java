@@ -2,14 +2,17 @@ package com.elice.kittyandpuppy.module.category.dto;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
 import com.elice.kittyandpuppy.module.product.dto.ProductDto;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@Data
-@Builder
+@Getter
+@Setter
+@NoArgsConstructor
 public class CategoryDto {
     private Long id;
     private String name;
@@ -17,19 +20,18 @@ public class CategoryDto {
     private String branch;
     private Long parentCategoryId;
     private List<CategoryDto> subCategories;
+
     // 상품 목록 설정 메소드
+    @Setter
     private List<ProductDto> products;
 
-    public static CategoryDto fromEntity(Category entity) {
-        if (entity == null) return null;
-
-        return CategoryDto.builder()
-                .id(entity.getId())
-                .name(entity.getName())
-                .code(entity.getCode())
-                .branch(entity.getBranch())
-                .parentCategoryId(entity.getParentCategory() != null ? entity.getParentCategory().getId() : null)
-                .subCategories(entity.getSubCategories().stream().map(CategoryDto::fromEntity).collect(Collectors.toList()))
-                .build();
+    @Builder
+    public CategoryDto(Category entity){
+        this.id = entity.getId();
+        this.name = entity.getName();
+        this.code = entity.getCode();
+        this.branch = entity.getBranch();
+        this.parentCategoryId = entity.getParentCategory() != null ? entity.getParentCategory().getId() : null;
+        this.subCategories = entity.getSubCategory().stream().map(CategoryDto::new).collect(Collectors.toList());
     }
 }

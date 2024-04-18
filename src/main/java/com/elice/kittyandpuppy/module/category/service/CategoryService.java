@@ -90,7 +90,7 @@ public class CategoryService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
         if (deleteSubcategory) {
-            category.getSubCategories().forEach(subCategory -> deleteCategory(subCategory.getId(), true));
+            category.getSubCategory().forEach(subCategory -> deleteCategory(subCategory.getId(), true));
         }
         categoryRepository.deleteById(categoryId);
     }
