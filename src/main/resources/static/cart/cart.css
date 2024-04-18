@@ -154,7 +154,7 @@ body{
 
     justify-content: center;
 
-    margin-bottom: 100px;
+    margin-bottom: 32px;
 }
 
 .product-delete{
@@ -162,4 +162,10 @@ body{
     margin-left: 5px;
     margin-top: 3px;
     cursor: pointer;
+}
+.cart-empty{
+    text-align: center;
+    margin-top: 71px;
+    margin-bottom: 71px;
+    font-size: 20px;
 }

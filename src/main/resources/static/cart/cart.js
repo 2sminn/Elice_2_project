@@ -21,7 +21,6 @@ function loadCartList() {
             displayOrderItems(orderItems);
         },
         error: function(xhr, status, error) {
-            console.error('장바구니를 불러오는 중 오류가 발생했습니다:', status, error);
         }
     })
 }
@@ -30,15 +29,15 @@ function getCart() {
 }
 
 // 장바구니 아이템 조회
-function displayOrderItems(cartItems) {
+function displayOrderItems(orderItems) {
     // html #cart_list 요소 선택
     let cartList = $('#cart_list');
     cartList.empty();
-    cartItems.forEach(function (orderItem) {
+    orderItems.forEach(function (orderItem) {
         let price = calPrice(orderItem.amount, orderItem.price)
         let cartElement = $(`
             <div class="product-box"> <!--상품 1개-->
-                <div class="product-item">
+                <div class="product-item" id="product-item">
                     <input type="checkbox" class="product-check">
                     <div><img src="/static/order/test_item.png" class="product-img"></div>
                     <div class="product-detail-box">
@@ -52,8 +51,12 @@ function displayOrderItems(cartItems) {
                         </div>
                         <div><span class="detail-price">${price}</span>원</div>
                     </div>
-                    <img src="/static/img/comment-delete2.png" class="product-delete">
+                    <img src="/static/img/comment-delete2.png" class="product-delete" id="product-delete">
                 </div>
+            </div>
+            <div class="product-btn-box">
+                <button class="product-order" id="product-order">주문하기</button>
+                <button class="product-cancel">취소하기</button>
             </div>
         `);
         cartElement.find('.product-item').data('id', orderItem.id);
@@ -82,33 +85,42 @@ function displayOrderItems(cartItems) {
 function calPrice(amount, price){
     return amount*price;
 }
-//삭제
-$(document).on('click', '.product-delete', function() {
-    let id = $(this).closest('.product-box').find('.product-item').data('id');
-    removeProductFromList(id);
-    loadCartList();
-    // $.ajax(
-    //     {
-    //         url: `/api/orderItem/${id}`,
-    //         type: 'DELETE',
-    //         dataType: 'text',
-    //         success: function (response) {
-    //             loadCartList();
-    //         }
-    //     }
-    // );
+
+
+
+//장바구니 아이템 삭제 버튼
+$(document).on('click', '#product-delete', function() {
+    let id = $(this).closest('.product-box').find('#product-item').data('id');
+    // let id = $(this).querySelector("#product-item").data('id');
+    $.ajax(
+        {
+            url: `/api/orderItem/${id}`,
+            type: 'DELETE',
+            dataType: 'text',
+            success: function (response) {
+                removeProductFromList(id);
+                alert("상품이 삭제되었습니다");
+                location.href = "/cart";
+                
+                
+            }
+        }
+    );
 });
 function removeProductFromList(productId) {
     // 로컬 스토리지에서 리스트 가져오기
-    let productList = JSON.parse(window.localStorage.getItem("productList")) || [];
+    let productList = JSON.parse(window.localStorage.getItem("orderItems")) || [];
     // 상품 ID를 리스트에서 제거
     const index = productList.indexOf(productId);
     if (index !== -1) {
         productList.splice(index, 1);
     }
     // 업데이트된 리스트를 다시 로컬 스토리지에 저장
-    window.localStorage.setItem("productList", JSON.stringify(productList));
+    window.localStorage.setItem("orderItems", JSON.stringify(productList));
 }
+
+
+
 
 
 //수량 감소
