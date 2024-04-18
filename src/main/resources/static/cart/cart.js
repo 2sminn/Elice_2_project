@@ -11,10 +11,10 @@ $(document).ready(function () {
 function loadCartList() {
     //로컬스토리지에서 장바구니 아이템(productId가 단긴 리스트 객체) 리스트 받아옴
     let cart = getCart(); //해당 코드는 let cart = [ 1, 2, 3, ... ] 과 같은 리스트 이다.
-    cart = cart.filter(item => item !== '');
     $.ajax({
         url:'/api/product/cart',
         type:'GET',
+        traditional: true,
         data: { cartList: cart },
         dataType: 'JSON',
         success: function(cartItems){
