@@ -14,7 +14,7 @@ public class CategoryMappingHelper {
         this.categoryRepository = categoryRepository;
     }
     @Named("idToCategory")
-    public Category map(Long id) {
-        return id == null ? null : categoryRepository.findById(id).orElse(null);
+    public Category map(Long categoryId) {
+        return categoryId == null ? null : categoryRepository.findById(categoryId).orElse(null);
     }
 }

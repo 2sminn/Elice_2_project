@@ -2,6 +2,7 @@ package com.elice.kittyandpuppy.module.category.dto;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
 import com.elice.kittyandpuppy.module.product.dto.ProductDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class CategoryDto {
-    private Long categoryId;
+    private Long id;
     private String name;
     private String code;
     private String branch;
@@ -24,8 +25,9 @@ public class CategoryDto {
     @Setter
     private List<ProductDto> products;
 
+    @Builder
     public CategoryDto(Category entity){
-        this.categoryId = entity.getId();
+        this.id = entity.getId();
         this.name = entity.getName();
         this.code = entity.getCode();
         this.branch = entity.getBranch();

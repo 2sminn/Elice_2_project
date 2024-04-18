@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -37,13 +38,14 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "\"desc\"")
+    @Column(name = "desc")
     private String description;
 
     @Column(name = "created_at")
     private String createdAt;
     @Column(name = "modified_at")
     private String modifiedAt;
+    @Builder
     public Product(Long categoryId, String name, int price, int stock, String imageUrl,
                    String description, String createdAt, String modifiedAt) {
         this.categoryId = categoryId;

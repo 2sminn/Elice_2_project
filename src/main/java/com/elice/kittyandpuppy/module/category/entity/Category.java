@@ -1,19 +1,16 @@
 package com.elice.kittyandpuppy.module.category.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "category")
-@Getter
+@AllArgsConstructor
 @NoArgsConstructor
-@Setter
 public class Category {
 
     @Id
