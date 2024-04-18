@@ -137,6 +137,9 @@ function changeCount(id, amount) {
 }
 
 
+
+
+
 //TODO 주문하기
 function order(){
     $.ajax({

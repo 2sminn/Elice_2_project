@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.comment.dto;
 
+import com.elice.kittyandpuppy.module.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,4 +9,5 @@ import lombok.Setter;
 public class CommentRequest {
     private String content;
     private Long postId;
+    private Long memberId;
 }
