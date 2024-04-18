@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 public class CategoryDto {
-    private Long categoryId;
+    private Long id;
     private String name;
     private String code;
     private String branch;
@@ -25,7 +25,7 @@ public class CategoryDto {
     private List<ProductDto> products;
 
     public CategoryDto(Category entity){
-        this.categoryId = entity.getId();
+        this.id = entity.getId();
         this.name = entity.getName();
         this.code = entity.getCode();
         this.branch = entity.getBranch();
