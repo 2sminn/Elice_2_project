@@ -57,13 +57,11 @@ public class OrderItemApiController {
     @DeleteMapping("/orderItem/{id}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable(value = "id") long id) {
         orderItemService.deleteById(id);
-
         return ResponseEntity.ok().build();
     }
 
-
     /**
-     * 상품들을 카트에 담는 코드
+     * 상품들을 카트에 담는 메소드
      * @author Lazycat
      * @param productId
      * @return
@@ -74,15 +72,23 @@ public class OrderItemApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
     }
     /**
-     * 카트에 담긴 상품을 view로 보여주는 코드
+     * 카트에 담긴 상품을 view로 보여주는 메소드
+     * @author Lazycat
+     * @param orderId
+     * @return
+     */
+    @GetMapping("/cart")
+    public ResponseEntity<List<OrderItemResponse>> getCartById(@RequestParam("cartList") int[] orderId) {
+        List<OrderItemResponse> orderItems = orderItemService.getCart(orderId);
+        return new ResponseEntity<>(orderItems, HttpStatus.OK);
+    }
+
+    /**
+     * Cart에 담긴 상품의 수량을 조절하는 메소드
      * @author Lazycat
      * @param cartList
      * @return
      */
-    @GetMapping("/cart")
-    public ResponseEntity<List<OrderItemResponse>> getCartById(@RequestParam("cartList") int[] cartList) {
-        List<OrderItemResponse> orderItems = orderItemService.getCart(cartList);
-        return new ResponseEntity<>(orderItems, HttpStatus.OK);
-    }
+//    @PutMapping("/orderItem/")
 
 }

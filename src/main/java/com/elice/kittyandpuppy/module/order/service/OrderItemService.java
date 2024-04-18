@@ -69,7 +69,6 @@ public class OrderItemService {
     public void deleteById(long id) {
         // 해당하는 정보가 존재하는지 확인
         findById(id);
-
         orderItemRepository.deleteById(id);
     }
 
@@ -81,30 +80,17 @@ public class OrderItemService {
     }
     
     //OrderItem 을 장바구니로 가져오는 메소드
-    @Transactional
-    public List<OrderItemResponse> getCart(int[] productId) {
-        Long[] productIds = Arrays.stream(productId)
+    public List<OrderItemResponse> getCart(int[] orderId) {
+        Long[] orderIds = Arrays.stream(orderId)
                 .mapToLong(Long::valueOf)
                 .boxed()
                 .toArray(Long[]::new);
 
         List<OrderItemResponse> OrderItems = new ArrayList<>();
-        for (Long id : productIds) {
-            Product product = productService.findById(id);
-            OrderItem orderItem = orderItemRepository.save(OrderItem.createOrderItem(product, 1, product.getPrice()));
+        for (Long id : orderIds) {
+            OrderItem orderItem = findById(id);
             OrderItems.add(new OrderItemResponse(orderItem));
         }
-
-//        //상품으로 받고
-//        List<Product> products = Arrays.stream(productIds)
-//                .map(productService::findProductById)
-//                .collect(Collectors.toList());
-//
-//        List<OrderItemResponse> OrderItems = new ArrayList<>();
-//        for(Product item : products){
-//            OrderItem orderItem = create(item, 1, item.getPrice());
-//            OrderItems.add(new OrderItemResponse(orderItem));
-//        }
         return OrderItems;
     }
     @Transactional
