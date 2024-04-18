@@ -57,7 +57,7 @@ function displayOrderItems(orders) {
     });
 }
 
-//주문하기
+// 주문하기 버튼
 function order(){
     $.ajax({
         //TODO 모든 api와 view의 연결작업이 끝나고 url(localhost:8080/cart)에는
@@ -66,11 +66,12 @@ function order(){
         type: 'GET',
         data: 'text',
         success: function (response) {
+            //장바구니 삭제
+            window.localStorage.removeItem("cartList");
             location.href = "/order";
         }
     })
 }
-
 //수량에 비례하여 가격 조정하는 메소드
 function calPrice(amount, price){
     return amount*price;
