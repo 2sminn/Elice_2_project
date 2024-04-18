@@ -21,6 +21,7 @@ public class CategoryDto {
     private List<CategoryDto> subCategories;
 
     // 상품 목록 설정 메소드
+    @Setter
     private List<ProductDto> products;
 
     public CategoryDto(Category entity){
