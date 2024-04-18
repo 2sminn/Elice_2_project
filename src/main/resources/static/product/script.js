@@ -2,7 +2,7 @@ $(document).ready(function () {
     loadProduct();
     $("#add-to-cart").click(function () {
         const productId = $('#product-name').data('productId');
-        comment_create(productId);
+        addToCart(productId);
     });
 });
 
@@ -31,12 +31,12 @@ function displayProduct(product){
 
 //장바구니 버튼을 눌렀을 때
 function addToCart(productId){
-    function addProductToList(productId) {
-        // 로컬 스토리지에서 리스트 가져오기
-        let cartList = JSON.parse(window.localStorage.getItem("cartList")) || [];
-        // 상품 ID를 리스트에 추가
+    if(localStorage.getItem('cartList')!= null){
+        let cartList = JSON.parse(localStorage.cartList);
         cartList.push(productId);
-        // 업데이트된 리스트를 다시 로컬 스토리지에 저장
-        window.localStorage.setItem("cartList", JSON.stringify(cartList));
+        localStorage.setItem('cartList',JSON.stringify(cartList));
+    } else{
+        localStorage.setItem('cartList',JSON.stringify([productId]));
     }
+    console.log(window.localStorage.getItem("cartList"));
 }

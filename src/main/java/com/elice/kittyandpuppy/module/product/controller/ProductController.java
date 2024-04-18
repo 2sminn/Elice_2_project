@@ -36,6 +36,19 @@ public class ProductController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
+
+    /**
+     * 이 코드 삭제 절대 금지, 카트에 담긴 상품 전달하는 코드
+     * @author Lazycat
+     * @param cartList
+     * @return
+     */
+    @GetMapping("/cart")
+    public ResponseEntity<List<ProductDto>> getCartById(@RequestParam("cartList") int[] cartList) {
+        List<ProductDto> products = productService.findByCart(cartList);
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
+
     // 특정 id 상품 조회
     @GetMapping("/{productId}")
     public ResponseEntity<ProductDto> getProductById(@PathVariable(value="productId") Long productId) {
