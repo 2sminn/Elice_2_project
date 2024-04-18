@@ -46,12 +46,12 @@ function displayComments(comments) {
             <div class="comment-content-container"> <!-- 댓글 1개-->
                 <div class="row-box comment-header">
                     <div class="commnet-name-box">
-                        <img src ="/static/img/miao.jpg" class="comment-profile">
+                        <img src ="/img/miao.jpg" class="comment-profile">
                         <span class="commnet-name">냔냔펑치</span>
                     </div>
                     <div class="comment-day">${formattedDate}</div>
-                    <img src="/static/img/comment-edit2.png" class="comment_edit" >
-                    <img src="/static/img/comment-delete2.png" class="comment_delete">
+                    <img src="/img/comment-edit2.png" class="comment_edit" >
+                    <img src="/img/comment-delete2.png" class="comment_delete">
                 </div>
                 <div class="row-box comment-article" >
                     <div class="comment_detail_box">
