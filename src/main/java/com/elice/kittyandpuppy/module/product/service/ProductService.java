@@ -40,11 +40,21 @@ public class ProductService {
         return productRepository.findAllByCategoryId(categoryId);
     }
 
+
     public ProductDto getProductById(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
         return productMapper.toDto(product);
     }
+
+
+    //Product Id로 Product 객체를 받아온다.
+    @Transactional
+    public Product findById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+    }
+
 
     // findAll : 모든 상품 조회
     public List<Product> findAll() {

@@ -12,13 +12,13 @@ function loadCartList() {
     //로컬스토리지에서 장바구니 아이템(productId가 단긴 리스트 객체) 리스트 받아옴
     let cart = getCart(); //해당 코드는 let cart = [ 1, 2, 3, ... ] 과 같은 리스트 이다.
     $.ajax({
-        url:'/api/product/cart',
+        url:'/api/cart',
         type:'GET',
         traditional: true,
         data: { cartList: cart },
         dataType: 'JSON',
-        success: function(cartItems){
-            displayOrderItems(cartItems);
+        success: function(orderItems){
+            displayOrderItems(orderItems);
         },
         error: function(xhr, status, error) {
             console.error('장바구니를 불러오는 중 오류가 발생했습니다:', status, error);
@@ -26,7 +26,7 @@ function loadCartList() {
     })
 }
 function getCart() {
-    return JSON.parse(window.localStorage.getItem("cartList")) || [];
+    return JSON.parse(window.localStorage.getItem("orderItems")) || [];
 }
 
 // 장바구니 아이템 조회

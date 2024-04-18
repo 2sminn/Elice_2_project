@@ -57,6 +57,7 @@ public class OrderItem {
         return orderItem;
     }
 
+
     // 연관관계 맵핑에 사용
     public void setOrder(Order order) {
         this.order = order;
