@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public interface CategoryMapper {
     CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    @Mapping(target = "categoryId", ignore = true)
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "parentCategoryId", target = "parentCategory", qualifiedByName = "idToCategory")
     Category toEntity(CategoryDto categoryDTO);
 
