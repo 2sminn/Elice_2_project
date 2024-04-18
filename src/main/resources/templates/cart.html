@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/static/cart/cart.js"></script>
+    <link rel="stylesheet" href="/static/cart/cart.css">
+    <title>구해줘멍냥</title>
+</head>
+<body>
+<div id="header"></div>
+
+<div class="cart-wrapper">
+    <div class="cart-container">
+        <div class="name">장바구니</div>
+        <div><input type="checkbox" class="check_all">전체 선택</div>
+        <div class="product-container" id="cart_list"> <!-- 상품리스트 -->
+            <div class="product-box"> <!--상품 1개-->
+                <div class="product-item">
+                    <input type="checkbox" class="product-check">
+                    <div><img src="/static/order/test_item.png" class="product-img"></div>
+                    <div class="product-detail-box">
+                        <div class="detail-name">삼색리리 안아줘요 캐릭터 엽서</div>
+                        <div class="detail-checkbox">
+                            <button class="product-minus">-</butt on>
+                            <div class="product-count">
+                                2
+                            </div>
+                            <button class="product-plus">+</button>
+                        </div>
+                        <div><span class="detail-price">4,000</span>원</div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-box">
+                <div class="product-item">
+                    <input type="checkbox" class="product-check">
+                    <div><img src="/static/order/test_item.png" class="product-img"></div>
+                    <div class="product-detail-box">
+                        <div class="detail-name">삼색리리 안아줘요 캐릭터 엽서</div>
+                        <div class="detail-checkbox">
+                            <button class="product-minus">-</button>
+                            <div class="product-count">
+                                3
+                            </div>
+                            <button class="product-plus">+</button>
+                        </div>
+                        <div><span class="detail-price">4,000</span>원</div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-box">
+                <div class="product-item">
+                    <input type="checkbox" class="product-check">
+                    <div><img src="/static/order/test_item.png" class="product-img"></div>
+                    <div class="product-detail-box">
+                        <div class="detail-name">삼색리리 안아줘요 캐릭터 엽서</div>
+                        <div class="detail-checkbox">
+                            <button class="product-minus">-</button>
+                            <div class="product-count">
+                                1
+                            </div>
+                            <button class="product-plus">+</button>
+                        </div>
+                        <div><span class="detail-price">4,000</span>원</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="product-btn-box">
+            <button class="product-order" id="product-order">주문하기</button>
+            <button class="product-cancel">취소하기</button>
+        </div>
+    </div>
+</div>
+
+
+<div id="footer"></div>
+<script>
+    $(function () {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+    })
+</script>
+</body>
+</html>

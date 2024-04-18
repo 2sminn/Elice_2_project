@@ -14,7 +14,7 @@ body{
 }
 .comment-container{
 
-    width: 1050px;
+    width: 1200px;
 }
 .comment-text-container{
 
@@ -45,7 +45,7 @@ body{
 
     width: 100%;
 
-    height: 60px;
+    height: 135px;
 
     border: #E4E4E6 solid 2px;
 
@@ -63,48 +63,8 @@ body{
 
     width: 25px;
 }
-.c-file{
-
-    position: relative;
-
-    top: -42px;
-
-    left: 875px;
-
-    display: flex;
-
-    align-items: center;
-
-    border: 0px solid;
-
-    border-radius: 15px;
-
-    padding: 1px 10px;
-
-    color: #87878A;
-
-    font-weight: 600;
-}
-.c-btn{
-
-    position: relative;
-
-    top: -72px;
-
-    background-color: #6D6045;
-
-    color: white;
-
-    padding: 4px 24px;
-
-    border: 0px solid;
-
-    border-radius: 15px;
-
-    font-weight: 600;
-
-    left: 979px;
-}
+.c-file{position: relative;top: -56px;left: 973px;display: flex;align-items: center;border: 0px solid;border-radius: 9px;padding: 5px 10px;color: #87878A;font-weight: 600;}
+.c-btn{position: relative;top: -95px;background-color: #6D6045;color: white;padding: 5px 24px;border: 0px solid;border-radius: 9px;font-weight: 600;left: 1102px;}
 
 
 .comment-list-container{
@@ -127,13 +87,12 @@ body{
 }
 .commnet-name-box{
     display: flex;
-
 }
 .comment-header{
 
     display: flex;
 
-    justify-content: space-between;
+    justify-content: flex-start;
 
     margin-top: 20px;
 
@@ -154,10 +113,17 @@ body{
 
 .comment-day{
 
-    color: #87878A;
+    color: #555;
+
+    margin-left: 7px;
 }
+
+
 .comment-article{
 
+    display: flex;
+    margin: 17px 0px;
+    justify-content: space-between;
 }
 .comment-footer{
 
@@ -208,4 +174,41 @@ body{
     padding: 4px 17px;
 
     font-weight: 600;
+}
+.comment_edit{
+    width: 25px;
+    cursor: pointer;
+    margin-left: 7px;
+}
+.comment_delete{
+    width: 26px;
+    margin-left: 7px;
+    cursor: pointer;
+}
+.comment_edit_textarea{
+    color: black;
+    resize: none;
+    border: #cfcfcf solid 1px;
+    border-radius: 8px;
+    width: 1096px;
+    margin-top: 11px;
+}
+.comment_edit_btn{
+    background-color: #6D6045;
+    width: 88px;
+    height: 90px;
+    border-radius: 10px;
+    border: 0px;
+    color: white;
+    font-weight: 600;
+    margin-left: 7px;
+}
+.comment_detail_box{
+
+}
+.comment_edit_box{
+    display: flex;
+    align-items: flex-end;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

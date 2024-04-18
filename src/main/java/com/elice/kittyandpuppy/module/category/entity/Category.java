@@ -1,24 +1,21 @@
 package com.elice.kittyandpuppy.module.category.entity;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Data
 @Table(name = "category")
-@Getter
+@AllArgsConstructor
 @NoArgsConstructor
-@Setter
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long id;
 
     @Column(name = "branch", nullable = false)
     private String branch;
@@ -37,8 +34,8 @@ public class Category {
     private List<Category> subCategory = new ArrayList<>();
 
     @Builder
-    public Category(Long categoryId, String branch, String name, Category parentCategory, String code){
-        this.categoryId = categoryId;
+    public Category(Long id, String branch, String name, Category parentCategory, String code){
+        this.id = id;
         this.name = name;
         this.parentCategory = parentCategory;
         this.code = code;

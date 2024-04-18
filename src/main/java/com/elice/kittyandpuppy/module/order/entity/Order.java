@@ -69,6 +69,11 @@ public class Order {
         delivery.setOrder(this);
     }
 
+    //수량조절 로직 (Cart에서 사용)
+    public void setOrderItems(List<OrderItem> orderItems){
+        this.orderItems = orderItems;
+    }
+
     protected void setStatus(OrderStatus status) {
         this.status = status;
     }

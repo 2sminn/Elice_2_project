@@ -7,57 +7,17 @@ import lombok.*;
 @Data // 표준적인 메서드를 자동으로 생성
 @NoArgsConstructor // 기본 생성자 생성
 @AllArgsConstructor // 모든 필드를 인자로 받는 생성자를 생성
-
+@Getter
+@Setter
 
 public class ProductDto {
     private Long id;
-    private Long category_id;
+    private Long categoryId;
     private String name;
     private int price;
     private int stock;
     private String imageUrl;
-    private String desc;
-    private String created_at;
-    private String modified_at;
-
-
-    // Dto - > product (DTO 상품 객체 - > 상품 엔티티로 변환)
-    public static Product toEntity(ProductDto productDto) {
-        Product product = new Product();
-        product.setId(productDto.getId()); // DTO 객체 id 값을 엔티티 객체에 설정
-        product.setCategory_id(productDto.getCategory_id());
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setStock(productDto.getStock());
-        product.setImageUrl(productDto.getImageUrl());
-        product.setDesc(productDto.getDesc());
-        product.setCreated_at(productDto.getCreated_at());
-        product.setModified_at(productDto.getModified_at());
-
-        return product;
-
-
-
-
-
-    }
-
-    // product - > Dto
-    public static ProductDto fromDto(Product product) {
-        ProductDto productDto = new ProductDto();
-        productDto.setId(product.getId());
-        productDto.setCategory_id(product.getCategory_id());
-        productDto.setName(product.getName());
-        productDto.setPrice(product.getPrice());
-        productDto.setStock(product.getStock());
-        productDto.setImageUrl(product.getImageUrl());
-        productDto.setDesc(product.getDesc());
-        productDto.setCreated_at(product.getCreated_at());
-        productDto.setModified_at(product.getModified_at());
-
-        return productDto;
-    }
-
-
-
+    private String description;
+    private String createdAt;
+    private String modifiedAt;
 }

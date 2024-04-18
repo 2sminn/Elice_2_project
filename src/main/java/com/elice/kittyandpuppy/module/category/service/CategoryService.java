@@ -4,87 +4,101 @@ import com.elice.kittyandpuppy.module.category.entity.Category;
 import com.elice.kittyandpuppy.module.category.dto.CategoryDto;
 import com.elice.kittyandpuppy.module.category.dto.CategoryMapper;
 import com.elice.kittyandpuppy.module.category.repository.CategoryRepository;
+import com.elice.kittyandpuppy.module.product.dto.ProductDto;
+import com.elice.kittyandpuppy.module.product.dto.ProductMapper;
+import com.elice.kittyandpuppy.module.product.entity.Product;
+import com.elice.kittyandpuppy.module.product.service.ProductService;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
-@RequiredArgsConstructor
 @Setter
 @Getter
 @Transactional
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final ProductService productService;
+
+    public CategoryService(CategoryRepository categoryRepository, CategoryMapper categoryMapper, ProductService productService) {
+        this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
+        this.productService = productService;
+    }
     public Long saveCategory(CategoryDto categoryDto) {
         Category category = categoryMapper.toEntity(categoryDto);
-
-        if (categoryDto.getParentCategoryName() == null) {
-            if (categoryRepository.existsByBranchAndName(categoryDto.getBranch(), categoryDto.getName())) {
-                throw new RuntimeException("categoryBranch와 categoryName이 같을 수 없습니다.");
-            }
-            Category topCategory = categoryRepository.findByBranchAndName(categoryDto.getBranch(), "TOP")
-                    .orElse(new Category());
-            topCategory.setName("TOP");
-            topCategory.setCode("TOP");
-            topCategory.setBranch(categoryDto.getBranch());
-
-            if (!categoryRepository.existsByBranchAndName(categoryDto.getBranch(), "TOP")) {
-                categoryRepository.save(topCategory);
-            }
-            category.setParentCategory(topCategory);
+        if (categoryDto.getParentCategoryId() == null) {
+            category.setParentCategory(null);
         } else {
-            String parentCategoryName = categoryDto.getParentCategoryName();
-            Category parentCategory = categoryRepository.findByBranchAndName(categoryDto.getBranch(), parentCategoryName)
-                    .orElseThrow(() -> new IllegalArgumentException("top카테고리 없음"));
+            Category parentCategory = categoryRepository.findById(categoryDto.getParentCategoryId())
+                    .orElseThrow(() -> new IllegalArgumentException("부모 카테고리를 찾을 수 없습니다."));
             category.setParentCategory(parentCategory);
-            parentCategory.getSubCategory().add(category);
         }
-        return categoryRepository.save(category).getCategoryId();
+        category = categoryRepository.save(category);
+        return category.getId();
+    }
+    // 주어진 branch의 최상위 카테고리 및 모든 하위 카테고리 가져오기
+    public CategoryDto getFullCategoryTreeByBranch(String branch) {
+        Category topCategory = categoryRepository.findByBranch(branch)
+                .orElseThrow(() -> new IllegalArgumentException("해당 branch의 최상위 카테고리를 찾을 수 없습니다: " + branch));
+        return buildCategoryDtoWithSubcategories(topCategory);
+    }
+    // 주어진 categoryId의 하위 카테고리와 상품을 포함하는 CategoryDto 생성
+    private CategoryDto buildCategoryDtoWithSubcategories(Category category) {
+        CategoryDto categoryDto = categoryMapper.toDto(category);
+        List<Category> subCategories = categoryRepository.findByParentCategoryId(category.getId());
+        List<CategoryDto> subCategoryDtos = subCategories.stream()
+                .map(this::buildCategoryDtoWithSubcategories)
+                .collect(Collectors.toList());
+        categoryDto.setSubCategories(subCategoryDtos);
+        List<ProductDto> products = productService.findByCategoryId(category.getId()).stream()
+                .map(productService.getProductMapper()::toDto)  // 수정: productService에서 productMapper 접근
+                .collect(Collectors.toList());
+        categoryDto.setProducts(products);
+        return categoryDto;
+    }
+    // 특정 카테고리의 정보와 해당 카테고리의 모든 하위 카테고리 및 상품 가져오기
+    public CategoryDto getCategoryById(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
+        return buildCategoryDtoWithSubcategories(category);
     }
 
-    public Map<String, CategoryDto> getCategoryByBranch(String branch) {
-        Category category = categoryRepository.findByBranchAndName(branch, "TOP")
-                .orElseThrow( () -> new IllegalArgumentException("찾는 부모카테고리가 없습니다"));
-
-        CategoryDto categoryDto = new CategoryDto(category);
-
-        Map<String, CategoryDto> data = new HashMap<>();
-        data.put(categoryDto.getName(), categoryDto);
-        return data;
+    // 특정 카테고리에 속한 상품들만 가져오기
+    public List<ProductDto> getCategoryProducts(Long categoryId) {
+        return productService.findByCategoryId(categoryId).stream()
+                .map(productService.getProductMapper()::toDto)
+                .collect(Collectors.toList());
     }
-
-    public void deleteCategory(Long categoryId){
-        Category category = findCategory(categoryId);
-
-        if(category.getSubCategory().size() == 0){
-            Category parentCategory = findCategory(category.getParentCategory().getCategoryId());
-            if(!parentCategory.getName().equals("TOP")){
-                parentCategory.getSubCategory().remove(category);
-            }
-            categoryRepository.deleteById(category.getCategoryId());
-        }else{
-            Category parentCategory = findCategory(category.getParentCategory().getCategoryId());
-            if(!parentCategory.getName().equals("TOP")){
-                parentCategory.getSubCategory().remove(category);
-            }
-            category.setName("삭제된 카테고리입니다.");
+    // 주어진 부모 카테고리의 모든 하위 카테고리 가져오기
+    public List<CategoryDto> getSubCategories(Long parentCategoryId) {
+        List<Category> subCategories = categoryRepository.findByParentCategoryId(parentCategoryId);
+        return subCategories.stream()
+                .map(this::buildCategoryDtoWithSubcategories)
+                .collect(Collectors.toList());
+    }
+    // 카테고리 삭제 (하위 카테고리를 선택적으로 함께 삭제)
+    public void deleteCategory(Long categoryId, boolean deleteSubcategory) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
+        if (deleteSubcategory) {
+            category.getSubCategory().forEach(subCategory -> deleteCategory(subCategory.getId(), true));
         }
-        }
-
-        public Long updateCategory (Long categoryId, CategoryDto categoryDto) {
-            Category category = findCategory(categoryId);
-            category.setName(categoryDto.getName());
-            return category.getCategoryId();
-        }
-
-        private Category findCategory(Long categoryId) {
-            return categoryRepository.findById(categoryId)
-                    .orElseThrow(() -> new IllegalArgumentException("해당 ID에 대한 카테고리를 찾을 수 없습니다: " + categoryId));
-        }
-
+        categoryRepository.deleteById(categoryId);
+    }
+    public Long updateCategory(Long categoryId, CategoryDto categoryDto) {
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new IllegalArgumentException("카테고리를 찾을 수 없습니다."));
+        categoryMapper.updateCategoryFromDto(categoryDto, category);
+        category = categoryRepository.save(category);
+        return category.getId();
+    }
 }

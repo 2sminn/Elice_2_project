@@ -4,18 +4,13 @@ import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemRequest;
 import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemResponse;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.service.OrderItemService;
+import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import com.elice.kittyandpuppy.module.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +43,14 @@ public class OrderItemApiController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(orderItemIds);
+    }
+
+    //orderItem 수량 조절을 위한 수정 메소드 추가
+    //TODO 본인스타일대로 수정하실거면 수정하십쇼~!~!
+    @PutMapping("/orderItem/{id}") ResponseEntity<OrderItemResponse> updateOrderItem(@PathVariable(value = "id") long id,
+                                                                                     @RequestBody OrderItemRequest orderItemRequest){
+        OrderItem orderItem = orderItemService.update(id, orderItemRequest.getAmount());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
     }
 
     @GetMapping("/orderItem/{id}")

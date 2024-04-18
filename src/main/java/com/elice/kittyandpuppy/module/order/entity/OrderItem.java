@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.order.entity;
 
+import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -53,7 +54,6 @@ public class OrderItem {
         orderItem.setProductPrice(productPrice);
 
         // TODO: 상품 재고 감소 로직 작성
-
         return orderItem;
     }
 
@@ -61,7 +61,6 @@ public class OrderItem {
     public void setOrder(Order order) {
         this.order = order;
     }
-
     /**
      * 주문이 취소된 경우 재고를 복구한다.
      */
@@ -84,7 +83,9 @@ public class OrderItem {
         this.product = product;
     }
 
-    private void setProductAmount(int productAmount) {
+
+    //Cart 수량조절을 위해 private에서 public으로 변경
+    public void setProductAmount(int productAmount) {
         this.productAmount = productAmount;
     }
 

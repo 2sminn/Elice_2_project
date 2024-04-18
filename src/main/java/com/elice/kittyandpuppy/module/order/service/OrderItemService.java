@@ -1,7 +1,9 @@
 package com.elice.kittyandpuppy.module.order.service;
 
+import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemResponse;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderItemRepository;
+import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 
 import lombok.RequiredArgsConstructor;
@@ -55,5 +57,13 @@ public class OrderItemService {
 
         orderItemRepository.deleteById(id);
     }
+
+    @Transactional
+    public OrderItem update(Long id, int amount) {
+        OrderItem orderItem = orderItemRepository.findById(id).orElseThrow();
+        orderItem.setProductAmount(amount);
+        return orderItemRepository.save(orderItem);
+    }
+
 
 }

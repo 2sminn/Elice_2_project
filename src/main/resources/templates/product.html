@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세 페이지</title>
+    <link rel="stylesheet" href="/static/product/style.css"> <!-- 경로 확인 -->
+    <script src="/static/product/script.js"></script> <!-- 경로 확인 -->
+</head>
+<body>
+<div class="product-container">
+    <div class="image-box">
+        <img id="product-image" src="path-to-your-image.jpg" alt="상품 이미지">
+    </div>
+    <div class="product-info">
+        <h1 id="product-name">상품 이름</h1>
+        <div class="price" id="product-price">₩ 가격</div>
+        <p id="product-description">상품에 대한 상세 설명</p>
+        <div class="purchase-info">
+            <div class="quantity">
+                <label for="product-quantity">수량:</label>
+                <input type="number" id="product-quantity" name="product-quantity" value="1" min="1">
+            </div>
+            <button id="buy-now" onclick="buyNow()">구매하기</button>
+            <button id="add-to-cart" onclick="addToCart()">장바구니</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,8 +1,9 @@
 package com.elice.kittyandpuppy.module.comment.controller;
 
 
+import com.elice.kittyandpuppy.module.comment.dto.CommentResponse;
 import com.elice.kittyandpuppy.module.comment.entity.Comment;
-import com.elice.kittyandpuppy.module.comment.repository.request.CommentRequest;
+import com.elice.kittyandpuppy.module.comment.dto.CommentRequest;
 import com.elice.kittyandpuppy.module.comment.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -36,5 +37,13 @@ public class CommentApiController {
         commentService.deleteComment(commentId);
         return ResponseEntity.ok().body(commentId);
     }
+
+    @Operation(summary = "댓글 조회", description = "게시물 ID에 따라서 댓글 조회")
+    @GetMapping("/{postId}")
+    public ResponseEntity<List<CommentResponse>> findByPost(@PathVariable Long postId){
+        List<CommentResponse> comments = commentService.findByPost(postId);
+        return ResponseEntity.status(HttpStatus.OK).body(comments);
+    }
+
 
 }

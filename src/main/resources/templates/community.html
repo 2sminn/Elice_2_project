@@ -19,69 +19,41 @@
 </head>
 <body>
 <div id="header"></div>
-<!-- 부트스트랩으로 가져온 게시판 검색 부분 -->
-<div class="research_container">
-    <form class="d-flex">
-        <input
-                class="form-control me-2"
-                type="search"
-                placeholder="검색할 내용을 입력하세요."
-                aria-label="Search"
-        />
-        <button
-                class="btn btn-outline-success"
-                type="submit"
-                style="width: 100px"
-        >
-            검색
-        </button>
-    </form>
-</div>
-<!-- 게시글 커뮤니티 내용에 대한 부분 -->
-<div class="community_list_container">
-    <table class="table", id="data-table">
+
+<div class="container">
+    <h2 class="text-center mb-4">자유게시판</h2>
+    <div class="search-bar d-flex justify-content-end mb-2">
+        <input class="form-control me-2" type="search" placeholder="검색어를 입력하세요." style="width: 900px">
+        <button class="btn btn-outline-dark" type="submit" style="margin-right: 30px">검색</button>
+        <button class="btn btn-primary" type="button" onclick="location.href='/community/create'">게시글 작성</button>
+    </div>
+    <table class="table table-bordered" id="data-table">
         <thead>
         <tr>
             <th scope="col">번호</th>
             <th scope="col">제목</th>
+            <!--            <th scope="col">이름</th>-->
+            <!--            <th scope="col">아이디</th>-->
             <th scope="col">작성일</th>
-            <th scope="col">날짜</th>
+            <th scope="col">조회수</th>
         </tr>
         </thead>
         <tbody>
-<!--            게시물이 삽입되는 영역 -->
+        <!-- 여기에 다른 게시물의 행을 추가하면 됩니다 -->
         </tbody>
     </table>
+
 </div>
-<!-- 부트스트랩 페이지네이션 -->
-<!--<div class="page_nation_container">-->
-<!--    <nav aria-label="...">-->
-<!--        <ul class="pagination">-->
-<!--            <li class="page-item disabled">-->
-<!--                <a class="page-link" href="#" tabindex="-1" aria-disabled="true"-->
-<!--                >Previous</a-->
-<!--                >-->
-<!--            </li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">1</a></li>-->
-<!--            <li class="page-item active" aria-current="page">-->
-<!--                <a class="page-link" href="#">2</a>-->
-<!--            </li>-->
-<!--            <li class="page-item"><a class="page-link" href="#">3</a></li>-->
-<!--            <li class="page-item">-->
-<!--                <a class="page-link" href="#">Next</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
-<!--</div>-->
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-    </ul>
+
+<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+    <ul class="pagination"></ul>
 </nav>
+
 <div id="footer"></div>
 <script>
     $(function () {
-        $("#header").load("/static/header.html");
-        $("#footer").load("/static/footer.html");
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
     })
 </script>
 </body>
