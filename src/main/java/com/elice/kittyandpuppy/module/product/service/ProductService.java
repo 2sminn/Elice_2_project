@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Setter
@@ -62,6 +64,19 @@ public class ProductService {
                 .map(productMapper::toDto)
                 .orElseThrow(() -> new IllegalArgumentException("죄송합니다. 상품을 찾을 수 없습니다."));
         return productMapper.toEntity(productDto);
+    }
+
+    public List<ProductDto> findByCart(int[] productId) {
+        Long[] productIds = Arrays.stream(productId)
+                .mapToLong(Long::valueOf)
+                .boxed()
+                .toArray(Long[]::new);
+
+        List<ProductDto> products = Arrays.stream(productIds)
+                .map(this::findProductById)
+                .map(productMapper::toDto)
+                .collect(Collectors.toList());
+        return products;
     }
     // 주어진 id에 해당하는 상품을 업데이트 하는 메서드
     public ProductDto updateProduct(Long id, ProductDto updateProductDto) {

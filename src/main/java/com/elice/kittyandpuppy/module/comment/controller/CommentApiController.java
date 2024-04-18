@@ -40,7 +40,7 @@ public class CommentApiController {
 
     @Operation(summary = "댓글 조회", description = "게시물 ID에 따라서 댓글 조회")
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentResponse>> findByPost(@PathVariable Long postId){
+    public ResponseEntity<List<CommentResponse>> findByPost(@PathVariable("postId") Long postId){
         List<CommentResponse> comments = commentService.findByPost(postId);
         return ResponseEntity.status(HttpStatus.OK).body(comments);
     }
