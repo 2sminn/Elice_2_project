@@ -100,17 +100,6 @@ body {
     background-color: #e6e6fa;
 }
 
-/* 상품 아이템 스타일링 */
-.product-section {
-    /* 좌우 정렬*/
-    display: flex;
-    justify-content: flex-start;
-
-    /* 수직 정렬 */
-    align-items: center;
-    padding: 20px;
-}
-
 /* 반응형 디자인 */
 @media (max-width: 768px) {
     .search-bar {
@@ -133,13 +122,13 @@ body {
         padding-right: 3vw;
     }
 }
+
+
 .product-section {
     margin-top: 25px;
     margin-bottom: 25px;
     margin-left: auto;
     margin-right: auto;
-
-    width: 50%; /* 2개씩 배치하므로 50%로 설정 */
 
     padding: 10px;
 
@@ -147,18 +136,18 @@ body {
     outline: solid 1px gray;
     border-radius: 25px;
 
-    /* 좌우 정렬*/
     display: flex;
-    justify-content: center;
+    flex-wrap: wrap;
 
-    /* 수직 정렬 */
-    align-items: center;
-
+    text-align:center;
 }
 
 .product-item {
 
-    margin: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    margin-left: auto;
+    margin-right: auto;
 
     width: 30vw;
     height: 30vw;

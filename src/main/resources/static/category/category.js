@@ -80,26 +80,10 @@ function updateProductSection(products) {
     const productSection = $('.product-section');
     productSection.empty();
 
-    const productsPerRow = 4; // 한 행당 상품 수
-    const numRows = Math.ceil(products.length / productsPerRow); // 필요한 행 수
-
-    for (let i = 0; i < numRows; i++) {
-        const rowStartIndex = i * productsPerRow;
-        const rowProducts = products.slice(rowStartIndex, rowStartIndex + productsPerRow);
-
-        const rowHtml = '<div class="row">' + generateProductHtml(rowProducts) + '</div>';
-        productSection.append(rowHtml);
-    }
-}
-
-function generateProductHtml(products) {
-    let html = '';
+    // 서버로부터 받은 상품 데이터로 상품 요소 생성 후 페이지에 추가
     products.forEach(product => {
-        html += `
+        const productHtml = `
             <div class="product-item" data-product-id="${product.id}">
-                <img src="${product.image_url}" alt="${product.name}">
-                <h4 class="product-name">${product.name}</h4>
-                <p class="product-price">${product.price}</p>
                 <div class="img">
                     <img class="image-thumbnail" src="${product.imageUrl}" alt="${product.name}">
                 </div>
@@ -109,6 +93,6 @@ function generateProductHtml(products) {
                 </div>
             </div>
         `;
+        productSection.append(productHtml);
     });
-    return html;
 }
