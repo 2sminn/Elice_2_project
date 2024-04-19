@@ -1,12 +1,11 @@
-
 //페이지 로드 시에
 $(document).ready(function () {
+    const postId = new URLSearchParams(window.location.search).get('postId');
     //댓글 작성
     $("#comment_submit").click(function () {
         comment_create(postId);
     });
     //댓글 조회
-    const postId = window.location.pathname.split('/').pop();
     $.ajax({
         url: `/api/comment/${postId}`,
         type: 'GET',
@@ -22,38 +21,17 @@ $(document).ready(function () {
 function comment_create(postId) {
     let data = {content : $('#comment_content').val(),
         postId : postId}
-    let token = {token : window.localStorage.getItem("token")};
     $.ajax({
-        url:'/api/address/member',
-        data: JSON.stringify(token),
-        type:'POST',
+        url: '/api/comment',
+        type: 'POST',
+        dataType: 'text',
         contentType: "application/json",
-        dataType: 'JSON',
-        async: false,
-        success: function(memberDetail){
-            data = {content : $('#comment_content').val(),
-                postId : postId,
-                memberId : memberDetail.id
-            };
-            $.ajax({
-                url: '/api/comment',
-                type: 'POST',
-                dataType: 'text',
-                contentType: "application/json",
-                data: JSON.stringify(data),
-                success: function (data) {
-                    alert("댓글이 작성되었습니다");
-                    location.href = '/comment';
-                },
-                error: function(xhr, status, error) {
-                    console.error("댓글 뭔 오류인데..", status, error);
-                }
-            });
-        },
-        error: function(xhr, status, error) {
-            console.error("회원 불러오기에 실패했습니다", status, error);
+        data: JSON.stringify(data),
+        success: function (data) {
+            alert("댓글이 작성되었습니다");
+            location.href = '/community?postId=' + postId;
         }
-    })
+    });
 }
 
 
@@ -68,7 +46,7 @@ function displayComments(comments) {
                 <div class="row-box comment-header">
                     <div class="commnet-name-box">
                         <img src ="/img/miao.jpg" class="comment-profile">
-                        <span class="commnet-name">${comment.name}</span>
+                        <span class="commnet-name">냔냔펑치</span>
                     </div>
                     <div class="comment-day">${formattedDate}</div>
                     <img src="/img/comment-edit2.png" class="comment_edit" >
@@ -92,7 +70,7 @@ function displayComments(comments) {
         // 댓글 요소를 목록에 추가
         commentList.append(commentElement);
 
-        });
+    });
 }
 
 //댓글 수정 버튼 클릭
@@ -124,7 +102,7 @@ $(document).on('click', '.comment_edit_btn', function() {
 });
 
 function comment_edit(commentId, newCommentContent) {
-    const postId = window.location.pathname.split('/').pop();
+    const postId = new URLSearchParams(window.location.search).get('postId');
     let data = {content : newCommentContent}
     $.ajax({
         url: '/api/comment/' + commentId,
@@ -134,7 +112,7 @@ function comment_edit(commentId, newCommentContent) {
         data: JSON.stringify(data),
         success: function (data) {
             alert("댓글이 수정되었습니다");
-            location.href = '/community/' + postId;
+            location.href = '/community?postId=' + postId;
         }
     });
 }
@@ -150,7 +128,7 @@ $(document).on('click', '.comment_delete', function() {
 });
 //댓글 삭제
 function comment_delete(commentId){
-    const postId = window.location.pathname.split('/').pop();
+    const postId = new URLSearchParams(window.location.search).get('postId');
     $.ajax(
         {
             url: '/api/comment/' + commentId,
@@ -158,7 +136,7 @@ function comment_delete(commentId){
             dataType: 'text',
             success: function (response) {
                 alert("댓글이 삭제되었습니다.");
-                location.href = '/community/' + postId;
+                location.href = '/community?postId=' + postId;
             }
         }
     );
