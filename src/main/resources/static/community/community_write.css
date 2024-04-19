@@ -14,3 +14,7 @@ body {
 .btn-primary:hover {
     background-color: #e9b836; /* 버튼 호버 색상 */
 }
+
+.ck-editor__editable_inline {
+    min-height: 500px;
+}

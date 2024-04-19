@@ -11,27 +11,29 @@
             integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
             crossorigin="anonymous"
     />
-    <!-- community_write.css 연결-->
+    <!-- community_update.css 연결-->
     <link rel="stylesheet" href="/static/community/community_update.css">
     <!-- 제이쿼리 CDN 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- CKEditor CDN 연결 -->
-    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-    <!-- community_write.js 연결 -->
-    <script src="/static/community/community_update.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.3.0/classic/ckeditor.js"></script>
+    <!-- community_update.js 연결 -->
+    <script type="module" src="/static/community/community_update.js"></script>
 </head>
 <body>
 <div id="header"></div>
-<h1>게시글 작성 페이지</h1>
+<h1>게시글 수정 페이지</h1>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 form-container">
-            <h2 class="mb-4">게시글 작성</h2>
+            <h2 class="mb-4">게시글 수정</h2>
             <div>
                 <div class="mb-3">
                     <label for="title" class="form-label">제목</label>
                     <input type="text" class="form-control" id="title" placeholder="게시글 제목을 입력하세요">
+                    <!-- 경고 메시지를 위한 빈 span 추가 -->
+                    <span id="titleError" class="text-danger" style="display: none;">게시글 제목을 입력해주세요!</span>
                 </div>
                 <div class="mb-3">
                     <label for="boardType" class="form-label">게시판 유형</label>
@@ -55,13 +57,9 @@
 <div id="footer"></div>
 <script>
     $(function () {
-        $("#header").load("/static/header.html");
-        $("#footer").load("/static/footer.html");
+        $("#header").load("../../header.html");
+        $("#footer").load("../../footer.html");
     })
-</script>
-<!-- CKEditor 초기화 스크립트 -->
-<script>
-    CKEDITOR.replace('content');
 </script>
 </body>
 </html>

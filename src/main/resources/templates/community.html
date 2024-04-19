@@ -16,6 +16,16 @@
     <!-- 제이쿼리 CDN 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/community/community.js"></script>
+    <style>
+        .post-link {
+            color: inherit; /* 상속받은 색상을 사용, 주로 검정색 */
+            text-decoration: none; /* 밑줄 제거 */
+        }
+        .post-link:hover {
+            text-decoration: underline; /* 마우스 오버 시 밑줄 표시 */
+            text-decoration-color: black; /* 밑줄 색상 지정 */
+        }
+    </style>
 </head>
 <body>
 <div id="header"></div>
@@ -24,8 +34,9 @@
     <h2 class="text-center mb-4">자유게시판</h2>
     <div class="search-bar d-flex justify-content-end mb-2">
         <input class="form-control me-2" type="search" placeholder="검색어를 입력하세요." style="width: 900px">
-        <button class="btn btn-outline-dark" type="submit" style="margin-right: 30px">검색</button>
+        <button class="btn btn-outline-dark" type="button" id="search-btn" style="margin-right: 30px">검색</button>
         <button class="btn btn-primary" type="button" onclick="location.href='/community/create'">게시글 작성</button>
+<!--        <button class="btn btn-primary" type="button" id="create-post-btn">게시글 작성</button>-->
     </div>
     <table class="table table-bordered" id="data-table">
         <thead>
