@@ -135,19 +135,8 @@ function changeCount(id, amount) {
 }
 
 
-
-
-
 //TODO 주문하기
-function order(){
-    $.ajax({
-        url: "/order",
-        type: "GET",
-        success: function(response) {
-            console.log("주문 페이지로 이동합니다.");
-        },
-        error: function(xhr, status, error) {
-            console.error("주문하기 요청에 실패했습니다:", status, error);
-        }
-    });
-}
+$('#product-order').click(function() {
+    // '/order'로 이동합니다.
+    window.location.href = '/order';
+});
