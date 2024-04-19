@@ -1,10 +1,8 @@
 $(document).ready(function () {
     loadCartList();
-    //
-    // $("#product-order").click(function () {
-    //     order();
-    // });
-
+    $("#product-order").click(function () {
+        order();
+    });
 });
 
 //장바구니 조회
@@ -12,18 +10,19 @@ function loadCartList() {
     //로컬스토리지에서 장바구니 아이템(productId가 단긴 리스트 객체) 리스트 받아옴
     let cart = getCart(); //해당 코드는 let cart = [ 1, 2, 3, ... ] 과 같은 리스트 이다.
     $.ajax({
-        url:'/api/cart',
-        type:'GET',
+        url: '/api/cart',
+        type: 'GET',
         traditional: true,
-        data: { cartList: cart },
+        data: {cartList: cart},
         dataType: 'JSON',
-        success: function(orderItems){
+        success: function (orderItems) {
             displayOrderItems(orderItems);
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
         }
     })
 }
+
 function getCart() {
     return JSON.parse(window.localStorage.getItem("orderItems")) || [];
 }
@@ -65,31 +64,14 @@ function displayOrderItems(orderItems) {
         cartList.append(cartElement);
     });
 }
-//
-// // 주문하기 버튼
-// function order(){
-//     $.ajax({
-//         //TODO 모든 api와 view의 연결작업이 끝나고 url(localhost:8080/cart)에는
-//         // 쿼리파라미터로 {orderId}가 들어갔을테니 그 때 수정하자
-//         url:'/api/order/1',
-//         type: 'GET',
-//         data: 'text',
-//         success: function (response) {
-//             //장바구니 삭제
-//             window.localStorage.removeItem("cartList");
-//             location.href = "/order";
-//         }
-//     })
-// }
+
 //수량에 비례하여 가격 조정하는 메소드
-function calPrice(amount, price){
-    return amount*price;
+function calPrice(amount, price) {
+    return amount * price;
 }
 
-
-
 //장바구니 아이템 삭제 버튼
-$(document).on('click', '#product-delete', function() {
+$(document).on('click', '#product-delete', function () {
     let id = $(this).closest('.product-box').find('#product-item').data('id');
     // let id = $(this).querySelector("#product-item").data('id');
     $.ajax(
@@ -101,12 +83,13 @@ $(document).on('click', '#product-delete', function() {
                 removeProductFromList(id);
                 alert("상품이 삭제되었습니다");
                 location.href = "/cart";
-                
-                
+
+
             }
         }
     );
 });
+
 function removeProductFromList(productId) {
     // 로컬 스토리지에서 리스트 가져오기
     let productList = JSON.parse(window.localStorage.getItem("orderItems")) || [];
@@ -119,13 +102,9 @@ function removeProductFromList(productId) {
     window.localStorage.setItem("orderItems", JSON.stringify(productList));
 }
 
-
-
-
-
 //수량 감소
 $(document).on('click', '.product-minus', function () {
-    let id = $(this).closest('.product-box').find('.product-item').data('id');
+    let id = $(this).closest('.product-box').find('#product-item').data('id');
     let countElement = $(this).siblings('.product-count');
     let amount = parseInt(countElement.text());
     if (amount > 1) {
@@ -157,3 +136,20 @@ function changeCount(id, amount) {
     })
 }
 
+
+
+
+
+//TODO 주문하기
+function order(){
+    $.ajax({
+        url: "/order",
+        type: "GET",
+        success: function(response) {
+            console.log("주문 페이지로 이동합니다.");
+        },
+        error: function(xhr, status, error) {
+            console.error("주문하기 요청에 실패했습니다:", status, error);
+        }
+    });
+}

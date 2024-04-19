@@ -5,6 +5,8 @@ import com.elice.kittyandpuppy.module.comment.dto.CommentResponse;
 import com.elice.kittyandpuppy.module.comment.entity.Comment;
 import com.elice.kittyandpuppy.module.comment.repository.CommentRepository;
 import com.elice.kittyandpuppy.module.comment.dto.CommentRequest;
+import com.elice.kittyandpuppy.module.member.repository.MemberRepository;
+import com.elice.kittyandpuppy.module.member.service.MemberService;
 import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
 import com.elice.kittyandpuppy.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +22,13 @@ import java.util.List;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
+    private final MemberService memberService;
 
     public Comment save(CommentRequest commentRequest) {
         Comment comment = Comment.builder()
                 .content(commentRequest.getContent())
                 .post(postRepository.findById(commentRequest.getPostId()).orElseThrow())
+                .member(memberService.findMemberById(commentRequest.getMemberId()).orElseThrow())
                 .build();
         return commentRepository.save(comment);
     }

@@ -18,7 +18,7 @@ public class CommentResponse {
     private String content;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-//    private Member member;
+    private String name;
 //    private Post post;
 
     public CommentResponse(Comment comment) {
@@ -27,5 +27,6 @@ public class CommentResponse {
         this.content = comment.getContent();
         this.createdAt = comment.getCreatedAt();
         this.modifiedAt = comment.getModifiedAt();
+        this.name = comment.getMember().getName();
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -86,9 +87,15 @@ public class OrderItemApiController {
     /**
      * Cart에 담긴 상품의 수량을 조절하는 메소드
      * @author Lazycat
-     * @param cartList
+     * @param amount
      * @return
      */
-//    @PutMapping("/orderItem/")
+    @PutMapping("/orderItem/{id}")
+    public ResponseEntity<OrderItemResponse> updateOrderItem(@PathVariable(value = "id") Long id,
+                                                             @RequestBody Map <String, Integer> requestData) {
+        int amount = requestData.get("amount");
+        OrderItem orderItem = orderItemService.update(id, amount);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
+    }
 
 }

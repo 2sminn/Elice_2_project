@@ -23,17 +23,38 @@ $(document).ready(function () {
 function comment_create(postId) {
     let data = {content : $('#comment_content').val(),
         postId : postId}
+    let token = {token : window.localStorage.getItem("token")};
     $.ajax({
-        url: '/api/comment',
-        type: 'POST',
-        dataType: 'text',
+        url:'/api/address/member',
+        data: JSON.stringify(token),
+        type:'POST',
         contentType: "application/json",
-        data: JSON.stringify(data),
-        success: function (data) {
-            alert("댓글이 작성되었습니다");
-            location.href = '/comment';
+        dataType: 'JSON',
+        async: false,
+        success: function(memberDetail){
+            data = {content : $('#comment_content').val(),
+                postId : postId,
+                memberId : memberDetail.id
+            };
+            $.ajax({
+                url: '/api/comment',
+                type: 'POST',
+                dataType: 'text',
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function (data) {
+                    alert("댓글이 작성되었습니다");
+                    location.href = '/comment';
+                },
+                error: function(xhr, status, error) {
+                    console.error("댓글 뭔 오류인데..", status, error);
+                }
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("회원 불러오기에 실패했습니다", status, error);
         }
-    });
+    })
 }
 
 
@@ -48,7 +69,7 @@ function displayComments(comments) {
                 <div class="row-box comment-header">
                     <div class="commnet-name-box">
                         <img src ="/static/img/miao.jpg" class="comment-profile">
-                        <span class="commnet-name">냔냔펑치</span>
+                        <span class="commnet-name">${comment.name}</span>
                     </div>
                     <div class="comment-day">${formattedDate}</div>
                     <img src="/static/img/comment-edit2.png" class="comment_edit" >
