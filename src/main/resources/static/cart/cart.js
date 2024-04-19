@@ -3,6 +3,7 @@ $(document).ready(function () {
     $("#product-order").click(function () {
         order();
     });
+
 });
 
 //장바구니 조회
@@ -53,10 +54,7 @@ function displayOrderItems(orderItems) {
                     <img src="/static/img/comment-delete2.png" class="product-delete" id="product-delete">
                 </div>
             </div>
-            <div class="product-btn-box">
-                <button class="product-order" id="product-order">주문하기</button>
-                <button class="product-cancel">취소하기</button>
-            </div>
+
         `);
         cartElement.find('.product-item').data('id', orderItem.id);
         cartElement.find('.detail-price').data('price', orderItem.price);
