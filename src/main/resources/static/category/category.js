@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // 페이지 로드 시 기본적으로 강아지 카테고리(예시로 id=1)의 상품 로드
-    loadProducts(3);
+    loadProductsByParentId(1);
 
     // 강아지와 고양이 버튼에 클릭 이벤트 바인딩
     $('.parent_category').click(function() {
@@ -8,7 +8,7 @@ $(document).ready(function() {
         $(this).addClass('selected');
 
         const parentId = $(this).hasClass('dog') ? 1 : 2;
-        loadProducts(parentId);
+        loadProductsByParentId(parentId);
     });
 
     // 하위 카테고리 버튼에 클릭 이벤트 바인딩
@@ -27,13 +27,33 @@ $(document).ready(function() {
     });
 });
 
-function loadProducts(categoryId) {
+function loadProductsByParentId(parentId) {
     $.ajax({
-        url: `/categories/${categoryId}/products`, // 올바른 엔드포인트로 GET 요청
+        url: `/categories/${parentId}/subcategories`, // 올바른 엔드포인트로 GET 요청
+        type: 'GET',
+        dataType: 'json',
+        success: function(response) {
+            const allProducts = [];
+            // 모든 하위 카테고리의 상품들을 하나의 배열로 합칩니다.
+            response.forEach(subCategory => {
+                allProducts.push(...subCategory.products);
+            });
+            // 상품 섹션을 업데이트 합니다.
+            updateProductSection(allProducts);
+            },
+            error: function(error) {
+                console.error('Error fetching products:', error);
+            }
+    });
+}
+
+function loadProducts(categoryId) {
+    // 특정 카테고리의 상품 데이터 로드
+    $.ajax({
+        url: `/categories/${categoryId}/products`,
         type: 'GET',
         dataType: 'json',
         success: function(products) {
-            console.log(products);
             updateProductSection(products);
         },
         error: function(error) {
@@ -50,6 +70,9 @@ function updateProductSection(products) {
     products.forEach(product => {
         const productHtml = `
             <div class="product-item" data-product-id="${product.id}">
+                <img src="${product.image_url}" alt="${product.name}">
+                <h4 class="product-name">${product.name}</h4>
+                <p class="product-price">${product.price}</p>
                 <div class="img">
                     <img class="image-thumbnail" src="${product.imageUrl}" alt="${product.name}">
                 </div>
