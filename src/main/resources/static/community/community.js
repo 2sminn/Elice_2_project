@@ -81,4 +81,13 @@ $(document).ready(function() {
         var date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2], dateArray[3], dateArray[4], dateArray[5], dateArray[6] / 1000000);
         return date.toLocaleString();
     }
+
+    $('#createPost').click(function (){
+        const token = localStorage.getItem("token");
+        if(token==null){
+            window.location.href="/login";
+        }else{
+            window.location.href="/community/create";
+        }
+    });
 });
