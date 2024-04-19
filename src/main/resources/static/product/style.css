@@ -1,38 +1,54 @@
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    padding-top: 100px; /* 상단 여백 추가 */
+    padding-top: 0px; /* 상품 페이지의 내용이 헤더 아래에 나오도록 상단 패딩을 설정 */
     background-color: #f5f5f5;
 }
 
+/* 헤더 및 푸터 스타일 */
+#header, #footer {
+    width: 100%;
+    background-color: #FFF; /* 헤더와 푸터의 배경색 */
+    border-bottom: 1px solid #E7E7E7; /* 헤더의 하단 테두리 */
+    border-top: 1px solid #E7E7E7; /* 푸터의 상단 테두리 */
+    padding: 10px 0; /* 헤더와 푸터 내부 여백 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+}
+
+/* 기존 상품 페이지 스타일 */
 .product-container {
     max-width: 1200px;
     margin: auto;
     padding: 20px;
     display: flex;
-    flex-wrap: wrap; /* 요소들이 강제로 한 줄에 배치되지 않도록 함 */
+    flex-wrap: wrap;
     align-items: flex-start;
     background: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .image-box {
-    flex: 1; /* 이미지 박스가 가변적인 크기를 가지도록 조정 */
-    max-width: 40%; /* 이미지 박스의 최대 너비를 제한 */
+    flex: 1;
+    max-width: 40%;
+    height: 480px;
     padding: 20px;
     box-sizing: border-box;
+    border: 1px solid #e7e7e7;
+    margin-right: 20px;
+    background: #f0f0f0;
 }
 
 .image-box img {
     max-width: 100%;
+    max-height: 100%;
     height: auto;
     display: block;
     margin: 0 auto;
 }
 
 .product-info {
-    flex: 1; /* 정보 부분도 가변적인 크기를 가지도록 조정 */
-    max-width: 60%; /* 정보 부분의 최대 너비를 제한 */
+    flex: 1;
+    max-width: 60%;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -51,22 +67,22 @@ body {
 #product-description {
     font-size: 1rem;
     padding: 20px;
-    background: #f0f0f0; /* 설명 컨테이너 배경 */
-    border: 1px solid #e7e7e7; /* 경계선 추가 */
+    background: #f0f0f0;
+    border: 1px solid #e7e7e7;
     margin-bottom: 20px;
-    height: 200px; /* 설명 컨테이너 높이 조정 */
-    overflow: auto; /* 내용이 많을 경우 스크롤 가능하도록 설정 */
+    height: 200px;
+    overflow: auto;
 }
 
 .purchase-info {
     display: flex;
-    flex-direction: column; /* 수직으로 스택 */
-    align-items: flex-start;
+    align-items: center;
     width: 100%;
 }
 
 .quantity {
-    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-bottom: 10px;
 }
 
 .quantity label {
@@ -80,20 +96,19 @@ body {
 }
 
 button {
-    background-color: #555;
+    background-color: #eebd39;
     color: white;
     border: none;
     padding: 10px 20px;
-    margin-bottom: 10px; /* 버튼 간의 여백 추가 */
+    margin-left: 10px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
 button:hover {
-    background-color: #333;
+    background-color: #d3a029;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
     .product-container {
         flex-direction: column;
@@ -105,9 +120,15 @@ button:hover {
 
     .image-box {
         padding: 0;
+        height: auto;
     }
 
     .product-info {
         padding: 0;
+    }
+
+    /* 모바일 뷰에서 헤더와 푸터 스타일을 조정할 수 있습니다 */
+    #header, #footer {
+        padding: 5px 0;
     }
 }
