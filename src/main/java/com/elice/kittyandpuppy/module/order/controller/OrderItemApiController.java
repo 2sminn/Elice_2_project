@@ -4,21 +4,17 @@ import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemRequest;
 import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemResponse;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.service.OrderItemService;
+import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import com.elice.kittyandpuppy.module.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -50,6 +46,8 @@ public class OrderItemApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderItemIds);
     }
 
+
+
     @GetMapping("/orderItem/{id}")
     public ResponseEntity<OrderItemResponse> getOrderDetail(@PathVariable(value = "id") long id) {
         OrderItem orderItem = orderItemService.findById(id);
@@ -60,7 +58,44 @@ public class OrderItemApiController {
     @DeleteMapping("/orderItem/{id}")
     public ResponseEntity<Void> deleteOrderItem(@PathVariable(value = "id") long id) {
         orderItemService.deleteById(id);
-
         return ResponseEntity.ok().build();
     }
+
+    /**
+     * 상품들을 카트에 담는 메소드
+     * @author Lazycat
+     * @param productId
+     * @return
+     */
+    @PostMapping("/orderItem/{productId}")
+    public ResponseEntity<OrderItemResponse> createOrderItem(@PathVariable(value="productId") Long productId){
+        OrderItem orderItem = orderItemService.create(productId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
+    }
+    /**
+     * 카트에 담긴 상품을 view로 보여주는 메소드
+     * @author Lazycat
+     * @param orderId
+     * @return
+     */
+    @GetMapping("/cart")
+    public ResponseEntity<List<OrderItemResponse>> getCartById(@RequestParam("cartList") int[] orderId) {
+        List<OrderItemResponse> orderItems = orderItemService.getCart(orderId);
+        return new ResponseEntity<>(orderItems, HttpStatus.OK);
+    }
+
+    /**
+     * Cart에 담긴 상품의 수량을 조절하는 메소드
+     * @author Lazycat
+     * @param amount
+     * @return
+     */
+    @PutMapping("/orderItem/{id}")
+    public ResponseEntity<OrderItemResponse> updateOrderItem(@PathVariable(value = "id") Long id,
+                                                             @RequestBody Map <String, Integer> requestData) {
+        int amount = requestData.get("amount");
+        OrderItem orderItem = orderItemService.update(id, amount);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
+    }
+
 }

@@ -10,48 +10,57 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.parser.Entity;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-//@RequestMapping("/products")
-@RequestMapping("/product")
-
+@RequestMapping("/api/product")
 public class ProductController {
-
     private final ProductService productService;
-
-
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
-
     // new 상품 생성
     @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductDto productDto) {
-        Product createProduct = productService.createProduct(productDto);
+    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+        ProductDto createProduct = productService.createProduct(productDto);
         return new ResponseEntity<>(createProduct, HttpStatus.CREATED);
     }
-
     // all 상품 조회
     @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
         List<Product> products = productService.findAll();
+        List<ProductDto> productDtos = products.stream()
+                .map(productService.getProductMapper()::toDto)
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(productDtos, HttpStatus.OK);
+    }
+
+    /**
+     * 이 코드 삭제 절대 금지, 카트에 담긴 상품 전달하는 코드
+     * @author Lazycat
+     * @param cartList
+     * @return
+     */
+    @GetMapping("/cart")
+    public ResponseEntity<List<ProductDto>> getCartById(@RequestParam("cartList") int[] cartList) {
+        List<ProductDto> products = productService.findByCart(cartList);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-    // 특정 id 상품 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product product = productService.findProductById(id);
-        return new ResponseEntity<>(product, HttpStatus.OK);
-    }
 
+    // 특정 id 상품 조회
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable(value="productId") Long productId) {
+        ProductDto product = productService.getProductById(productId);
+        return ResponseEntity.status(HttpStatus.OK).body(product);
+
+    }
     // 특정 id 상품 수정
     @PutMapping("/{id}")
-    public ResponseEntity<Product> updateProduct(@PathVariable Long id, @RequestBody ProductDto updateProductDto) {
-        Product updateProduct = productService.updateProduct(id, updateProductDto);
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @RequestBody ProductDto updateProductDto) {
+        ProductDto updateProduct = productService.updateProduct(id, updateProductDto);
         return new ResponseEntity<>(updateProduct, HttpStatus.OK);
     }
-
     // 특정 id 상품 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {

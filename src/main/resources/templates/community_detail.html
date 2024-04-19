@@ -13,58 +13,72 @@
     />
     <!-- 커뮤니티 css 연결 -->
     <link rel="stylesheet" href="/static/community/community_detail.css" />
+    <link rel="stylesheet" type="text/css" href="/comment/comment.css">
     <!-- 제이쿼리 CDN 추가 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="/static/community/community_detail.js"></script>
+    <script src="/comment/comment.js"></script>
 
 </head>
 <body>
 <div id="header"></div>
     <h1>게시글 상세 정보</h1>
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-10">
-            <table class="table table-hover detail-table">
-                <thead>
-                <tr>
-                    <th scope="col">제목</th>
-                    <td colspan="3"><div id="post-title"></div></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <th scope="row">작성자</th>
-                    <td>작성자 이름</td>
-                    <th scope="row">작성일자</th>
-                    <td><div id="post-created"></div></td>
-                </tr>
-                <tr>
-                    <th scope="row">수정일자</th>
-                    <td><div id="post-modifiedAt"></div></td>
-                    <th scope="row">조회수</th>
-                    <td>123회</td>
-                </tr>
-                <tr>
-                    <th scope="row">내용</th>
-                    <td colspan="3"><div id="post-content"></div></td>
-                </tr>
-                </tbody>
-            </table>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- 게시글 -->
+            <div class="card">
+                <div class="card-body">
+                    <!-- 게시글 제목 -->
+                    <h5 class="card-title"><div id="post-title"></div></h5>
+                    <!-- 게시글 메타 정보 -->
+                    <h6 class="card-subtitle mb-2 text-muted">작성자: 고양이 | 작성일자: <span id="post-created"></span> | 수정일자: <span id="post-modifiedAt"></span></h6>
+                    <!-- 조회수 -->
+                    <h6 class="card-subtitle mb-2 text-muted">조회수: <span id="post-views"></span></h6>
+                    <hr>
+                    <!-- 게시글 내용 -->
+                    <p class="card-text"><div id="post-content"></div></p>
+
+                </div>
+
+            </div>
+            <div class="text-center" style="margin-top: 20px">
+                <button id="editBtn" class="btn btn-edit">수정</button>
+                <button id="deleteBtn" class="btn btn-danger">삭제</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="comment-wrapper">
+    <div class="comment-container">
+        <div class="comment-text-container">
+            <div class="comment-count-box">
+                댓글<span class="comment-count">4</span>
+            </div>
+            <div class="comment-text-box">
+                <div class="context-text-form">
+                    <textarea name="content" class="c-text" cols="30" rows="5"
+                              id = "comment_content"
+                              placeholder="댓글을 입력하세요"></textarea>
+                    <button class="c-file"><img src="/static/img/camera_img.png" class="camera-img">사진첨부</button>
+                    <button class="c-btn" id="comment_submit">등록</button>
+                </div>
+            </div>
+        </div>
+        <div class="comment-list-container" id="comment_list"> <!-- 댓글 리스트 -->
         </div>
     </div>
 </div>
 
 
-
-
-
-    <div id="footer"></div>
+<div id="footer"></div>
 <script>
     $(function () {
-        $("#header").load("/static/header.html");
-        $("#footer").load("/static/footer.html");
-    })
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+    });
 </script>
 </body>
 </html>

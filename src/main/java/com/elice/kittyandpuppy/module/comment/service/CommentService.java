@@ -1,10 +1,17 @@
 package com.elice.kittyandpuppy.module.comment.service;
 
 
+import com.elice.kittyandpuppy.module.comment.dto.CommentResponse;
 import com.elice.kittyandpuppy.module.comment.entity.Comment;
 import com.elice.kittyandpuppy.module.comment.repository.CommentRepository;
-import com.elice.kittyandpuppy.module.comment.repository.request.CommentRequest;
+import com.elice.kittyandpuppy.module.comment.dto.CommentRequest;
+import com.elice.kittyandpuppy.module.member.repository.MemberRepository;
+import com.elice.kittyandpuppy.module.member.service.MemberService;
+import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
+import com.elice.kittyandpuppy.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,12 +21,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
+    private final MemberService memberService;
 
     public Comment save(CommentRequest commentRequest) {
-        return Comment.builder()
+        Comment comment = Comment.builder()
                 .content(commentRequest.getContent())
-                .parent_id(commentRequest.getParentId())
+                .post(postRepository.findById(commentRequest.getPostId()).orElseThrow())
+                .member(memberService.findMemberById(commentRequest.getMemberId()).orElseThrow())
                 .build();
+        return commentRepository.save(comment);
     }
 
     @Transactional
@@ -38,8 +49,13 @@ public class CommentService {
         return commentRepository.findById(commentId).orElseThrow();
     }
 
-    public List<Comment> findByPost(Long postId) {
-        return commentRepository.findByPostId(postId);
+    public List<CommentResponse> findByPost(Long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+        List<CommentResponse> commentResponses = comments.stream()
+                .map(CommentResponse::new)
+                .toList();
+        return commentResponses;
     }
+
 
 }

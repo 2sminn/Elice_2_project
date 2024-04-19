@@ -1,14 +1,15 @@
 package com.elice.kittyandpuppy.module.category.dto;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {CategoryMappingHelper.class})
 public interface CategoryMapper {
-    CategoryMapper INSTANCE = Mappers.getMapper(CategoryMapper.class);
 
-    @Mapping(target = "categoryId", ignore = true)
     Category toEntity(CategoryDto categoryDTO);
+
+    @InheritInverseConfiguration(name = "toEntity")
+    CategoryDto toDto(Category category);
+
+    void updateCategoryFromDto(CategoryDto categoryDto, @MappingTarget Category category);
 }

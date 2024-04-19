@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>구해줘멍냥</title>
+    <!-- 부트스트랩 CDN으로 연결 -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+    />
+    <!-- community_write.css 연결-->
+    <link rel="stylesheet" href="/static/community/community_update.css">
+    <!-- 제이쿼리 CDN 추가 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- CKEditor CDN 연결 -->
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+    <!-- community_write.js 연결 -->
+    <script src="/static/community/community_update.js"></script>
+</head>
+<body>
+<div id="header"></div>
+<h1>게시글 작성 페이지</h1>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 form-container">
+            <h2 class="mb-4">게시글 작성</h2>
+            <div>
+                <div class="mb-3">
+                    <label for="title" class="form-label">제목</label>
+                    <input type="text" class="form-control" id="title" placeholder="게시글 제목을 입력하세요">
+                </div>
+                <div class="mb-3">
+                    <label for="boardType" class="form-label">게시판 유형</label>
+                    <select class="form-control" id="boardType">
+                        <option value="1">커뮤니티</option>
+                        <option value="2">콘텐츠</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">내용</label>
+                    <textarea class="form-control" id="content" rows="5" placeholder="게시글 내용을 입력하세요"></textarea>
+                </div>
+                <button type="button" class="btn btn-primary" id="submitBtn">수정하기</button>
+                <button type="button"
+                        class="btn btn-danger"
+                        onclick="window.location.href='/communities'">취소하기</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="footer"></div>
+<script>
+    $(function () {
+        $("#header").load("/static/header.html");
+        $("#footer").load("/static/footer.html");
+    })
+</script>
+<!-- CKEditor 초기화 스크립트 -->
+<script>
+    CKEDITOR.replace('content');
+</script>
+</body>
+</html>

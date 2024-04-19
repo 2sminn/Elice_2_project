@@ -31,8 +31,8 @@ public class Post extends BaseTimeEntity {
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
-//    @Column(name = "views")
-//    private int views;
+    @Column(name = "views")
+    private int views;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
@@ -54,5 +54,9 @@ public class Post extends BaseTimeEntity {
 
         if (post.content != null)
             this.content = post.content;
+    }
+
+    public void incrementViewCount() {
+        this.views++;
     }
 }
