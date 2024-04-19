@@ -8,10 +8,23 @@ function getUrlParameter(name) {
 
 $(document).ready(function () {
     var orderId = getUrlParameter('orderId');
-    let orderHTML = ""; // Initialize as an empty string
-    let paymentHTML = ""; // Initialize as an empty string
-    let orderItemsHTML = ""; // Initialize as an empty string
-    console.log(orderId);
+    let orderHTML = "";
+    let paymentHTML = "";
+    let orderItemsHTML = "";
+
+    // 결제 완료 후 주문 상태로 변경
+    $.ajax({
+        url: '/api/order/' + orderId + '/status/order',
+        type: 'PUT',
+        async: false,
+        contentType: 'application/json',
+        error: function (xhr, status, error) {
+            // 요청이 실패한 경우 콘솔에 오류 메시지 출력
+            console.error('PUT 요청 실패:', status, error);
+        }
+    })
+
+    // 주문 내역 가져오기
     $.ajax({
         url: '/api/order/' + orderId,
         type: 'GET',
@@ -22,7 +35,7 @@ $(document).ready(function () {
             var orderId = response.id;
             var orderItems = response.orderItems;
             var deliveryAddress = response.deliveryAddress;
-            var totalPrice = response.totalPrice; // Corrected property name
+            var totalPrice = response.totalPrice;
             var payment = response.payment;
             var date = response.date;
 
