@@ -25,11 +25,6 @@ function displayProduct(product){
     $('#product-name').html(product.name);
     $('#product-price').html(product.price);
     $('#product-description').html(product.description);
-    $('#image-box').remove();
-    $('#image-box').append(`
-    <img id="product-image" src="${product.imageUrl}" alt="상품 이미지">
-    `);
-
     // productName.empty();
     // productName.append(`${product.name}`);
 }
@@ -42,13 +37,13 @@ function addToCart(productId){
         dataType: 'json',
         success: function(orderItem){
             alert("장바구니에 담겼습니다.");
-            if(localStorage.getItem('orderItemIds')!= null){
+            if(localStorage.getItem('orderItems')!= null){
                 let orderItems = JSON.parse(localStorage.orderItems);
                 orderItems.push(orderItem.id);
-                localStorage.setItem('orderItemIds',JSON.stringify(orderItems));
+                localStorage.setItem('orderItems',JSON.stringify(orderItems));
 
             } else{
-                localStorage.setItem('orderItemIds',JSON.stringify([orderItem.id]));
+                localStorage.setItem('orderItems',JSON.stringify([orderItem.id]));
             }
         },
         error: function(xhr, status, error) {
@@ -57,5 +52,5 @@ function addToCart(productId){
     });
 
 
-    console.log(window.localStorage.getItem("orderItemIds"));
+    console.log(window.localStorage.getItem("orderItems"));
 }

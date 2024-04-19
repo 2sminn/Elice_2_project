@@ -24,7 +24,7 @@ function loadCartList() {
 }
 
 function getCart() {
-    return JSON.parse(window.localStorage.getItem("orderItemIds")) || [];
+    return JSON.parse(window.localStorage.getItem("orderItems")) || [];
 }
 
 // 장바구니 아이템 조회
@@ -92,14 +92,14 @@ $(document).on('click', '#product-delete', function () {
 
 function removeProductFromList(productId) {
     // 로컬 스토리지에서 리스트 가져오기
-    let productList = JSON.parse(window.localStorage.getItem("orderItemIds")) || [];
+    let productList = JSON.parse(window.localStorage.getItem("orderItems")) || [];
     // 상품 ID를 리스트에서 제거
     const index = productList.indexOf(productId);
     if (index !== -1) {
         productList.splice(index, 1);
     }
     // 업데이트된 리스트를 다시 로컬 스토리지에 저장
-    window.localStorage.setItem("orderItemIds", JSON.stringify(productList));
+    window.localStorage.setItem("orderItems", JSON.stringify(productList));
 }
 
 //수량 감소
