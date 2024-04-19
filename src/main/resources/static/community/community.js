@@ -32,35 +32,10 @@ $(document).ready(function() {
             const row = `
                 <tr>
                     <td>${post.id}</td>
-                    <td><a href="#" class="post-link" data-id="${post.id}">${post.title}</a></td>
+                    <td><a href="/community/${post.id}" class="post-link">${post.title}</a></td>
                     <td>${formatDate(post.createdAt)}</td>
-                    <td id="views-${post.id}">${post.views}</td>
                 </tr>`;
             tbody.append(row);
-        });
-
-        // 게시글 링크에 조회수 업데이트 이벤트 바인딩
-        $('.post-link').on('click', function(e) {
-            e.preventDefault(); // 기본 이벤트 방지
-            const postId = $(this).data('id');
-            updateViews(postId); // 조회수 업데이트 함수 호출
-        });
-    }
-
-    function updateViews(postId) {
-        $.ajax({
-            url: `/api/community/${postId}/increment-views`,
-            type: 'POST',
-            success: function() {
-                const currentViews = parseInt($(`#views-${postId}`).text());
-                $(`#views-${postId}`).text(currentViews + 1); // 클라이언트 측에서 조회수 업데이트
-
-                // 게시글 상세 페이지로 이동
-                window.location.href = `/community/${postId}`;
-            },
-            error: function() {
-                alert('조회수를 업데이트하는 데 실패했습니다.');
-            }
         });
     }
 
