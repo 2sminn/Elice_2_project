@@ -1,6 +1,6 @@
 //페이지 로드 시에
 $(document).ready(function () {
-    const postId = new URLSearchParams(window.location.search).get('postId');
+    const postId = getUrlParameter("postId");
     //댓글 작성
     $("#comment_submit").click(function () {
         comment_create(postId);
@@ -16,6 +16,13 @@ $(document).ready(function () {
     });
 
 });
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
 
 //댓글 작성
 function comment_create(postId) {
@@ -45,12 +52,12 @@ function displayComments(comments) {
             <div class="comment-content-container"> <!-- 댓글 1개-->
                 <div class="row-box comment-header">
                     <div class="commnet-name-box">
-                        <img src ="/img/miao.jpg" class="comment-profile">
+                        <img src ="/static/img/miao.jpg" class="comment-profile">
                         <span class="commnet-name">냔냔펑치</span>
                     </div>
                     <div class="comment-day">${formattedDate}</div>
-                    <img src="/img/comment-edit2.png" class="comment_edit" >
-                    <img src="/img/comment-delete2.png" class="comment_delete">
+                    <img src="/static/img/comment-edit2.png" class="comment_edit" >
+                    <img src="/static/img/comment-delete2.png" class="comment_delete">
                 </div>
                 <div class="row-box comment-article" >
                     <div class="comment_detail_box">
@@ -102,7 +109,7 @@ $(document).on('click', '.comment_edit_btn', function() {
 });
 
 function comment_edit(commentId, newCommentContent) {
-    const postId = new URLSearchParams(window.location.search).get('postId');
+    const postId = getUrlParameter("postId");
     let data = {content : newCommentContent}
     $.ajax({
         url: '/api/comment/' + commentId,
@@ -128,7 +135,7 @@ $(document).on('click', '.comment_delete', function() {
 });
 //댓글 삭제
 function comment_delete(commentId){
-    const postId = new URLSearchParams(window.location.search).get('postId');
+    const postId = getUrlParameter("postId");
     $.ajax(
         {
             url: '/api/comment/' + commentId,
