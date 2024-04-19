@@ -26,8 +26,8 @@ public class OrderService {
      * @return 생성된 Order 객체
      */
     @Transactional
-    public Order create(Member member, Delivery delivery, List<OrderItem> orderItems) {
-        Order createdOrder = Order.createOrder(member, delivery, orderItems);
+    public Order create(Member member, Delivery delivery, List<OrderItem> orderItems, String payment) {
+        Order createdOrder = Order.createOrder(member, delivery, orderItems, payment);
 
         return orderRepository.save(createdOrder);
     }
@@ -119,20 +119,10 @@ public class OrderService {
         Order order = findById(id);
         order.setDelivery(delivery);
     }
-
-    //updateOrder 생성
-
-    /**
-     * orderItems들을 수량 변경 후에 저장하는 메소드이다.
-     * @param orderId
-     * @param orderItems
-     * @return Order
-     */
     @Transactional
-    public Order updateOrder(Long orderId, List<OrderItem> orderItems) {
-        Order findOrder = findById(orderId);
-        findOrder.setOrderItems(orderItems);
-        return orderRepository.save(findOrder);
+    public void updatePayment(Long id, String payment) {
+        Order order = findById(id);
+        order.setPayment(payment);
     }
 }
 
