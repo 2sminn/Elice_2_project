@@ -10,8 +10,15 @@ let requestsCompleted = 0; // 총 주문 건수
 $(document).ready(function () {
 
     token = localStorage.getItem("token");
-    // orderItemsId = JSON.parse(localStorage.getItem('orderItemsId'));
-    orderItemsId = [1, 2, 3]
+
+    orderItemsId = localStorage.getItem('orderItemsId');
+
+    if (orderItemsId !== null) {
+        orderItemsId = JSON.parse(orderItemsId);
+    } else {
+        orderItemsId = [];
+    }
+
     getOrderItems();
     getMemberInfo();
 
@@ -62,22 +69,21 @@ function execDaumPostcode() {
 }
 
 // 사용자 정보 불러오기
-// TODO: memberAddress API 구현이 끝나면 수정 필요
 function getMemberInfo() {
     $.ajax({
         url: '/api/address/member',
-        type: 'GET',
+        type: 'POST',
         async: false,
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
+        data: JSON.stringify({
+            token: token
+        }),
         contentType: 'application/json',
         success: function (response) {
             document.getElementById('zipCode').value = response.address.zipCode;
             document.getElementById('street').value = response.address.street;
             document.getElementById('detail').value = response.address.detail;
-            document.getElementById('receiverName').value = response.deliveryName;
-            document.getElementById('receiverPhone').value = response.deliveryPhone;
+            document.getElementById('receiverName').value = response.name;
+            document.getElementById('receiverPhone').value = response.phone;
         }
     });
 }
@@ -142,33 +148,35 @@ function order() {
         return;
     }
 
-    // TODO: 체크박스가 체크되어 있으면 회원 배송지 정보 업데이트 하기
-    // let checkbox = document.getElementById("deliveryCheckbox");
-    //
-    // if (checkbox.checked) {
-    //     $.ajax({
-    //         url: '/api/address/member',
-    //         type: 'POST',
-    //         async: false,
-    //         data: JSON.stringify({
-    //             address: {
-    //                 zipCode: document.getElementById('zipCode').value,
-    //                 street: document.getElementById('street').value,
-    //                 detail: document.getElementById('detail').value
-    //             },
-    //             deliveryName: document.getElementById('receiverName').value,
-    //             deliveryPhone: document.getElementById('receiverPhone').value,
-    //             token: token
-    //         }),
-    //         contentType: 'application/json',
-    //         success: function (response) {
-    //             deliveryId = response;
-    //         },
-    //         error: function (xhr, status, error) {
-    //             console.error('API 호출 실패:', status, error);
-    //         }
-    //     });
-    // }
+    // 체크박스가 체크되어 있으면 회원 배송지 정보 업데이트 하기
+    let checkbox = document.getElementById("deliveryCheckbox");
+
+    if (checkbox.checked) {
+        $.ajax({
+            url: '/api/details',
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                address: {
+                    zipCode: document.getElementById('zipCode').value,
+                    street: document.getElementById('street').value,
+                    detail: document.getElementById('detail').value
+                },
+                name: document.getElementById('receiverName').value,
+                phone: document.getElementById('receiverPhone').value,
+                token: token
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                if (response === true) {
+                    console.log('API 호출 성공');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('API 호출 실패:', status, error);
+            }
+        });
+    }
 
     // 배송지 정보 저장
     $.ajax({
@@ -199,7 +207,7 @@ function order() {
         type: 'POST',
         async: false,
         data: JSON.stringify({
-            memberId: 1,
+            token: token,
             deliveryId: deliveryId,
             orderItemIds: orderItemsId,
             payment: payBy
@@ -212,6 +220,8 @@ function order() {
             console.error('API 호출 실패:', status, error);
         }
     });
+
+    localStorage.removeItem('orderItemsId');
 
     // 카카오 페이 결제
     if (payBy === "kakao") {
