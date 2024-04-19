@@ -1,18 +1,20 @@
+const productId = window.location.pathname.split('/').pop();
+
 $(document).ready(function () {
     loadProduct();
-    $("#add-to-cart").click(function () {
-        const productId = $('#product-name').data('productId');
-        addToCart(productId);
-    });
-    $("#buy-now").click(function () {
-        const productId = $('#product-name').data('productId');
-        buyProduct(productId);
-    });
+});
+
+$("#add-to-cart").click(function () {
+
+    addToCart(productId);
+});
+$("#buy-now").click(function () {
+
+    buyProduct(productId);
 });
 
 function loadProduct(){
     //추후에 사용
-    const productId = window.location.pathname.split('/').pop();
     $.ajax({
         //TODO 추후에 productId를 받을수 있다면 수정할 예정입니다.
         url: `/api/product/${productId}`,
@@ -34,17 +36,18 @@ function displayProduct(product){
 }
 
 //장바구니 버튼을 눌렀을 때
-function addToCart(productId){
+function addToCart(){
+    console.log(productId);
     $.ajax({
         url:`/api/orderItem/${productId}`,
         type: 'POST',
         dataType: 'json',
         success: function(orderItem){
             alert("장바구니에 담겼습니다.");
-            if(localStorage.getItem('orderItemIds')!= null){
-                let orderItems = JSON.parse(localStorage.orderItems);
+            if(localStorage.getItem('orderItemIds')!== null){
+                var orderItems = JSON.parse(localStorage.getItem('orderItemIds'));
                 orderItems.push(orderItem.id);
-                localStorage.setItem('orderItemIds',JSON.stringify(orderItems));
+                localStorage.setItem('orderItemIds', JSON.stringify(orderItems));
 
             } else{
                 localStorage.setItem('orderItemIds',JSON.stringify([orderItem.id]));
@@ -60,21 +63,21 @@ function addToCart(productId){
 }
 
 //구매하기 버튼 눌렀을 때
-function buyProduct(productId){
+function buyProduct(){
     $.ajax({
         url: `/api/orderItem/${productId}`,
         type: 'POST',
         dataType: 'json',
         success: function (orderItem) {
-            alert("장바구니에 담겼습니다.");
-            if(localStorage.getItem('orderItemIds')!= null){
-                let orderItems = JSON.parse(localStorage.orderItems);
+            if(localStorage.getItem('orderItemIds') !== null){
+                var orderItems = JSON.parse(localStorage.getItem('orderItemIds'));
                 orderItems.push(orderItem.id);
-                localStorage.setItem('orderItemIds',JSON.stringify(orderItems));
+                localStorage.setItem('orderItemIds', JSON.stringify(orderItems));
 
             } else{
                 localStorage.setItem('orderItemIds',JSON.stringify([orderItem.id]));
             }
+
             location.href = '/cart';
         }
     });
