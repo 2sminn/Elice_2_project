@@ -1,14 +1,14 @@
 $(document).ready(function() {
     // 페이지 로드 시 기본적으로 강아지 카테고리(예시로 id=1)의 상품 로드
-    loadProducts(1);
+    loadProducts(3);
 
     // 강아지와 고양이 버튼에 클릭 이벤트 바인딩
     $('.parent_category').click(function() {
         $('.parent_category').removeClass('selected');
         $(this).addClass('selected');
 
-        const categoryId = $(this).hasClass('dog') ? 1 : 2;
-        loadProducts(categoryId);
+        const parentId = $(this).hasClass('dog') ? 1 : 2;
+        loadProducts(parentId);
     });
 
     // 하위 카테고리 버튼에 클릭 이벤트 바인딩
@@ -29,10 +29,11 @@ $(document).ready(function() {
 
 function loadProducts(categoryId) {
     $.ajax({
-        url: `/api/categories/${categoryId}`, // 올바른 엔드포인트로 GET 요청
+        url: `/categories/${categoryId}/products`, // 올바른 엔드포인트로 GET 요청
         type: 'GET',
         dataType: 'json',
         success: function(products) {
+            console.log(products);
             updateProductSection(products);
         },
         error: function(error) {
