@@ -90,3 +90,16 @@ body {
     font-weight: bold;
     color: #ffff;
 }
+
+.index-login{
+    width: 122px;
+    height: 45px;
+    background-color: #ffffff;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 9px;
+    border: #6D6045 2px solid;
+    color: #6D6045;
+}

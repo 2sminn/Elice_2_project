@@ -97,4 +97,14 @@ public class MemberRestController {
         return new ResponseEntity<>(true,headers,HttpStatus.OK);
     }
 
+    @PostMapping("/member/id")
+    public ResponseEntity<Long> getIdByToken(@RequestBody Map<String,String> map){
+        String token = map.get("token");
+        if(tokenProvider.validToken(token)){
+            Long id = tokenProvider.getMemberId(token);
+            return new ResponseEntity<>(id,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
+    }
+
 }
