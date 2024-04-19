@@ -1,12 +1,11 @@
-
 //페이지 로드 시에
 $(document).ready(function () {
+    const postId = new URLSearchParams(window.location.search).get('postId');
     //댓글 작성
     $("#comment_submit").click(function () {
         comment_create(postId);
     });
     //댓글 조회
-    const postId = window.location.pathname.split('/').pop();
     $.ajax({
         url: `/api/comment/${postId}`,
         type: 'GET',
@@ -30,7 +29,7 @@ function comment_create(postId) {
         data: JSON.stringify(data),
         success: function (data) {
             alert("댓글이 작성되었습니다");
-            location.href = '/community/' + postId;
+            location.href = '/community?postId=' + postId;
         }
     });
 }
@@ -71,7 +70,7 @@ function displayComments(comments) {
         // 댓글 요소를 목록에 추가
         commentList.append(commentElement);
 
-        });
+    });
 }
 
 //댓글 수정 버튼 클릭
@@ -103,7 +102,7 @@ $(document).on('click', '.comment_edit_btn', function() {
 });
 
 function comment_edit(commentId, newCommentContent) {
-    const postId = window.location.pathname.split('/').pop();
+    const postId = new URLSearchParams(window.location.search).get('postId');
     let data = {content : newCommentContent}
     $.ajax({
         url: '/api/comment/' + commentId,
@@ -113,7 +112,7 @@ function comment_edit(commentId, newCommentContent) {
         data: JSON.stringify(data),
         success: function (data) {
             alert("댓글이 수정되었습니다");
-            location.href = '/community/' + postId;
+            location.href = '/community?postId=' + postId;
         }
     });
 }
@@ -129,7 +128,7 @@ $(document).on('click', '.comment_delete', function() {
 });
 //댓글 삭제
 function comment_delete(commentId){
-    const postId = window.location.pathname.split('/').pop();
+    const postId = new URLSearchParams(window.location.search).get('postId');
     $.ajax(
         {
             url: '/api/comment/' + commentId,
@@ -137,7 +136,7 @@ function comment_delete(commentId){
             dataType: 'text',
             success: function (response) {
                 alert("댓글이 삭제되었습니다.");
-                location.href = '/community/' + postId;
+                location.href = '/community?postId=' + postId;
             }
         }
     );

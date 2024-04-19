@@ -6,12 +6,7 @@ body{
     letter-spacing: -1px;
 }
 
-.comment-wrapper{
-
-    display: flex;
-
-    justify-content: center;
-}
+.comment-wrapper{display: flex;justify-content: center;margin-bottom: 18px;}
 .comment-container{
 
     width: 1200px;

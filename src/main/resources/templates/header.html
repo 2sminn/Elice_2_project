@@ -1,7 +1,6 @@
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <link rel="stylesheet" href="/static/header/style.css"/>
-  <!--  <script src="/static/header/header.js" type="module" defer></script>-->
 </head>
 <header class="header" id="header-fragment">
   <div class="left-box"><span>
@@ -13,17 +12,14 @@
   </span></div>
 
   <div class="right-box">
-    <a href="/login" class="index-login" id="index-login"><p id="login">로그인</p></a>
+    <a href="/login" class="write-button" id="index-login"><p id="login">로그인</p></a>
     <a href="/cart" class="write-button" id="index-register"><p>장바구니</p></a>
   </div>
   <script>
-    window.onload=function (){
-      const token = localStorage.getItem("token");
-      if(token==null){
-        return;
+    const token = localStorage.getItem("token");
+      if (token !== null) {
+        $("#login").text("마이 페이지");
+        document.getElementById("index-login").href = "/mypage";
       }
-      $("#login").text("마이 페이지");
-      document.getElementById("index-login").href = "/mypage";
-    }
   </script>
 </header>

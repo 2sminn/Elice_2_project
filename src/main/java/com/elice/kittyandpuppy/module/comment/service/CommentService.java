@@ -28,7 +28,6 @@ public class CommentService {
         Comment comment = Comment.builder()
                 .content(commentRequest.getContent())
                 .post(postRepository.findById(commentRequest.getPostId()).orElseThrow())
-                .member(memberService.findMemberById(commentRequest.getMemberId()).orElseThrow())
                 .build();
         return commentRepository.save(comment);
     }
