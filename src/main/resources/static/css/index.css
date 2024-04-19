@@ -1,12 +1,7 @@
 body{
     box-sizing: border-box;
-    font-size: 19px;
-    font-family: 'Noto Sans KR', sans-serif;
-    letter-spacing: -1px;
 }
-input{
-    font-family: 'Noto Sans KR', sans-serif;
-}
+
 
 #content {
     height: 83vh;
