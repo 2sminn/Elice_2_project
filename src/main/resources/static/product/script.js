@@ -4,6 +4,10 @@ $(document).ready(function () {
         const productId = $('#product-name').data('productId');
         addToCart(productId);
     });
+    $("#buy-now").click(function () {
+        const productId = $('#product-name').data('productId');
+        buyProduct(productId);
+    });
 });
 
 function loadProduct(){
@@ -25,8 +29,8 @@ function displayProduct(product){
     $('#product-name').html(product.name);
     $('#product-price').html(product.price);
     $('#product-description').html(product.description);
-    // productName.empty();
-    // productName.append(`${product.name}`);
+    $('#image-box').append(`<img id="product-image" src="${product.imageUrl}" alt="상품 이미지">`);
+
 }
 
 //장바구니 버튼을 눌렀을 때
@@ -37,13 +41,13 @@ function addToCart(productId){
         dataType: 'json',
         success: function(orderItem){
             alert("장바구니에 담겼습니다.");
-            if(localStorage.getItem('orderItems')!= null){
+            if(localStorage.getItem('orderItemIds')!= null){
                 let orderItems = JSON.parse(localStorage.orderItems);
                 orderItems.push(orderItem.id);
-                localStorage.setItem('orderItems',JSON.stringify(orderItems));
+                localStorage.setItem('orderItemIds',JSON.stringify(orderItems));
 
             } else{
-                localStorage.setItem('orderItems',JSON.stringify([orderItem.id]));
+                localStorage.setItem('orderItemIds',JSON.stringify([orderItem.id]));
             }
         },
         error: function(xhr, status, error) {
@@ -52,5 +56,26 @@ function addToCart(productId){
     });
 
 
-    console.log(window.localStorage.getItem("orderItems"));
+    console.log(window.localStorage.getItem("orderItemIds"));
+}
+
+//구매하기 버튼 눌렀을 때
+function buyProduct(productId){
+    $.ajax({
+        url: `/api/orderItem/${productId}`,
+        type: 'POST',
+        dataType: 'json',
+        success: function (orderItem) {
+            alert("장바구니에 담겼습니다.");
+            if(localStorage.getItem('orderItemIds')!= null){
+                let orderItems = JSON.parse(localStorage.orderItems);
+                orderItems.push(orderItem.id);
+                localStorage.setItem('orderItemIds',JSON.stringify(orderItems));
+
+            } else{
+                localStorage.setItem('orderItemIds',JSON.stringify([orderItem.id]));
+            }
+            location.href = '/cart';
+        }
+    });
 }

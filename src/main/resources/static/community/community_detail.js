@@ -1,6 +1,6 @@
 $(document).ready(function() {
     // URL에서 게시글 ID 추출
-    const postId = window.location.pathname.split('/').pop();
+    const postId = getUrlParameter("postId");
 
     // AJAX 요청으로 게시글 데이터 가져오기
     $.ajax({
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
     // 수정 버튼 클릭 이벤트 핸들러 추가
     $('#editBtn').click(function() {
-        window.location.href = `/community/update/${postId}`; // 수정 페이지로 리디렉션
+        window.location.href = `/community/update?postId=${postId}`; // 수정 페이지로 리디렉션
     });
 
     // 삭제 버튼 클릭 이벤트 핸들러 추가
@@ -41,6 +41,13 @@ $(document).ready(function() {
         }
     });
 });
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+}
 
 function formatDate(dateArray) {
     var date = new Date(dateArray[0], dateArray[1] - 1, dateArray[2], dateArray[3], dateArray[4], dateArray[5], dateArray[6] / 1000000);

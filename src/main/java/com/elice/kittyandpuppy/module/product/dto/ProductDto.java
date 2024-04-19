@@ -1,7 +1,6 @@
 package com.elice.kittyandpuppy.module.product.dto;
 
 
-import com.elice.kittyandpuppy.module.product.entity.Product;
 import lombok.*;
 
 @Data // 표준적인 메서드를 자동으로 생성

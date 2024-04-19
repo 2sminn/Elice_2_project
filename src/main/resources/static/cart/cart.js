@@ -1,8 +1,10 @@
 $(document).ready(function () {
     loadCartList();
-    $("#product-order").click(function () {
-        order();
+    $('#product-order').click(function() {
+        // '/order'로 이동합니다.
+        window.location.href = '/order';
     });
+
 });
 
 //장바구니 조회
@@ -24,7 +26,7 @@ function loadCartList() {
 }
 
 function getCart() {
-    return JSON.parse(window.localStorage.getItem("orderItems")) || [];
+    return JSON.parse(window.localStorage.getItem("orderItemIds")) || [];
 }
 
 // 장바구니 아이템 조회
@@ -38,7 +40,7 @@ function displayOrderItems(orderItems) {
             <div class="product-box"> <!--상품 1개-->
                 <div class="product-item" id="product-item">
                     <input type="checkbox" class="product-check">
-                    <div><img src="/static/order/test_item.png" class="product-img"></div>
+                    <div><img src="${orderItem.imageUrl}" class="product-img"></div>
                     <div class="product-detail-box">
                         <div class="detail-name">${orderItem.name}</div>
                         <div class="detail-checkbox">
@@ -53,10 +55,7 @@ function displayOrderItems(orderItems) {
                     <img src="/static/img/comment-delete2.png" class="product-delete" id="product-delete">
                 </div>
             </div>
-            <div class="product-btn-box">
-                <button class="product-order" id="product-order">주문하기</button>
-                <button class="product-cancel">취소하기</button>
-            </div>
+
         `);
         cartElement.find('.product-item').data('id', orderItem.id);
         cartElement.find('.detail-price').data('price', orderItem.price);
@@ -92,14 +91,14 @@ $(document).on('click', '#product-delete', function () {
 
 function removeProductFromList(productId) {
     // 로컬 스토리지에서 리스트 가져오기
-    let productList = JSON.parse(window.localStorage.getItem("orderItems")) || [];
+    let productList = JSON.parse(window.localStorage.getItem("orderItemIds")) || [];
     // 상품 ID를 리스트에서 제거
     const index = productList.indexOf(productId);
     if (index !== -1) {
         productList.splice(index, 1);
     }
     // 업데이트된 리스트를 다시 로컬 스토리지에 저장
-    window.localStorage.setItem("orderItems", JSON.stringify(productList));
+    window.localStorage.setItem("orderItemIds", JSON.stringify(productList));
 }
 
 //수량 감소
@@ -137,19 +136,3 @@ function changeCount(id, amount) {
 }
 
 
-
-
-
-//TODO 주문하기
-function order(){
-    $.ajax({
-        url: "/order",
-        type: "GET",
-        success: function(response) {
-            console.log("주문 페이지로 이동합니다.");
-        },
-        error: function(xhr, status, error) {
-            console.error("주문하기 요청에 실패했습니다:", status, error);
-        }
-    });
-}
