@@ -4,12 +4,15 @@ $(document).ready(function() {
 
     // 강아지와 고양이 버튼에 클릭 이벤트 바인딩
     $('.parent_category').click(function() {
+        var parentCategory = $(this).hasClass('dog') ? 'dog' : 'cat';
+        var parentCategoryId = $(this).hasClass('dog') ? 1 : 2;
+
         $('.parent_category').removeClass('selected');
         $(this).addClass('selected');
-
-        const parentId = $(this).hasClass('dog') ? 1 : 2;
-        loadProductsByParentId(parentId);
+        updateCategoryButtons(parentCategory);
+        loadProductsByParentId(parentCategoryId);
     });
+
 
     // 하위 카테고리 버튼에 클릭 이벤트 바인딩
     $('.category').click(function() {
@@ -26,7 +29,18 @@ $(document).ready(function() {
         window.location.href = `/product/${productId}`;
     });
 });
+function updateCategoryButtons(parentCategory) {
+    // 상위 카테고리에 따라 하위 카테고리 버튼의 ID를 업데이트합니다.
+    var categoryMappings = {
+        'dog': { '간식': 3, '매트': 4, '사료': 5, '패션': 6, '장난감': 7 },
+        'cat': { '간식': 8, '매트': 9, '사료': 10, '패션': 11, '장난감': 12 }
+    };
 
+    $('.category').each(function() {
+        var categoryName = $(this).text();
+        $(this).data('category-id', categoryMappings[parentCategory][categoryName]);
+    });
+}
 function loadProductsByParentId(parentId) {
     $.ajax({
         url: `/categories/${parentId}/subcategories`, // 올바른 엔드포인트로 GET 요청
