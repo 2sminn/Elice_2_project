@@ -11,7 +11,7 @@ function loadProduct(){
     const productId = window.location.pathname.split('/').pop();
     $.ajax({
         //TODO 추후에 productId를 받을수 있다면 수정할 예정입니다.
-        url: '/api/product/1',
+        url: `/api/product/${productId}`,
         type: 'GET',
         dataType: 'json',
         success: function (product) {
