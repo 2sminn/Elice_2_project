@@ -33,6 +33,30 @@ $(document).ready(function() {
 
 function loadProducts(categoryId) {
     $.ajax({
+        url: `/api/categories/${categoryId}`, // 해당 카테고리id에 있는 상품데이터 갖고오기 <GET 요청>
+        type: 'GET',
+        dataType: 'json',
+        success: function(products) {
+            updateProductSection(products); // 상품 섹션 업데이트
+        },
+        error: function(error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+
+    $.ajax({
+        url: `/api/categories/${parentId}/subcategories`, // 서버의 해당 엔드포인트로 GET 요청
+        type: 'GET',
+        dataType: 'json',
+        success: function(products) {
+            updateProductSection(products); // 상품 섹션 업데이트
+        },
+        error: function(error) {
+            console.error('Error fetching products:', error);
+        }
+    });
+
+    $.ajax({
         url: `/api/categories/${categoryId}/products`, // 서버의 해당 엔드포인트로 GET 요청
         type: 'GET',
         dataType: 'json',
@@ -53,7 +77,7 @@ function updateProductSection(products) {
     products.forEach(product => {
         const productHtml = `
             <div class="product-item">
-                <img src="${product.imageUrl}" alt="${product.name}">
+                <img src="${product.image_url}" alt="${product.name}">
                 <h4 class="product-name">${product.name}</h4>
                 <p class="product-price">${product.price}</p>
             </div>
