@@ -11,7 +11,7 @@ $(document).ready(function () {
 
     token = localStorage.getItem("token");
 
-    orderItemsId = localStorage.getItem('orderItemIds');
+    orderItemsId = localStorage.getItem('orderItemsId');
 
     if (orderItemsId !== null) {
         orderItemsId = JSON.parse(orderItemsId);
@@ -221,7 +221,7 @@ function order() {
         }
     });
 
-    localStorage.removeItem('orderItemIds');
+    localStorage.removeItem('orderItemsId');
 
     // 카카오 페이 결제
     if (payBy === "kakao") {

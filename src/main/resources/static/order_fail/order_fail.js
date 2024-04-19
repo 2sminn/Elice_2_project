@@ -24,7 +24,7 @@ function orderRetry() {
         async: false,
         contentType: 'application/json',
         success: function (response) {
-            localStorage.setItem("orderItemIds", JSON.stringify(response.orderItemIds));
+            localStorage.setItem("orderItemsId", JSON.stringify(response.orderItemIds));
         },
         error: function (xhr, status, error) {
             console.error('API 호출 실패:', status, error);
