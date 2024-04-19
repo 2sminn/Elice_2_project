@@ -2,12 +2,13 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <ti햐tle>상품 상세 페이지</ti햐tle>
+    <title>상품 상세 페이지</title>
+    <link rel="stylesheet" href="/static/product/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/static/product/style.css"> <!-- 경로 확인 -->
-    <script src="/static/product/script.js"></script> <!-- 경로 확인 -->
 </head>
 <body>
+<div id="header"></div> <!-- 헤더가 로드될 위치 -->
+
 <div class="product-container">
     <div class="image-box">
         <img id="product-image" src="path-to-your-image.jpg" alt="상품 이미지">
@@ -27,5 +28,14 @@
     </div>
 </div>
 
+<div id="footer"></div> <!-- 푸터가 로드될 위치 -->
+
+<script src="/static/product/script.js"></script>
+<script>
+    $(function() {
+        $("#header").load("header.html");
+        $("#footer").load("footer.html");
+    });
+</script>
 </body>
 </html>
