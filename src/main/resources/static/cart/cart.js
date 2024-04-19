@@ -1,7 +1,8 @@
 $(document).ready(function () {
     loadCartList();
-    $("#product-order").click(function () {
-        order();
+    $('#product-order').click(function() {
+        // '/order'로 이동합니다.
+        window.location.href = '/order';
     });
 
 });
@@ -135,8 +136,3 @@ function changeCount(id, amount) {
 }
 
 
-//TODO 주문하기
-$('#product-order').click(function() {
-    // '/order'로 이동합니다.
-    window.location.href = '/order';
-});
