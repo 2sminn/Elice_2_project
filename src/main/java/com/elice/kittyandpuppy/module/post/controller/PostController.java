@@ -13,8 +13,8 @@ public class PostController {
         return "community";
     }
 
-    @GetMapping("/community/{id}")
-    public String communityDetailForm(@PathVariable Long id) {
+    @GetMapping("/community")
+    public String communityDetailForm() {
         return "community_detail";
     }
 
@@ -23,8 +23,8 @@ public class PostController {
         return "community_write";
     }
 
-    @GetMapping("/community/update/{id}")
-    public String communityUpdateForm(@PathVariable Long id) {
+    @GetMapping("/community/update")
+    public String communityUpdateForm() {
         return "community_update";
     }
 }

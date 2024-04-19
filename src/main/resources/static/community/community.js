@@ -32,7 +32,7 @@ $(document).ready(function() {
             const row = `
                 <tr>
                     <td>${post.id}</td>
-                    <td><a href="/community/${post.id}" class="post-link">${post.title}</a></td>
+                    <td><a href="/community?postId=${post.id}" class="post-link">${post.title}</a></td>
                     <td>${formatDate(post.createdAt)}</td>
                 </tr>`;
             tbody.append(row);

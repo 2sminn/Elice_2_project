@@ -33,7 +33,7 @@ public class PostRestController {
     }
 
     @GetMapping("/community/{id}")
-    public ResponseEntity<ResponsePost> getCommunityDetail(@PathVariable Long id) {
+    public ResponseEntity<ResponsePost> getCommunityDetail(@PathVariable(name = "id") Long id) {
         Post post = postService.getCommunityDetail(id);
 
         return ResponseEntity.ok().body(new ResponsePost(post));
@@ -50,7 +50,7 @@ public class PostRestController {
 
     // PUT, 수정 완료
     @PutMapping("/community/post/{id}")
-    public ResponseEntity<Post> updateCommunityDetail(@PathVariable Long id, @RequestBody RequestPost requestPost) {
+    public ResponseEntity<Post> updateCommunityDetail(@PathVariable(name = "id") Long id, @RequestBody RequestPost requestPost) {
         Post updated = postService.updateCommunityDetail(id, requestPost);
         return (updated != null) ?
                 ResponseEntity.status(HttpStatus.OK).body(updated):
@@ -59,7 +59,7 @@ public class PostRestController {
 
     // DELETE
     @DeleteMapping("/community/post/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable(name = "id") Long id) {
         postService.deleteCommunity(id);
         return ResponseEntity.ok().build();
     }

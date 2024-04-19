@@ -40,7 +40,7 @@ function displayOrderItems(orderItems) {
             <div class="product-box"> <!--상품 1개-->
                 <div class="product-item" id="product-item">
                     <input type="checkbox" class="product-check">
-                    <div><img src="/static/order/test_item.png" class="product-img"></div>
+                    <div><img src="${orderItem.imageUrl}" class="product-img"></div>
                     <div class="product-detail-box">
                         <div class="detail-name">${orderItem.name}</div>
                         <div class="detail-checkbox">

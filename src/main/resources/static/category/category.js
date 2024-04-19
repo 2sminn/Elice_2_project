@@ -50,9 +50,13 @@ function updateProductSection(products) {
     products.forEach(product => {
         const productHtml = `
             <div class="product-item" data-product-id="${product.id}">
-                <img src="${product.imageUrl}" alt="${product.name}">
-                <h4 class="product-name">${product.name}</h4>
-                <p class="product-price">${product.price}</p>
+                <div class="img">
+                    <img class="image-thumbnail" src="${product.imageUrl}" alt="${product.name}">
+                </div>
+                <div class="detail">
+                    <h4 class="product-name">${product.name}</h4>
+                    <p class="product-price">${product.price}</p>
+                </div>
             </div>
         `;
         productSection.append(productHtml);

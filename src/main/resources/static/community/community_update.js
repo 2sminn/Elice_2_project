@@ -24,7 +24,6 @@ const storage = getStorage(app);
 
 $(document).ready(function() {
     let editorInstance; // 에디터 인스턴스를 저장할 변수
-
     // CKEditor 초기화
     ClassicEditor
         .create(document.querySelector('#content'), {
@@ -35,7 +34,7 @@ $(document).ready(function() {
             editorInstance = editor; // 로컬 변수에 에디터 인스턴스 저장
 
             // URL에서 게시글 ID 추출
-            const postId = window.location.pathname.split('/').pop();
+            const postId = getUrlParameter('postId');
 
             // 게시글 데이터 가져오기
             $.ajax({
@@ -80,7 +79,7 @@ $(document).ready(function() {
         };
 
         // URL에서 게시글 ID 추출
-        const postId = window.location.pathname.split('/').pop();
+        const postId = getUrlParameter('postId');
 
         $.ajax({
             url: `/api/community/post/${postId}`,
@@ -190,4 +189,11 @@ class FirebaseUploadAdapter {
             };
         }));
     }
+}
+
+function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    var results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
 }
