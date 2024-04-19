@@ -119,7 +119,6 @@ public class OrderService {
         Order order = findById(id);
         order.setDelivery(delivery);
     }
-
     @Transactional
     public void updatePayment(Long id, String payment) {
         Order order = findById(id);
