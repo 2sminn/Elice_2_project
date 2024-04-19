@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:8080") // 프론트엔드 서버의 URL
 @RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
