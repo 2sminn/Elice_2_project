@@ -25,13 +25,8 @@ function displayProduct(product){
     $('#product-name').html(product.name);
     $('#product-price').html(product.price);
     $('#product-description').html(product.description);
-    $('#image-box').remove();
-    $('#image-box').append(`
-    <img id="product-image" src="${product.imageUrl}" alt="상품 이미지">
-    `);
+    $('#image-box').append(`<img id="product-image" src="${product.imageUrl}" alt="상품 이미지">`);
 
-    // productName.empty();
-    // productName.append(`${product.name}`);
 }
 
 //장바구니 버튼을 눌렀을 때
