@@ -1,11 +1,9 @@
 $(document).ready(function () {
     loadCartList();
-
-});
-
-$('#product-order').click(function() {
-    // '/order'로 이동합니다.
-    window.location.href = '/order';
+    $('#product-order').click(function() {
+        // '/order'로 이동합니다.
+        window.location.href = '/order';
+    });
 });
 
 //장바구니 조회

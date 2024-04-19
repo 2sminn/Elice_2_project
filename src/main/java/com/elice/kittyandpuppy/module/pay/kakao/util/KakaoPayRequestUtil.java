@@ -30,9 +30,9 @@ public class KakaoPayRequestUtil {
 
         jsonObject.put("total_amount", order.getTotalPrice());
         jsonObject.put("tax_free_amount", "0");
-        jsonObject.put("approval_url", "http://localhost:8080/order/kakaopay"+"?memberId=" + memberId + "&orderId=" + order.getId()); // 성공 시 redirect url
-        jsonObject.put("cancel_url", "http://localhost:8080/order/kakaopay/fail"); // 취소 시 redirect url
-        jsonObject.put("fail_url", "http://localhost:8080/order/kakaopay/fail"); // 실패 시 redirect url
+        jsonObject.put("approval_url", "http://localhost:8080/payment/order/kakaopay"+"?memberId=" + memberId + "&orderId=" + order.getId()); // 성공 시 redirect url
+        jsonObject.put("cancel_url", "http://localhost:8080/payment/order/kakaopay/fail"); // 취소 시 redirect url
+        jsonObject.put("fail_url", "http://localhost:8080/payment/order/kakaopay/fail"); // 실패 시 redirect url
 
         return new KakaoPayRequest("https://open-api.kakaopay.com/online/v1/payment/ready", jsonObject);
     }

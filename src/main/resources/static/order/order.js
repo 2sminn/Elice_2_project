@@ -257,16 +257,19 @@ function order() {
             }
         });
     }
+
+    location.replace("/order/success" + "?orderId=" + orderId);
 }
 
 // 결제 승인창에서 정상 결제시 메세지를 전송함
 window.addEventListener("message", receiveMessage, false);
 function receiveMessage(event) {
+    console.log(event);
     var receivedData = JSON.parse(event.data);
     var message = receivedData.message;
     if (message === '결제 실패') {
         location.replace("/order/fail" + "?orderId=" + orderId);
-    } else if (message === '결제 성공'){
+    } else {
         location.replace("/order/success" + "?orderId=" + orderId);
     }
 }
