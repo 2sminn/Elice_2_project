@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.order.controller;
 
+import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
 import com.elice.kittyandpuppy.module.order.dto.order.OrderResponse;
@@ -35,12 +36,13 @@ public class OrderApiController {
     private final OrderItemService orderItemService;
     private final DeliveryService deliveryService;
     private final MemberService memberService;
+    private final TokenProvider tokenProvider;
 
     @PostMapping("/order")
     public ResponseEntity<Long> addOrder(@RequestBody OrderRequest request) {
 
-        // TODO: memberService 에서 예외를 처리하는게 낫지 않나?
-        Member member = memberService.findMemberById(request.getMemberId()).orElseThrow();
+        Long memberId = tokenProvider.getMemberId(request.getToken());
+        Member member = memberService.findMemberById(memberId).orElseThrow();
 
         Delivery delivery = deliveryService.findById(request.getDeliveryId());
 
@@ -55,21 +57,9 @@ public class OrderApiController {
     }
     
 
-    //Cart에서 수량 변경후 주문하기 버튼을 누르면 사용되는 메소드 -> 사용X
-    @PutMapping("/order/{orderId}")
-    @Deprecated
-    public ResponseEntity<Long> updateOrder(@PathVariable(value="orderId") Long orderId,
-                                            @RequestBody OrderRequest request) {
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (Long orderItemId : request.getOrderItemIds()) {
-            orderItems.add(orderItemService.findById(orderItemId));
-        }
-        Order order = orderService.updateOrder(orderId, orderItems);
-        return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
-    }
-
-    @GetMapping("/orders/{memberId}")
-    public ResponseEntity<List<OrderResponse>> findOrders(@PathVariable(value="memberId") Long memberId) {
+    @GetMapping("/orders")
+    public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam String token) {
+        Long memberId = tokenProvider.getMemberId(token);
         List<OrderResponse> orderResponses = orderService.findAllByMemberId(memberId)
                 .stream()
                 .map(OrderResponse::new)
