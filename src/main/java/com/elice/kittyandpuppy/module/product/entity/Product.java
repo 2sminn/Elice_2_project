@@ -38,7 +38,7 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "desc")
+    @Column(name = "description")
     private String description;
 
     @Column(name = "created_at")

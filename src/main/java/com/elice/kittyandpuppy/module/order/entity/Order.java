@@ -19,6 +19,7 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +33,6 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -81,6 +81,10 @@ public class Order {
         this.status = status;
     }
 
+    protected void setId() {
+        this.id = Long.valueOf(RandomStringUtils.randomNumeric(12));
+    }
+
     public void setPayment(String payment) {
         if (this.status != OrderStatus.CREATE) {
             throw new IllegalStateException("결제가 완료된 주문입니다.");
@@ -112,6 +116,8 @@ public class Order {
         order.setStatus(OrderStatus.CREATE);
 
         order.setPayment(payment);
+
+        order.setId();
 
         return order;
     }
