@@ -26,12 +26,6 @@ public class CategoryController {
         return new ResponseEntity<>(categoryId, HttpStatus.CREATED);
     }
 
-    @GetMapping("/branch/{branch}")
-    public ResponseEntity<CategoryDto> getCategoryByBranch(@PathVariable("branch") String branch) {
-        CategoryDto category = categoryService.getFullCategoryTreeByBranch(branch);
-        return new ResponseEntity<>(category, HttpStatus.OK);
-    }
-
     // 강아지, 고양이 카테고리 정보 가져오기
     @GetMapping("/{categoryId}")
     public ResponseEntity<CategoryDto> getCategory(@PathVariable("categoryId") Long categoryId) {
