@@ -4,6 +4,10 @@ $(document).ready(function () {
         const productId = $('#product-name').data('productId');
         addToCart(productId);
     });
+    $("#buy-now").click(function () {
+        const productId = $('#product-name').data('productId');
+        buyProduct(productId);
+    });
 });
 
 function loadProduct(){
@@ -53,4 +57,25 @@ function addToCart(productId){
 
 
     console.log(window.localStorage.getItem("orderItemIds"));
+}
+
+//구매하기 버튼 눌렀을 때
+function buyProduct(productId){
+    $.ajax({
+        url: `/api/orderItem/${productId}`,
+        type: 'POST',
+        dataType: 'json',
+        success: function (orderItem) {
+            alert("장바구니에 담겼습니다.");
+            if(localStorage.getItem('orderItemIds')!= null){
+                let orderItems = JSON.parse(localStorage.orderItems);
+                orderItems.push(orderItem.id);
+                localStorage.setItem('orderItemIds',JSON.stringify(orderItems));
+
+            } else{
+                localStorage.setItem('orderItemIds',JSON.stringify([orderItem.id]));
+            }
+            location.href = '/cart';
+        }
+    });
 }
