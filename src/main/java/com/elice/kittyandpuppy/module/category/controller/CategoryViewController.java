@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class CategoryViewController {
 
-    @GetMapping("/categories")
+    @GetMapping("api/categories")
     public String showCategories(){
         return "category";
     }

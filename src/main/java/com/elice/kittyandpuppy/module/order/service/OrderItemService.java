@@ -3,19 +3,16 @@ package com.elice.kittyandpuppy.module.order.service;
 import com.elice.kittyandpuppy.module.order.dto.orderItem.OrderItemResponse;
 import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.repository.OrderItemRepository;
-import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 
 import com.elice.kittyandpuppy.module.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -40,7 +37,7 @@ public class OrderItemService {
      */
     @Transactional
     public OrderItem create(Long productId) {
-        Product product = productService.findById(productId);
+        Product product = productService.getProductById(productId);
         return orderItemRepository.save(OrderItem.createOrderItem(product, 1, product.getPrice()));
     }
 
