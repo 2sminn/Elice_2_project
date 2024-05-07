@@ -65,6 +65,7 @@ body {
     font-size: 25px;
     font-weight: bold;
     color: #ffff;
+    margin-left: 5px;
 }
 
 .header .right-box .write-button {
@@ -86,7 +87,7 @@ body {
 .header .right-box .write-button p {
     margin: 0;
 
-    font-size: 25px;
+    font-size: 23px;
     font-weight: bold;
     color: #ffff;
 }
