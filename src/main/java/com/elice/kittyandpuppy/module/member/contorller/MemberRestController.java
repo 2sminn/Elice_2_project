@@ -3,7 +3,6 @@ package com.elice.kittyandpuppy.module.member.contorller;
 import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.dto.MemberSaveDto;
-import com.elice.kittyandpuppy.module.member.mapper.MemberMapper;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,6 @@ import java.util.Map;
 @RequestMapping("/api")
 public class MemberRestController {
     private final MemberService memberService;
-    private final MemberMapper memberMapper;
     private final TokenProvider tokenProvider;
 
     @GetMapping("/members/{id}")
@@ -35,7 +33,7 @@ public class MemberRestController {
 
     @PostMapping("/member")
     public ResponseEntity<Member> joinMember(@RequestBody @Valid MemberSaveDto memberSaveDto, BindingResult bindingResult) {
-        Member member = memberMapper.MemberDTOToMember(memberSaveDto);
+        Member member = memberSaveDto.toMember();
         Member savedMember = memberService.join(member);
 
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);

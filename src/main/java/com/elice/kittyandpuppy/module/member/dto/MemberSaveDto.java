@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.member.dto;
 
+import com.elice.kittyandpuppy.module.member.entity.Member;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -22,4 +23,12 @@ public class MemberSaveDto {
     @NotNull
     @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z]).{8,20}")
     private String password;
+
+    public Member toMember(){
+        Member member = new Member();
+        member.setEmail(this.email);
+        member.setName(this.name);
+        member.setPassword(this.password);
+        return member;
+    }
 }
