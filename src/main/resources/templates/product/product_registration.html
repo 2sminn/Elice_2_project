@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!--jquery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/static/product/product_registration.js"></script>
+    <!-- css --->
+    <link rel="stylesheet" type="text/css" href="/static/product/product_registration.css">
+    <!--font-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap" rel="stylesheet">
+
+</head>
+<body>
+<div id="header"></div>
+
+
+<div class="wrapper">
+    <div class="container">
+        <div class="product-box">
+            <div class="product-box-title">관리자 전용 상품 등록 페이지</div>
+            <table>
+                <tr>
+                    <th>카테고리</th>
+                    <td>
+                        <div class="align-box">
+                            <select name="catogory">
+                                <option value="">선택해주세요</option>
+                                <option value="all">공용</option>
+                                <option value="dog">강아지</option>
+                                <option value="cat">고양이</option>
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>상품명 (필수)</th>
+                    <td>
+                        <div class="align-box">
+                            <input type="text" name="productName" placeholder="강아지 귀 청소 브러쉬" maxlength="250"
+                                   class="productName" oninput="validatePrice()">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>판매가 (필수)</th>
+                    <td>
+                        <div class="feature-box">
+                            <div class="align-box">
+                                <input type="text" name="productPrice" maxlength="250" class="productPrice">
+                                <span>원</span>
+                            </div>
+                            <div id="priceMessage1" style="color: red; font-size: 16px;"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>할인율</th>
+                    <td>
+                        <div class="feature-box">
+                            <div class="align-box">
+                                <input type="text" name="productDiscount" placeholder="0" maxlength="250" class="productDiscount">
+                                <span>%</span>
+                            </div>
+                            <div id="priceMessage2" style="color: red; font-size: 16px;"></div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <th>상품 상세 설명</th>
+                    <td>
+                        <div class="align-box">
+                            <textarea name="description" placeholder="상품 기능 및 특징 입력란" maxlength="255" class="description"></textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <th>대표 이미지 등록</th>
+                    <td>
+                        이미지 등록..
+                    </td>
+                </tr>
+                <tr>
+                    <th>기본 이미지 등록</th>
+                    <td>
+                        이미지...
+                    </td>
+                </tr>
+            </table>
+            <div class="btn-box">
+                <input type="button" class="submit-btn" value="등록">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div id="footer"></div>
+<script>
+    $(function () {
+        $("#header").load("../header.html");
+        $("#footer").load("../footer.html");
+    })
+</script>
+</body>
+</html>
