@@ -1,15 +1,11 @@
 package com.elice.kittyandpuppy.module.product.dto;
 
+import lombok.Builder;
+import lombok.Data;
 
-import lombok.*;
-
-@Data // 표준적인 메서드를 자동으로 생성
-@NoArgsConstructor // 기본 생성자 생성
-@AllArgsConstructor // 모든 필드를 인자로 받는 생성자를 생성
-@Getter
-@Setter
-
-public class ProductDto {
+@Data
+@Builder
+public class ResponseProductDto {
     private Long id;
     private Long categoryId;
     private String name;

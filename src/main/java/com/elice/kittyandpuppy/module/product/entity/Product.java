@@ -1,5 +1,7 @@
 package com.elice.kittyandpuppy.module.product.entity;
 
+import com.elice.kittyandpuppy.module.product.dto.RequestProductDto;
+import com.elice.kittyandpuppy.module.product.dto.ResponseProductDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,5 +58,32 @@ public class Product {
         this.description = description;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
+    }
+
+    // DTO to Entity conversion
+    public static Product fromDto(RequestProductDto dto) {
+        return Product.builder()
+                .categoryId(dto.getCategoryId())
+                .name(dto.getName())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+                .imageUrl(dto.getImageUrl())
+                .description(dto.getDescription())
+                .build();
+    }
+
+    // Entity to DTO conversion
+    public ResponseProductDto toResponseDto() {
+        return ResponseProductDto.builder()
+                .id(this.getId())
+                .categoryId(this.getCategoryId())
+                .name(this.getName())
+                .price(this.getPrice())
+                .stock(this.getStock())
+                .imageUrl(this.getImageUrl())
+                .description(this.getDescription())
+                .createdAt(this.getCreatedAt())
+                .modifiedAt(this.getModifiedAt())
+                .build();
     }
 }

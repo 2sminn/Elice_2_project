@@ -1,6 +1,5 @@
 package com.elice.kittyandpuppy.module.order.entity;
 
-import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
