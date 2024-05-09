@@ -11,6 +11,7 @@ import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.service.DeliveryService;
 import com.elice.kittyandpuppy.module.order.service.OrderItemService;
 import com.elice.kittyandpuppy.module.order.service.OrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Tag(name="주문 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")

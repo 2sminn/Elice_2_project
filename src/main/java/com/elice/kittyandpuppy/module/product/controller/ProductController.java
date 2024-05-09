@@ -4,6 +4,7 @@ import com.elice.kittyandpuppy.module.product.dto.RequestProductDto;
 import com.elice.kittyandpuppy.module.product.dto.ResponseProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import com.elice.kittyandpuppy.module.product.service.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Tag(name="상품 API")
 @RestController
 @RequestMapping("/api/product")
 public class ProductController {
