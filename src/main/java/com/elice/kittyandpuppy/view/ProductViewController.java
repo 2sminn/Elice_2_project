@@ -1,17 +1,16 @@
-package com.elice.kittyandpuppy.module.product.controller;
+package com.elice.kittyandpuppy.view;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ProductViewController {
-    @GetMapping("/product/{productId}")
-    public String viewProduct(@PathVariable(value="productId")Long productId){
+    @GetMapping("/product")
+    public String viewProduct(){
         return "product";
     }
 
     @GetMapping("/product/write")
-    public String producteWrite(){
+    public String productWrite(){
         return "/product/product_registration";
     }
 }

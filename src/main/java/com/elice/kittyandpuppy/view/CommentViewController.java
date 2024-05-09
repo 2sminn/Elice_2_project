@@ -1,4 +1,4 @@
-package com.elice.kittyandpuppy.module.comment.controller;
+package com.elice.kittyandpuppy.view;
 
 
 import org.springframework.stereotype.Controller;
