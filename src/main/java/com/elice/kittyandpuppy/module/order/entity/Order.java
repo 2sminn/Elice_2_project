@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,6 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +81,9 @@ public class Order {
     }
 
     protected void setId() {
-        this.id = Long.valueOf(RandomStringUtils.randomNumeric(12));
+        LocalDate currentDate = LocalDate.now();
+        String dateString = currentDate.toString().replace("-", "").substring(0, 6);
+        this.id = Long.valueOf(dateString + RandomStringUtils.randomNumeric(8));
     }
 
     public void setPayment(String payment) {
