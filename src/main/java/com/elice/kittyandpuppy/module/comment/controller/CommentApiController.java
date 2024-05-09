@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Tag(name="댓글 API")
+@Tag(name = "댓글 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/comment")
 public class CommentApiController {
     private final CommentService commentService;
+
     @Operation(summary = "댓글 작성")
     @PostMapping
     public ResponseEntity<Comment> createComment(@RequestBody final CommentRequest commentRequest) {
         Comment comment = commentService.save(commentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(comment);
     }
+
     @Operation(summary = "댓글 수정")
     @PutMapping("/{commentId}")
     public ResponseEntity<Comment> updateComment(@PathVariable("commentId") Long commentId,
@@ -33,6 +35,7 @@ public class CommentApiController {
         Comment comment = commentService.update(commentId, commentRequest);
         return ResponseEntity.status(HttpStatus.OK).body(comment);
     }
+
     @Operation(summary = "댓글 삭제")
     @DeleteMapping("/{commentId}")
     public ResponseEntity<Long> deleteComment(@PathVariable("commentId") Long commentId) {
@@ -42,7 +45,7 @@ public class CommentApiController {
 
     @Operation(summary = "댓글 조회", description = "게시물 ID에 따라서 댓글 조회")
     @GetMapping("/{postId}")
-    public ResponseEntity<List<CommentResponse>> findByPost(@PathVariable("postId") Long postId){
+    public ResponseEntity<List<CommentResponse>> findByPost(@PathVariable("postId") Long postId) {
         List<CommentResponse> comments = commentService.findByPost(postId);
         return ResponseEntity.status(HttpStatus.OK).body(comments);
     }
