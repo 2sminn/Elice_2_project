@@ -1,5 +1,6 @@
 package com.elice.kittyandpuppy.module.order.controller;
 
+import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
 import com.elice.kittyandpuppy.module.order.dto.order.OrderResponse;
@@ -10,6 +11,7 @@ import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.service.DeliveryService;
 import com.elice.kittyandpuppy.module.order.service.OrderItemService;
 import com.elice.kittyandpuppy.module.order.service.OrderService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+@Tag(name="주문 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -35,12 +38,13 @@ public class OrderApiController {
     private final OrderItemService orderItemService;
     private final DeliveryService deliveryService;
     private final MemberService memberService;
+    private final TokenProvider tokenProvider;
 
     @PostMapping("/order")
     public ResponseEntity<Long> addOrder(@RequestBody OrderRequest request) {
 
-        // TODO: memberService 에서 예외를 처리하는게 낫지 않나?
-        Member member = memberService.findMemberById(request.getMemberId()).orElseThrow();
+        Long memberId = tokenProvider.getMemberId(request.getToken());
+        Member member = memberService.findMemberById(memberId).orElseThrow();
 
         Delivery delivery = deliveryService.findById(request.getDeliveryId());
 
@@ -49,13 +53,15 @@ public class OrderApiController {
             orderItems.add(orderItemService.findById(orderItemId));
         }
 
-        Order order = orderService.create(member, delivery, orderItems);
+        Order order = orderService.create(member, delivery, orderItems, request.getPayment());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(order.getId());
     }
+    
 
     @GetMapping("/orders")
-    public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam Long memberId) {
+    public ResponseEntity<List<OrderResponse>> findOrders(@RequestParam String token) {
+        Long memberId = tokenProvider.getMemberId(token);
         List<OrderResponse> orderResponses = orderService.findAllByMemberId(memberId)
                 .stream()
                 .map(OrderResponse::new)
@@ -106,6 +112,15 @@ public class OrderApiController {
                                                @PathVariable(value = "deliveryId") Long deliveryId) {
         Delivery delivery = deliveryService.findById(deliveryId);
         orderService.updateDelivery(id, delivery);
+
+        return ResponseEntity.ok().build();
+    }
+
+    // 배송지 변경
+    @PutMapping("/order/{id}/payment/{payment}")
+    public ResponseEntity<Void> updatePayment(@PathVariable(value = "id") Long id,
+                                               @PathVariable(value = "payment") String payment) {
+        orderService.updatePayment(id, payment);
 
         return ResponseEntity.ok().build();
     }

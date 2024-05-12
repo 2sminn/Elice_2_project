@@ -1,15 +1,24 @@
-var token; // 사용자 token
-var orderItemsId; // 주문 상품 Ids
-var deliveryId; // 배송지 Id
-var orderId; // 주문 Id
-var payBy; // 결제 방법
+let token; // 사용자 token
+let orderItemsId; // 주문 상품 Ids
+let deliveryId; // 배송지 Id
+let orderId; // 주문 Id
+let payBy; // 결제 방법
+let orderTotalPrice = 0; // 총 금액
+let requestsCompleted = 0; // 총 주문 건수
 
 // 주문 페이지 전환 후 자동으로 사용자 주소 가져오기
 $(document).ready(function () {
 
     token = localStorage.getItem("token");
-    // orderItemsId = JSON.parse(localStorage.getItem('orderItemsId'));
-    orderItemsId = [1, 2, 3]
+
+    orderItemsId = localStorage.getItem('orderItemIds');
+
+    if (orderItemsId !== null) {
+        orderItemsId = JSON.parse(orderItemsId);
+    } else {
+        orderItemsId = [];
+    }
+
     getOrderItems();
     getMemberInfo();
 
@@ -60,22 +69,21 @@ function execDaumPostcode() {
 }
 
 // 사용자 정보 불러오기
-// TODO: memberAddress API 구현이 끝나면 수정 필요
 function getMemberInfo() {
     $.ajax({
         url: '/api/address/member',
-        type: 'GET',
+        type: 'POST',
         async: false,
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
+        data: JSON.stringify({
+            token: token
+        }),
         contentType: 'application/json',
         success: function (response) {
             document.getElementById('zipCode').value = response.address.zipCode;
             document.getElementById('street').value = response.address.street;
             document.getElementById('detail').value = response.address.detail;
-            document.getElementById('receiverName').value = response.deliveryName;
-            document.getElementById('receiverPhone').value = response.deliveryPhone;
+            document.getElementById('receiverName').value = response.name;
+            document.getElementById('receiverPhone').value = response.phone;
         }
     });
 }
@@ -83,8 +91,6 @@ function getMemberInfo() {
 // 주문 상품 불러오기
 function getOrderItems() {
     let resultHTML = "";
-    let orderTotalPrice = 0;
-    let requestsCompleted = 0;
 
     // orderItemsId가 존재하고 비어 있지 않은 경우에만 요청을 보냄
     if (orderItemsId && orderItemsId.length > 0) {
@@ -104,8 +110,8 @@ function getOrderItems() {
                          </div>
                          <div class="detail">
                            <p class="font-middle">${item.name}</p>
-                           <p class="font-middle">수량 ${new Intl.NumberFormat("ko-KR").format(item.amount)}개</p>
-                           <p class="font-middle">${item.totalPrice}원</p>
+                           <p class="font-middle">수량 ${item.amount}개</p>
+                           <p class="font-middle">${new Intl.NumberFormat("ko-KR").format(item.totalPrice)}원</p>
                          </div>
                        </div>`
 
@@ -116,8 +122,8 @@ function getOrderItems() {
                     if (requestsCompleted === orderItemsId.length) {
                         document.querySelector("#orderItemBox").innerHTML = resultHTML;
                         document.querySelector("#totalPrice").innerHTML = `<p class="font-middle">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}원</p>`;
-                        document.querySelector("#count").innerHTML = `<p style="margin-right: 10px;">총 <p style="color: #F0AB0F;" id="orderItemCount">${requestsCompleted}</p>건</p>`;
-                        document.querySelector("#result").innerHTML = `<p><p style="color: #F0AB0F;" id="resultPrice">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}</p>원</p>`;
+                        document.querySelector("#count").innerHTML = `<p style="margin-right: 10px;">총 <span style="color: #F0AB0F;" id="orderItemCount">${requestsCompleted}</span>건</p>`;
+                        document.querySelector("#result").innerHTML = `<p><span style="color: #F0AB0F;" id="resultPrice">${new Intl.NumberFormat("ko-KR").format(orderTotalPrice)}</span>원</p>`;
                     }
                 },
                 error: function (xhr, status, error) {
@@ -142,33 +148,35 @@ function order() {
         return;
     }
 
-    // TODO: 체크박스가 체크되어 있으면 회원 배송지 정보 업데이트 하기
-    // let checkbox = document.getElementById("deliveryCheckbox");
-    //
-    // if (checkbox.checked) {
-    //     $.ajax({
-    //         url: '/api/address/member',
-    //         type: 'POST',
-    //         async: false,
-    //         data: JSON.stringify({
-    //             address: {
-    //                 zipCode: document.getElementById('zipCode').value,
-    //                 street: document.getElementById('street').value,
-    //                 detail: document.getElementById('detail').value
-    //             },
-    //             deliveryName: document.getElementById('receiverName').value,
-    //             deliveryPhone: document.getElementById('receiverPhone').value,
-    //             token: token
-    //         }),
-    //         contentType: 'application/json',
-    //         success: function (response) {
-    //             deliveryId = response;
-    //         },
-    //         error: function (xhr, status, error) {
-    //             console.error('API 호출 실패:', status, error);
-    //         }
-    //     });
-    // }
+    // 체크박스가 체크되어 있으면 회원 배송지 정보 업데이트 하기
+    let checkbox = document.getElementById("deliveryCheckbox");
+
+    if (checkbox.checked) {
+        $.ajax({
+            url: '/api/details',
+            type: 'POST',
+            async: false,
+            data: JSON.stringify({
+                address: {
+                    zipCode: document.getElementById('zipCode').value,
+                    street: document.getElementById('street').value,
+                    detail: document.getElementById('detail').value
+                },
+                name: document.getElementById('receiverName').value,
+                phone: document.getElementById('receiverPhone').value,
+                token: token
+            }),
+            contentType: 'application/json',
+            success: function (response) {
+                if (response === true) {
+                    console.log('API 호출 성공');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('API 호출 실패:', status, error);
+            }
+        });
+    }
 
     // 배송지 정보 저장
     $.ajax({
@@ -199,9 +207,10 @@ function order() {
         type: 'POST',
         async: false,
         data: JSON.stringify({
-            memberId: 1,
+            token: token,
             deliveryId: deliveryId,
-            orderItemIds: orderItemsId
+            orderItemIds: orderItemsId,
+            payment: payBy
         }),
         contentType: 'application/json',
         success: function (response) {
@@ -211,6 +220,8 @@ function order() {
             console.error('API 호출 실패:', status, error);
         }
     });
+
+    localStorage.removeItem('orderItemIds');
 
     // 카카오 페이 결제
     if (payBy === "kakao") {
@@ -232,29 +243,33 @@ function order() {
             }
         });
     }
-    // if (payBy === "card") {
-    //     AUTHNICE.requestPay({
-    //         clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
-    //         method: 'card',
-    //         orderId: '000000000000001',
-    //         amount: 1000000,
-    //         goodsName: '테스트-상품',
-    //         returnUrl: 'http://localhost:8080/nicepayView', //API를 호출할 Endpoint 입력
-    //         fnError: function (result) {
-    //             alert('개발자확인용 : ' + result.errorMsg + '')
-    //         }
-    //     });
-    // }
+
+    if (payBy === "card") {
+        AUTHNICE.requestPay({
+            clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
+            method: 'card',
+            orderId: orderId,
+            amount: orderTotalPrice,
+            goodsName: '구해줘멍냥',
+            returnUrl: 'http://localhost:8080/nicepay', //API를 호출할 Endpoint 입력
+            fnError: function (result) {
+                alert('개발자확인용 : ' + result.errorMsg + '')
+            }
+        });
+    }
+
+    location.replace("/order/success" + "?orderId=" + orderId);
 }
 
 // 결제 승인창에서 정상 결제시 메세지를 전송함
 window.addEventListener("message", receiveMessage, false);
 function receiveMessage(event) {
+    console.log(event);
     var receivedData = JSON.parse(event.data);
     var message = receivedData.message;
     if (message === '결제 실패') {
         location.replace("/order/fail" + "?orderId=" + orderId);
-    } else if (message === '결제 성공'){
+    } else {
         location.replace("/order/success" + "?orderId=" + orderId);
     }
 }

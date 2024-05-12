@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 상세 페이지</title>
+    <link rel="stylesheet" href="/static/product/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="header"></div> <!-- 헤더가 로드될 위치 -->
+
+<div class="product-container">
+    <div class="image-box" id="image-box">
+
+    </div>
+    <div class="product-info">
+        <h1 id="product-name">상품 이름</h1>
+        <div class="price" id="product-price">₩ 가격</div>
+        <p id="product-description">상품에 대한 상세 설명</p>
+        <div class="purchase-info">
+            <div class="quantity">
+                <label for="product-quantity">수량:</label>
+                <input type="number" id="product-quantity" name="product-quantity" value="1" min="1">
+            </div>
+            <button id="buy-now">구매하기</button>
+            <button id="add-to-cart">장바구니</button>
+        </div>
+    </div>
+</div>
+
+<div id="footer"></div> <!-- 푸터가 로드될 위치 -->
+
+<script src="/static/product/script.js"></script>
+<script>
+    $(function() {
+        $("#header").load("../header.html");
+        $("#footer").load("../footer.html");
+    });
+</script>
+</body>
+</html>

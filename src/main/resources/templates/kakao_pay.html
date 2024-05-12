@@ -16,7 +16,7 @@
     }
 
     $(document).ready(function () {
-        var memberId = getUrlParameter('memberId');
+        var memberId = getUrlParameter('token');
         var orderId =  getUrlParameter('orderId');
         var pgToken =  getUrlParameter('pg_token');
         $.ajax({
@@ -24,12 +24,12 @@
             async: false,
             contentType: 'application/json',
             success: function (response) {
-                window.opener.postMessage(response, '*');
+                window.opener.postMessage(JSON.stringify(response), '*');
                 window.close();
             },
             error: function (xhr, status, error) {
                 console.error('API 호출 실패:', status, error);
-                window.opener.postMessage("결제 실패", '*');
+                window.opener.postMessage(JSON.stringify("결제 실패"), '*');
                 window.close();
             }
         });

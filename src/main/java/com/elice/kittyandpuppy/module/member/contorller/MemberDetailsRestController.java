@@ -4,6 +4,7 @@ import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.dto.MemberDetailsDto;
 import com.elice.kittyandpuppy.module.member.entity.MemberDetails;
 import com.elice.kittyandpuppy.module.member.service.MemberDetailService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@Tag(name="회원상세 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")

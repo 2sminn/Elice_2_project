@@ -1,24 +1,24 @@
 package com.elice.kittyandpuppy.module.category.entity;
 
+import com.elice.kittyandpuppy.module.category.dto.RequestCategoryDto;
+import com.elice.kittyandpuppy.module.category.dto.ResponseCategoryDto;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
+@Data
 @Table(name = "category")
-@Getter
 @NoArgsConstructor
-@Setter
+@AllArgsConstructor
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
+    private Long id;
 
     @Column(name = "branch", nullable = false)
     private String branch;
@@ -34,15 +34,42 @@ public class Category {
     private Category parentCategory;
 
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
-    private List<Category> subCategory = new ArrayList<>();
+    private List<Category> subCategories = new ArrayList<>();
 
     @Builder
-    public Category(Long categoryId, String branch, String name, Category parentCategory, String code){
-        this.categoryId = categoryId;
-        this.name = name;
-        this.parentCategory = parentCategory;
-        this.code = code;
+    public Category(Long id, String branch, String name, Category parentCategory, String code){
+        this.id = id;
         this.branch = branch;
+        this.name = name;
+        this.code = code;
+        this.parentCategory = parentCategory;
     }
 
+    // Convert DTO to Entity
+    public static Category fromDto(RequestCategoryDto dto) {
+        Category category = Category.builder()
+                .id(dto.getId())
+                .branch(dto.getBranch())
+                .name(dto.getName())
+                .code(dto.getCode())
+                .build();
+        if (dto.getParentCategoryId() != null) {
+            category.parentCategory = new Category();
+            category.parentCategory.id = dto.getParentCategoryId();
+        }
+        return category;
+    }
+
+    // Convert Entity to DTO
+    public ResponseCategoryDto toDto() {
+        return ResponseCategoryDto.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .code(this.getCode())
+                .branch(this.getBranch())
+                .parentCategoryId(this.getParentCategory() != null ? this.getParentCategory().getId() : null)
+                .subCategories(this.getSubCategories() != null ? this.getSubCategories().stream()
+                        .map(Category::toDto).collect(Collectors.toList()) : null)
+                .build();
+    }
 }

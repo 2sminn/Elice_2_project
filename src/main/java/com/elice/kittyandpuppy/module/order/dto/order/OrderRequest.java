@@ -10,9 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-// TODO: jwt 도입시, memberId를 받을 필요 없음
 public class OrderRequest {
-    private Long memberId;
+    private String token;
     private Long deliveryId;
     private List<Long> orderItemIds;
+    private String payment;
 }

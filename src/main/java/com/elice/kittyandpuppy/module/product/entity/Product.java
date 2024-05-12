@@ -1,5 +1,7 @@
 package com.elice.kittyandpuppy.module.product.entity;
 
+import com.elice.kittyandpuppy.module.product.dto.RequestProductDto;
+import com.elice.kittyandpuppy.module.product.dto.ResponseProductDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +26,7 @@ public class Product {
     private Long id;
 
     @Column(name = "category_id")
-    private Long category_id;
+    private Long categoryId;
 
     @Column(name = "name")
     private String name;
@@ -37,25 +40,50 @@ public class Product {
     @Column(name = "image_url")
     private String imageUrl;
 
-    @Column(name = "\"desc\"")
-    private String desc;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "created_at")
-    private String created_at;
-
+    private String createdAt;
     @Column(name = "modified_at")
-    private String modified_at;
-
-    public Product(Long category_id, String name, int price, int stock, String imageUrl,
-                   String desc, String created_at, String modified_at) {
-        this.category_id = category_id;
+    private String modifiedAt;
+    @Builder
+    public Product(Long categoryId, String name, int price, int stock, String imageUrl,
+                   String description, String createdAt, String modifiedAt) {
+        this.categoryId = categoryId;
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.imageUrl = imageUrl;
-        this.desc = desc;
-        this.created_at = created_at;
-        this.modified_at = modified_at;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.modifiedAt = modifiedAt;
     }
 
+    // DTO to Entity conversion
+    public static Product fromDto(RequestProductDto dto) {
+        return Product.builder()
+                .categoryId(dto.getCategoryId())
+                .name(dto.getName())
+                .price(dto.getPrice())
+                .stock(dto.getStock())
+                .imageUrl(dto.getImageUrl())
+                .description(dto.getDescription())
+                .build();
+    }
+
+    // Entity to DTO conversion
+    public ResponseProductDto toResponseDto() {
+        return ResponseProductDto.builder()
+                .id(this.getId())
+                .categoryId(this.getCategoryId())
+                .name(this.getName())
+                .price(this.getPrice())
+                .stock(this.getStock())
+                .imageUrl(this.getImageUrl())
+                .description(this.getDescription())
+                .createdAt(this.getCreatedAt())
+                .modifiedAt(this.getModifiedAt())
+                .build();
+    }
 }

@@ -8,8 +8,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,7 +17,9 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.RandomStringUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,6 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -44,6 +43,9 @@ public class Order {
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Delivery delivery;
+
+    @Column(name = "payment")
+    private String payment;
 
     @Column(name = "order_date")
     private LocalDateTime orderDate;
@@ -69,8 +71,26 @@ public class Order {
         delivery.setOrder(this);
     }
 
+    //수량조절 로직 (Cart에서 사용)
+    public void setOrderItems(List<OrderItem> orderItems){
+        this.orderItems = orderItems;
+    }
+
     protected void setStatus(OrderStatus status) {
         this.status = status;
+    }
+
+    protected void setId() {
+        LocalDate currentDate = LocalDate.now();
+        String dateString = currentDate.toString().replace("-", "").substring(0, 6);
+        this.id = Long.valueOf(dateString + RandomStringUtils.randomNumeric(8));
+    }
+
+    public void setPayment(String payment) {
+        if (this.status != OrderStatus.CREATE) {
+            throw new IllegalStateException("결제가 완료된 주문입니다.");
+        }
+        this.payment = payment;
     }
 
     // 객체 생성 로직
@@ -82,7 +102,7 @@ public class Order {
      * @param orderItems
      * @return 저장된 Order 객체
      */
-    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems) {
+    public static Order createOrder(Member member, Delivery delivery, List<OrderItem> orderItems, String payment) {
         Order order = new Order();
         order.setMember(member);
 
@@ -95,6 +115,10 @@ public class Order {
         }
 
         order.setStatus(OrderStatus.CREATE);
+
+        order.setPayment(payment);
+
+        order.setId();
 
         return order;
     }

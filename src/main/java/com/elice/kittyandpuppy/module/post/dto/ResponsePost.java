@@ -17,6 +17,7 @@ public class ResponsePost {
     private String title;
     private String content;
     private int type;
+    private int views;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -25,6 +26,7 @@ public class ResponsePost {
         this.title = post.getTitle();
         this.content = post.getContent();
         this.type = post.getType();
+        this.views = post.getViews();
         this.createdAt = post.getCreatedAt();
         this.modifiedAt = post.getModifiedAt();
     }

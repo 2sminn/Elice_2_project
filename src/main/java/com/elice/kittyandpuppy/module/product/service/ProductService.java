@@ -1,80 +1,68 @@
 package com.elice.kittyandpuppy.module.product.service;
 
+import com.elice.kittyandpuppy.module.product.dto.RequestProductDto;
 import com.elice.kittyandpuppy.module.product.entity.Product;
-import com.elice.kittyandpuppy.module.product.dto.ProductDto;
 import com.elice.kittyandpuppy.module.product.repository.ProductRepository;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ProductService {
-
     private final ProductRepository productRepository;
 
-
-    @Autowired // 생성자를 통한 의존성 주입 ProductService가 ProductRepository를 사용할 수 있게 된다.
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
+    public List<Product> findByCategoryId(Long categoryId) {
+        return productRepository.findAllByCategoryId(categoryId);
+    }
 
-    @Transactional
-    public Product createProduct(ProductDto productDto) { // 상품을 생성하는 메서드 상품 DTO를 받아 새로운 상품 엔티티를 생성하고, 이를 저장한 후 반환.
-        Product product = new Product(
-            productDto.getCategory_id(),
-            productDto.getName(),
-            productDto.getPrice(),
-            productDto.getStock(),
-            productDto.getImageUrl(),
-            productDto.getDesc(),
-            productDto.getCreated_at(),
-            productDto.getModified_at()
-        );
+    public Product getProductById(Long id) {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+    }
+
+    public List<Product> findAll() {
+        return productRepository.findAll();
+    }
+
+    public List<Product> findByCart(int[] cartList) {
+        return Arrays.stream(cartList)
+                .mapToObj(id -> productRepository.findById((long) id).orElse(null))
+                .filter(java.util.Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public Product createProduct(RequestProductDto requestDto) {
+        Product product = Product.fromDto(requestDto);
         return productRepository.save(product);
     }
 
-    // findAll : 모든 상품 조회
-    public List<Product> findAll() { return productRepository.findAll(); }
-
-
-    // deleteProduct : 해당 id 상품을 삭제하는 메서드
-    @Transactional
     public void deleteProduct(Long id) {
-        Product existingProduct = productRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("죄송합니다. 상품을 찾을 수 없습니다."));
-        productRepository.delete(existingProduct);
-
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        productRepository.delete(product);
     }
 
-    // findProductById : 주어진 id에 해당하는 상품을 조회하는 메서드
-    public Product findProductById(Long id) {
-        return productRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("죄송합니다. 상품을 찾을 수 없습니다."));
+    public Product updateProduct(Long id, RequestProductDto updateRequestProductDto) {
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Product not found"));
+        updateProductFromRequestDto(updateRequestProductDto, product);
+        return productRepository.save(product);
     }
 
-    // 주어진 id에 해당하는 상품을 업데이트 하는 메서드
-    public Product updateProduct(Long id, ProductDto updateProductDto) {
-        Product existingProduct = productRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("죄송합니다. 상품을 찾을 수 없습니다."));
-        existingProduct.setCategory_id(updateProductDto.getCategory_id());
-        existingProduct.setName(updateProductDto.getName());
-        existingProduct.setPrice(updateProductDto.getPrice());
-        existingProduct.setStock(updateProductDto.getStock());
-        existingProduct.setImageUrl(updateProductDto.getImageUrl());
-        existingProduct.setDesc(updateProductDto.getDesc());
-        existingProduct.setCreated_at(updateProductDto.getCreated_at());
-        existingProduct.setModified_at(updateProductDto.getModified_at());
-        return productRepository.save(existingProduct);
-
-
+    private void updateProductFromRequestDto(RequestProductDto dto, Product product) {
+        product.setCategoryId(dto.getCategoryId());
+        product.setName(dto.getName());
+        product.setPrice(dto.getPrice());
+        product.setStock(dto.getStock());
+        product.setImageUrl(dto.getImageUrl());
+        product.setDescription(dto.getDescription());
     }
-
-
-
-
-
 }

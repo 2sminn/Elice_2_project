@@ -26,7 +26,7 @@ body {
         text-decoration: none;
     }
     a:visited {
-        color : black;
+        color: #6D6045;
         text-decoration: none;
     }
     a:hover {
@@ -62,9 +62,10 @@ body {
 
     align-items: center;
 
-    font-size: 25px;
+    font-size: 23px;
     font-weight: bold;
     color: #ffff;
+    margin-left: 5px;
 }
 
 .header .right-box .write-button {
@@ -86,7 +87,20 @@ body {
 .header .right-box .write-button p {
     margin: 0;
 
-    font-size: 25px;
+    font-size: 23px;
     font-weight: bold;
     color: #ffff;
+}
+
+.index-login{
+    width: 122px;
+    height: 45px;
+    background-color: #ffffff;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 9px;
+    border: #6D6045 2px solid;
+    color: #6D6045;
 }

@@ -3,8 +3,8 @@ package com.elice.kittyandpuppy.module.member.contorller;
 import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.dto.MemberSaveDto;
-import com.elice.kittyandpuppy.module.member.mapper.MemberMapper;
 import com.elice.kittyandpuppy.module.member.service.MemberService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name="회원 API")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 public class MemberRestController {
     private final MemberService memberService;
-    private final MemberMapper memberMapper;
     private final TokenProvider tokenProvider;
 
     @GetMapping("/members/{id}")
@@ -35,7 +35,7 @@ public class MemberRestController {
 
     @PostMapping("/member")
     public ResponseEntity<Member> joinMember(@RequestBody @Valid MemberSaveDto memberSaveDto, BindingResult bindingResult) {
-        Member member = memberMapper.MemberDTOToMember(memberSaveDto);
+        Member member = memberSaveDto.toMember();
         Member savedMember = memberService.join(member);
 
         return new ResponseEntity<>(savedMember, HttpStatus.CREATED);
@@ -95,6 +95,16 @@ public class MemberRestController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("token",jwt);
         return new ResponseEntity<>(true,headers,HttpStatus.OK);
+    }
+
+    @PostMapping("/member/id")
+    public ResponseEntity<Long> getIdByToken(@RequestBody Map<String,String> map){
+        String token = map.get("token");
+        if(tokenProvider.validToken(token)){
+            Long id = tokenProvider.getMemberId(token);
+            return new ResponseEntity<>(id,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
     }
 
 }
