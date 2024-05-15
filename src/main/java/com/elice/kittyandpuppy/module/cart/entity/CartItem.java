@@ -2,13 +2,11 @@ package com.elice.kittyandpuppy.module.cart.entity;
 
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Builder
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class CartItem {
@@ -23,7 +21,6 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    @Getter
     private Product product;
 
     private int quantity;

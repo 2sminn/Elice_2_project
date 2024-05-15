@@ -57,6 +57,7 @@ function displayOrderItems(orderItems) {
 
         `);
         cartElement.find('.product-item').data('id', orderItem.id);
+        cartElement.find('.product-item').data('id', orderItem.id);
         cartElement.find('.detail-price').data('price', orderItem.price);
         cartElement.find('.product-count').data('count', orderItem.amount);
         cartList.append(cartElement);
