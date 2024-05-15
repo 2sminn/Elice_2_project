@@ -23,6 +23,12 @@ $(document).ready(function() {
         loadProducts(categoryId);
     });
 
+    // 정렬 버튼에 클릭 이벤트 바인딩
+    $('.sort-btn').click(function() {
+        const sortType = $(this).attr('id');
+        sortProducts(sortType);
+    });
+
     // 상품 클릭 시 상세 페이지로 이동
     $(document).on('click', '.product-item', function() {
         const productId = $(this).data('product-id');
@@ -95,4 +101,25 @@ function updateProductSection(products) {
         `;
         productSection.append(productHtml);
     });
+}
+
+function sortProducts(sortType) {
+    const products = $('.product-section .product-item').get();
+    switch (sortType) {
+        case 'popularity':
+            products.sort((a, b) => $(b).data('popularity') - $(a).data('popularity'));
+            break;
+        case 'latest':
+            products.sort((a, b) => $(b).data('date') - $(a).data('date'));
+            break;
+        case 'low-to-high':
+            products.sort((a, b) => $(a).data('price') - $(b).data('price'));
+            break;
+        case 'high-to-low':
+            products.sort((a, b) => $(b).data('price') - $(a).data('price'));
+            break;
+        default:
+            break;
+    }
+    $('.product-section').empty().append(products);
 }
