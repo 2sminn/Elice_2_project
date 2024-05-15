@@ -9,4 +9,9 @@ public class ProductViewController {
     public String viewProduct(@PathVariable(value="productId")Long productId){
         return "product";
     }
+
+    @GetMapping("/product/write")
+    public String producteWrite(){
+        return "/product/product_registration";
+    }
 }
