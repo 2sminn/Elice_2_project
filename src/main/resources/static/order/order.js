@@ -223,31 +223,23 @@ function order() {
 
     localStorage.removeItem('orderItemIds');
 
-    // 카카오 페이 결제
-    if (payBy === "kakao") {
-        $.ajax({
-            url: '/payment/ready',
-            type: 'POST',
-            async: false,
-            data: JSON.stringify({
-                token: token,
-                orderId: orderId
-            }),
-            contentType: 'application/json',
-            success: function (response) {
-                var payment = response.next_redirect_pc_url;
-                window.open(payment, '_blank');
-            },
-            error: function (xhr, status, error) {
-                console.error('API 호출 실패:', status, error);
-            }
-        });
-    }
-
-    if (payBy === "card") {
+    if (payBy === 'vbank') {
         AUTHNICE.requestPay({
             clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
-            method: 'card',
+            method: payBy,
+            orderId: orderId,
+            amount: orderTotalPrice,
+            vbankHolder: '구해줘멍냥',
+            goodsName: '구해줘멍냥',
+            returnUrl: 'http://localhost:8080/nicepay', //API를 호출할 Endpoint 입력
+            fnError: function (result) {
+                alert('개발자확인용 : ' + result.errorMsg + '')
+            }
+        });
+    } else {
+        AUTHNICE.requestPay({
+            clientId: 'S2_3c0c9aed5cd44acb9d4a155c9bb74371',
+            method: payBy,
             orderId: orderId,
             amount: orderTotalPrice,
             goodsName: '구해줘멍냥',
@@ -258,7 +250,6 @@ function order() {
         });
     }
 
-    location.replace("/order/success" + "?orderId=" + orderId);
 }
 
 // 결제 승인창에서 정상 결제시 메세지를 전송함
@@ -266,8 +257,8 @@ window.addEventListener("message", receiveMessage, false);
 function receiveMessage(event) {
     console.log(event);
     var receivedData = JSON.parse(event.data);
-    var message = receivedData.message;
-    if (message === '결제 실패') {
+    var type = receivedData.type;
+    if (type === 'error') {
         location.replace("/order/fail" + "?orderId=" + orderId);
     } else {
         location.replace("/order/success" + "?orderId=" + orderId);

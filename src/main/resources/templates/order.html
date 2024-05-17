@@ -89,36 +89,36 @@
         <!-- 결제 방법 -->
         <article style="margin-top: 100px">
           <p class="font-large">결제방법</p>
-          <div class="box">
-            <div class="column">
-              <label>
-                <input type="radio" name="payBy" value="card">
-                <div>신용·체크카드</div>
-              </label>
-              <label>
-                <input type="radio" name="payBy" value="accountTransfer">
-                <div>계좌이체</div>
-              </label>
-              <label>
-                <input type="radio" name="payBy" value="BankTransfer">
-                <div>무통장입금</div>
-              </label>
-            </div>
+            <div class="box">
+              <div class="column">
+                <label>
+                  <input type="radio" name="payBy" value="card">
+                  <div>신용·체크카드</div>
+                </label>
+                <label>
+                  <input type="radio" name="payBy" value="bank">
+                  <div>계좌이체</div>
+                </label>
+                <label>
+                  <input type="radio" name="payBy" value="vbank">
+                  <div>무통장입금</div>
+                </label>
+              </div>
 
-            <div class="column">
-              <label>
-                <input type="radio" name="payBy" value="phone">
-                <div>휴대폰</div>
-              </label>
-              <label>
-                <input type="radio" name="payBy" value="naver">
-                <div><img style="width: 65px;" src="/static/img/naver_pay.png"></div>
-              </label>
-              <label>
-                <input type="radio" name="payBy" value="kakao">
-                <div><img style="width: 123px" src="/static/img/kakao_pay.png"></div>
-              </label>
-            </div>
+              <div class="column">
+                <label>
+                  <input type="radio" name="payBy" value="cellphone">
+                  <div>휴대폰</div>
+                </label>
+                <label>
+                  <input type="radio" name="payBy" value="naverpayCard">
+                  <div><img style="width: 65px;" src="/static/img/naver_pay.png"></div>
+                </label>
+                <label>
+                  <input type="radio" name="payBy" value="kakaopay">
+                  <div><img style="width: 123px" src="/static/img/kakao_pay.png"></div>
+                </label>
+              </div>
 
             <div class="order-column">
               <input type="button" class="order-button" onclick="order()" value="결제하기">
