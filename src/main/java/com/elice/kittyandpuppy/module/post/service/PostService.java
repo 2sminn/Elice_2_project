@@ -71,7 +71,7 @@ public class PostService {
     @Transactional
     public Post incrementViews(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new IllegalArgumentException("Post not found"));
+                .orElseThrow(() -> new IllegalArgumentException("게시글을 찾을 수 없음"));
         post.incrementViewCount();
         return postRepository.save(post);
 

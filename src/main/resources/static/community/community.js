@@ -30,12 +30,28 @@ $(document).ready(function() {
         tbody.empty();
         posts.forEach(post => {
             const row = `
-                <tr>
-                    <td>${post.id}</td>
-                    <td><a href="/community?postId=${post.id}" class="post-link">${post.title}</a></td>
-                    <td>${formatDate(post.createdAt)}</td>
-                </tr>`;
+            <tr>
+                <td>${post.id}</td>
+                <td><a href="#" class="post-link" data-id="${post.id}">${post.title}</a></td>
+                <td>${formatDate(post.createdAt)}</td>
+                <td>${post.views}</td>
+            </tr>`;
             tbody.append(row);
+        });
+
+        $('.post-link').click(function(e) {
+            e.preventDefault();
+            const postId = $(this).data('id');
+            $.ajax({
+                url: `/api/community/${postId}/increment-views`,
+                type: 'POST',
+                success: function() {
+                    window.location.href = `/community?postId=${postId}`;
+                },
+                error: function() {
+                    alert('조회수 증가에 실패했습니다.');
+                }
+            });
         });
     }
 
