@@ -19,6 +19,12 @@
     <script src="/static/community/community_detail.js"></script>
     <script src="/static/comment/comment.js"></script>
 
+    <!-- Font Awesome CDN 추가 -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+            crossorigin="anonymous"
+    />
 </head>
 <body>
 <div id="header"></div>
@@ -46,6 +52,12 @@
             <div class="text-center" style="margin-top: 20px">
                 <button id="editBtn" class="btn btn-edit">수정</button>
                 <button id="deleteBtn" class="btn btn-danger">삭제</button>
+            </div>
+            <!-- 좋아요 토글 버튼 추가 -->
+            <div class="text-center mt-3">
+                <button id="likeBtn" class="btn btn-like">
+                    <i class="far fa-heart"></i> <span id="likeCount">0</span>
+                </button>
             </div>
         </div>
     </div>

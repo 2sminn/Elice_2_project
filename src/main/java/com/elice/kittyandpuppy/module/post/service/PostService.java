@@ -2,7 +2,9 @@ package com.elice.kittyandpuppy.module.post.service;
 
 import com.elice.kittyandpuppy.module.post.dto.RequestPost;
 import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
+import com.elice.kittyandpuppy.module.post.entity.Like;
 import com.elice.kittyandpuppy.module.post.entity.Post;
+import com.elice.kittyandpuppy.module.post.repository.LikeRepository;
 import com.elice.kittyandpuppy.module.post.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,20 +12,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @RequiredArgsConstructor
 @Service
 @Transactional
 public class PostService {
     private final PostRepository postRepository;
+    private final LikeRepository likeRepository;
 
     // Community 관련 서비스
     @Transactional(readOnly = true)
-    public Page<ResponsePost> getCommunityList(String search, Pageable pageable) {
+    public Page<Post> getCommunityList(String search, Pageable pageable) {
         if (search != null && !search.isEmpty()) {
-            return postRepository.findByTitleContaining(search, pageable)
-                    .map(ResponsePost::new);  // 검색 결과를 ResponsePost DTO로 변환
+            return postRepository.findByTitleContaining(search, pageable);  // 검색 결과를 반환
         } else {
-            return postRepository.findAll(pageable).map(ResponsePost::new);  // 모든 게시물 반환
+            return postRepository.findAll(pageable);  // 모든 게시물 반환
         }
     }
 
@@ -31,7 +35,6 @@ public class PostService {
     public Post getCommunityDetail(Long id) {
         return postRepository.findById(id).orElse(null);
     }
-
 
     public Post createCommunityDetail(RequestPost requestPost) {
         Post entity = requestPost.toEntity(requestPost);
@@ -50,7 +53,6 @@ public class PostService {
         // entity 가 있으면 수정하고 저장
         if (entity != null) {
             entity.updatePatch(requestPost.toEntity(requestPost));
-//            return postRepository.save(entity);
             return entity;
         } else {
             return null;
@@ -75,5 +77,33 @@ public class PostService {
         post.incrementViewCount();
         return postRepository.save(post);
 
+    }
+
+    // 특정 사용자가 게시글을 좋아요 했는지 확인
+    public boolean isPostLikedByUser(Long postId, Long memberId) {
+        return likeRepository.existsByPostIdAndMemberId(postId, memberId);
+    }
+
+    // 좋아요 개수 세기
+    @Transactional(readOnly = true)
+    public int getLikeCount(Long postId) {
+        return likeRepository.countByPostId(postId);
+    }
+
+    // 좋아요 상태 토글 및 좋아요 개수 반환
+    public Map<String, Object> toggleLikeStatus(Long postId, Long memberId) {
+        boolean isLiked;
+        if (isPostLikedByUser(postId, memberId)) {
+            likeRepository.deleteByPostIdAndMemberId(postId, memberId);
+            isLiked = false;
+        } else {
+            likeRepository.save(Like.builder()
+                    .postId(postId)
+                    .memberId(memberId)
+                    .build());
+            isLiked = true;
+        }
+        int likeCount = likeRepository.countByPostId(postId);
+        return Map.of("isLiked", isLiked, "likeCount", likeCount);
     }
 }

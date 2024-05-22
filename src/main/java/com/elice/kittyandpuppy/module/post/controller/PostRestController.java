@@ -1,8 +1,10 @@
 package com.elice.kittyandpuppy.module.post.controller;
 
 
+import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.post.dto.RequestPost;
 import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
+import com.elice.kittyandpuppy.module.post.dto.ResponsePostLike;
 import com.elice.kittyandpuppy.module.post.entity.Post;
 import com.elice.kittyandpuppy.module.post.service.PostService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -13,9 +15,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @Tag(name="커뮤니티 API")
 @RequiredArgsConstructor
@@ -24,21 +28,27 @@ import java.util.List;
 public class PostRestController {
     private final PostService postService;
 
-    // Community 관련 컨트롤러
-    // GET
     @GetMapping("/communities")
-    public ResponseEntity<Page<ResponsePost>> getCommunityList(
+    public ResponseEntity<Page<ResponsePostLike>> getCommunityList(
             @RequestParam(value = "search", required = false) String search,
             @PageableDefault(size = 13, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<ResponsePost> responsePosts = postService.getCommunityList(search, pageable);
-        return ResponseEntity.ok().body(responsePosts);
+        Page<Post> posts = postService.getCommunityList(search, pageable);
+        Page<ResponsePostLike> responsePostLikes = posts.map(post -> {
+            int likeCount = postService.getLikeCount(post.getId());
+            return new ResponsePostLike(post, likeCount);
+        });
+        return ResponseEntity.ok().body(responsePostLikes);
     }
 
     @GetMapping("/community/{id}")
-    public ResponseEntity<ResponsePost> getCommunityDetail(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<Map<String, Object>> getCommunityDetail(@PathVariable(name = "id") Long id) {
         Post post = postService.getCommunityDetail(id);
+        int likeCount = postService.getLikeCount(id);
 
-        return ResponseEntity.ok().body(new ResponsePost(post));
+        return ResponseEntity.ok().body(Map.of(
+                "post", new ResponsePost(post),
+                "likeCount", likeCount
+        ));
     }
 
     // POST
@@ -71,5 +81,19 @@ public class PostRestController {
     public ResponseEntity<Void> incrementPostViews(@PathVariable Long postId) {
         postService.incrementViews(postId);
         return ResponseEntity.ok().build(); // 성공적으로 처리되면 OK 상태 코드 반환
+    }
+
+    // 특정 사용자의 좋아요 상태 확인
+    @GetMapping("/community/post/{id}/like-status")
+    public ResponseEntity<Map<String, Boolean>> getLikeStatus(@PathVariable Long id, @AuthenticationPrincipal Member member) {
+        boolean isLiked = postService.isPostLikedByUser(id, member.getId());
+        return ResponseEntity.ok(Map.of("isLiked", isLiked));
+    }
+
+    // 좋아요 상태 업데이트
+    @PostMapping("/community/post/{id}/like")
+    public ResponseEntity<Map<String, Object>> toggleLikeStatus(@PathVariable Long id, @AuthenticationPrincipal Member member) {
+        Map<String, Object> response = postService.toggleLikeStatus(id, member.getId());
+        return ResponseEntity.ok(response);
     }
 }

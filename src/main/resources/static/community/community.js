@@ -7,7 +7,7 @@ $(document).ready(function() {
     });
 
     function loadPosts(pageNumber, searchTerm = '') {
-        $('#data-table tbody').html('<tr><td colspan="4">Loading...</td></tr>'); // 로딩 메시지 표시
+        $('#data-table tbody').html('<tr><td colspan="5">Loading...</td></tr>'); // 로딩 메시지 표시
         $.ajax({
             url: `/api/communities?page=${pageNumber}&search=${encodeURIComponent(searchTerm)}`,
             type: 'GET',
@@ -16,11 +16,11 @@ $(document).ready(function() {
                 displayPosts(response.content); // 게시글 표시
                 setupPagination(response, searchTerm); // 페이지네이션 설정, 검색어 전달
                 if (response.content.length === 0) {
-                    $('#data-table tbody').html('<tr><td colspan="4">No posts found.</td></tr>'); // 검색 결과가 없음
+                    $('#data-table tbody').html('<tr><td colspan="5">No posts found.</td></tr>'); // 검색 결과가 없음
                 }
             },
             error: function() {
-                $('#data-table tbody').html('<tr><td colspan="4">Failed to load data. Please check your connection and try again.</td></tr>'); // 에러 메시지 강화
+                $('#data-table tbody').html('<tr><td colspan="5">Failed to load data. Please check your connection and try again.</td></tr>'); // 에러 메시지 강화
             }
         });
     }
@@ -35,6 +35,7 @@ $(document).ready(function() {
                 <td><a href="#" class="post-link" data-id="${post.id}">${post.title}</a></td>
                 <td>${formatDate(post.createdAt)}</td>
                 <td>${post.views}</td>
+                <td>${post.likeCount}</td> <!-- 좋아요 개수 추가 -->
             </tr>`;
             tbody.append(row);
         });
@@ -100,10 +101,10 @@ $(document).ready(function() {
 
     $('#createPost').click(function (){
         const token = localStorage.getItem("token");
-        if(token==null){
-            window.location.href="/login";
-        }else{
-            window.location.href="/community/create";
+        if(token == null){
+            window.location.href = "/login";
+        } else {
+            window.location.href = "/community/create";
         }
     });
 });
