@@ -2,6 +2,7 @@ package com.elice.kittyandpuppy.module.cart.entity;
 
 
 import com.elice.kittyandpuppy.global.BaseTimeEntity;
+import com.elice.kittyandpuppy.module.cart.dto.CartResponse;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import jakarta.persistence.*;
@@ -33,5 +34,9 @@ public class Cart extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     @Setter
     private Member member;
+
+    public CartResponse toDTO() {
+        return new CartResponse(this.cartItems);
+    }
 
 }

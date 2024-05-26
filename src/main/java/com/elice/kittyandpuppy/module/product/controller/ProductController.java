@@ -41,15 +41,6 @@ public class ProductController {
         return new ResponseEntity<>(productDtos, HttpStatus.OK);
     }
 
-    // 카트에 담긴 상품 전달
-    @GetMapping("/cart")
-    public ResponseEntity<List<ResponseProductDto>> getCartById(@RequestParam("cartList") int[] cartList) {
-        List<Product> products = productService.findByCart(cartList);
-        List<ResponseProductDto> productDtos = products.stream()
-                .map(Product::toResponseDto)
-                .collect(Collectors.toList());
-        return new ResponseEntity<>(productDtos, HttpStatus.OK);
-    }
 
     // 특정 id 상품 조회
     @GetMapping("/{productId}")

@@ -27,7 +27,25 @@ public class CartService {
     private final ProductService productService;
 
 
-    //TODO 상품 상세 페이지에서 장바구니 담기
+    /**
+     * 상품 상세페이지에서 장바구니에 상품을 추가한다.
+     */
+    //TODO 수량조절
+    public Cart addItemToCart(Long memberId, Long productId, int quantity) {
+        Cart cart = getCartByMemberId(memberId);
+        Product product = productService.getProductById(productId);
+
+        //TODO 이미 추가한 상품일 때의 예외 처리는 나중에 할 예정
+        CartItem cartItem = CartItem.builder()
+                .cart(cart)
+                .product(product)
+                .quantity(quantity)
+                .build();
+
+        cart.getCartItems().add(cartItem);
+        return cartRepository.save(cart);
+    }
+
     /**
      * memberId로 장바구니를 반환한다.
      * 만약 회원이 장바구니를 생성한 적이 없다면
@@ -42,23 +60,6 @@ public class CartService {
             return cartRepository.save(newCart);
         });
         return cart;
-    }
-
-    /**
-     * 장바구니에 상품을 추가한다.
-     */
-    public Cart addItemToCart(Long memberId, Long productId, int quantity) {
-        Cart cart = getCartByMemberId(memberId);
-        Product product = productService.getProductById(productId);
-
-        //TODO 이미 추가한 상품일 때의 예외 처리는 나중에 할 예정
-        CartItem cartItem = CartItem.builder()
-                .cart(cart)
-                .product(product)
-                .build();
-
-        cart.getCartItems().add(cartItem);
-        return cartRepository.save(cart);
     }
 
     /**
