@@ -4,14 +4,16 @@ import com.elice.kittyandpuppy.module.category.dto.RequestCategoryDto;
 import com.elice.kittyandpuppy.module.category.dto.ResponseCategoryDto;
 import com.elice.kittyandpuppy.module.category.service.CategoryService;
 import com.elice.kittyandpuppy.module.product.dto.ResponseProductDto;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name="카테고리 API")
 @RestController
-@RequestMapping("api/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 

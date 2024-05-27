@@ -1,15 +1,10 @@
-package com.elice.kittyandpuppy.module.member.contorller;
+package com.elice.kittyandpuppy.view;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
-
-@RequiredArgsConstructor
 @Controller
-public class MemberController {
+public class MemberViewController {
     @GetMapping("/signup")
     public String joinForm(){
         return "join";

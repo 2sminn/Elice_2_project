@@ -1,10 +1,8 @@
-package com.elice.kittyandpuppy.module.order.controller;
+package com.elice.kittyandpuppy.view;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@RequiredArgsConstructor
 @Controller
 public class OrderViewController {
 
@@ -20,20 +18,7 @@ public class OrderViewController {
 
     @GetMapping("/order/fail")
     public String orderFail() {
-        return "order_fail";}
-
-    @GetMapping("/cart")
-    public String cart() {
-        return "cart";
+        return "order_fail";
     }
 
-    @GetMapping("/footer.html")
-    public String footer() {
-        return"footer";
-    }
-
-    @GetMapping("/header.html")
-    public String header() {
-        return "header";
-    }
 }

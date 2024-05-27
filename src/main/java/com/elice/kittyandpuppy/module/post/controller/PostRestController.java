@@ -5,6 +5,7 @@ import com.elice.kittyandpuppy.module.post.dto.RequestPost;
 import com.elice.kittyandpuppy.module.post.dto.ResponsePost;
 import com.elice.kittyandpuppy.module.post.entity.Post;
 import com.elice.kittyandpuppy.module.post.service.PostService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Tag(name="커뮤니티 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")

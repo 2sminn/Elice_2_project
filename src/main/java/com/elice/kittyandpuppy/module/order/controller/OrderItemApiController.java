@@ -6,6 +6,7 @@ import com.elice.kittyandpuppy.module.order.entity.OrderItem;
 import com.elice.kittyandpuppy.module.order.service.OrderItemService;
 import com.elice.kittyandpuppy.module.product.entity.Product;
 import com.elice.kittyandpuppy.module.product.service.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@Tag(name="주문상품 API")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api")
@@ -63,6 +65,7 @@ public class OrderItemApiController {
         return ResponseEntity.status(HttpStatus.CREATED).body(new OrderItemResponse(orderItem));
     }
 
+    // TODO: cart 여기서 빠질 예정
     @GetMapping("/cart")
     public ResponseEntity<List<OrderItemResponse>> getCartById(@RequestParam("cartList") int[] orderId) {
         List<OrderItemResponse> orderItems = orderItemService.getCart(orderId);
