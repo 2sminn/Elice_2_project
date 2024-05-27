@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class ProductViewController {
-    @GetMapping("api/product/{productId}")
+    @GetMapping("/product/view/{productId}")
     public String viewProduct(@PathVariable(value="productId")Long productId){
         return "product";
     }
