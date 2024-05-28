@@ -40,7 +40,7 @@ public class CartApiController {
     public String addToCart(@RequestBody CartRequest cartRequest) {
         Long memberId = tokenProvider.getMemberId(cartRequest.getToken());
         cartService.addItemToCart(memberId, cartRequest.getProductId(), 1);
-        return "장바구니 추가가 성공적으로 완료되었습니다.";
+        return "success";
     }
     @Operation(summary = "장바구니 주문", description = "로그인 한 회원이 장바구니에 담긴 상품들을 주문한다.")
     @GetMapping("/order")
