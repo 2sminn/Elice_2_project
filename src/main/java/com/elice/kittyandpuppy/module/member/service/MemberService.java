@@ -3,6 +3,7 @@ package com.elice.kittyandpuppy.module.member.service;
 import com.elice.kittyandpuppy.global.jwt.TokenProvider;
 import com.elice.kittyandpuppy.module.member.entity.Member;
 import com.elice.kittyandpuppy.module.member.entity.MemberDetails;
+import com.elice.kittyandpuppy.module.member.entity.SocialType;
 import com.elice.kittyandpuppy.module.member.repository.MemberDetailRepository;
 import com.elice.kittyandpuppy.module.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class MemberService {
         String password = passwordEncoder.encode(member.getPassword()+key);
 
         member.setPassword(password);
+        member.setSocialType(SocialType.BASIC);
         Member savedMember = memberRepository.save(member);
         MemberDetails memberDetails = new MemberDetails(savedMember);
         memberDetailRepository.save(memberDetails);
