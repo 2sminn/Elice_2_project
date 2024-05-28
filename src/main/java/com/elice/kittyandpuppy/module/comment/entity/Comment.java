@@ -42,6 +42,4 @@ public class Comment extends BaseTimeEntity{
                 .parentId(comment.getParent_id())
                 .build();
     }
-
-
 }
