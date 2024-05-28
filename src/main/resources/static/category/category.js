@@ -13,7 +13,6 @@ $(document).ready(function() {
         loadProductsByParentId(parentCategoryId);
     });
 
-
     // 하위 카테고리 버튼에 클릭 이벤트 바인딩
     $('.category').click(function() {
         $('.category').removeClass('selected');
@@ -35,8 +34,8 @@ $(document).ready(function() {
         window.location.href = `/product/${productId}`;
     });
 });
+
 function updateCategoryButtons(parentCategory) {
-    // 상위 카테고리에 따라 하위 카테고리 버튼의 ID를 업데이트합니다.
     var categoryMappings = {
         'dog': { '간식': 3, '매트': 4, '사료': 5, '패션': 6, '장난감': 7 },
         'cat': { '간식': 8, '매트': 9, '사료': 10, '패션': 11, '장난감': 12 }
@@ -47,30 +46,30 @@ function updateCategoryButtons(parentCategory) {
         $(this).data('category-id', categoryMappings[parentCategory][categoryName]);
     });
 }
+
 function loadProductsByParentId(parentId) {
     $.ajax({
-        url: `/categories/${parentId}/subcategories`, // 올바른 엔드포인트로 GET 요청
+        url: `/api/categories/${parentId}/subcategories`,
         type: 'GET',
         dataType: 'json',
         success: function(response) {
             const allProducts = [];
-            // 모든 하위 카테고리의 상품들을 하나의 배열로 합칩니다.
             response.forEach(subCategory => {
-                allProducts.push(...subCategory.products);
+                if (subCategory.products && Array.isArray(subCategory.products)) {
+                    allProducts.push(...subCategory.products);
+                }
             });
-            // 상품 섹션을 업데이트 합니다.
             updateProductSection(allProducts);
-            },
-            error: function(error) {
-                console.error('Error fetching products:', error);
-            }
+        },
+        error: function(error) {
+            console.error('Error fetching products:', error);
+        }
     });
 }
 
 function loadProducts(categoryId) {
-    // 특정 카테고리의 상품 데이터 로드
     $.ajax({
-        url: `/categories/${categoryId}/products`,
+        url: `/api/categories/${categoryId}/products`,
         type: 'GET',
         dataType: 'json',
         success: function(products) {

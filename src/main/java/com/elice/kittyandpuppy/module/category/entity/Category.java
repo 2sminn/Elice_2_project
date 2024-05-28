@@ -2,6 +2,7 @@ package com.elice.kittyandpuppy.module.category.entity;
 
 import com.elice.kittyandpuppy.module.category.dto.RequestCategoryDto;
 import com.elice.kittyandpuppy.module.category.dto.ResponseCategoryDto;
+import com.elice.kittyandpuppy.module.product.entity.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -36,8 +37,11 @@ public class Category {
     @OneToMany(mappedBy = "parentCategory", cascade = CascadeType.ALL)
     private List<Category> subCategories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "categoryId", fetch = FetchType.LAZY)
+    private List<Product> products = new ArrayList<>();
+
     @Builder
-    public Category(Long id, String branch, String name, Category parentCategory, String code){
+    public Category(Long id, String branch, String name, Category parentCategory, String code) {
         this.id = id;
         this.branch = branch;
         this.name = name;
@@ -70,6 +74,8 @@ public class Category {
                 .parentCategoryId(this.getParentCategory() != null ? this.getParentCategory().getId() : null)
                 .subCategories(this.getSubCategories() != null ? this.getSubCategories().stream()
                         .map(Category::toDto).collect(Collectors.toList()) : null)
+                .products(this.getProducts() != null ? this.getProducts().stream()
+                        .map(Product::toResponseDto).collect(Collectors.toList()) : new ArrayList<>())
                 .build();
     }
 }
