@@ -5,12 +5,17 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.Date;
+import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class TokenProvider {
@@ -46,8 +51,10 @@ public class TokenProvider {
                 .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(now)      // 발급 시간
                 .setExpiration(expiry)  // 토큰 만료 시간
-                .setSubject(member.getEmail())  // 토큰 용도 명시
-                .claim("id", member.getId())    // Playload에 담길 Claim 값
+                .setSubject("token")  // 토큰 용도 명시
+                // Playload에 담길 Claim 값
+                .claim("id", member.getId())
+                .claim("email",member.getEmail())
                 .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
@@ -63,8 +70,10 @@ public class TokenProvider {
             Jwts.parser()
                     .setSigningKey(jwtProperties.getSecretKey())
                     .parseClaimsJws(token);
+            log.info("token is valid");
             return true;
         } catch (Exception e) {
+            log.info("token is invalid");
             return false;
         }
     }
@@ -79,11 +88,25 @@ public class TokenProvider {
         Claims claims = getClaims(token);
         return claims.get("id", Long.class);
     }
+    public String getMemberEmail(String token) {
+        Claims claims = getClaims(token);
+        return claims.get("email", String.class);
+    }
 
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
                 .parseClaimsJws(token)
                 .getBody();
+    }
+    /*
+    *   헤더에 Token 설정
+    */
+    public void setTokenHeader(HttpServletResponse response, String token){
+        response.setHeader("token",token);
+    }
+
+    public Optional<String> extractToken(HttpServletRequest request){
+        return Optional.ofNullable(request.getHeader("token"));
     }
 }
