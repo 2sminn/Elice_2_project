@@ -2,22 +2,17 @@ package com.elice.kittyandpuppy.module.product.entity;
 
 import com.elice.kittyandpuppy.module.product.dto.RequestProductDto;
 import com.elice.kittyandpuppy.module.product.dto.ResponseProductDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data // getter, setter 등 여러 메소드들을 자동으로 생성
-@Entity // 클래스가 데이터베이스의 테이블과 매핑됨
-@NoArgsConstructor // Lombok 파라미터가 없는 기본 생성자 생성
-@AllArgsConstructor // 모든 필드를 파라미터로 받는 생성자 생성
-@Table(name = "product") // 해당 엔티티가 매핑되는 DB 테이블의 이름 지정
+@Data
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -45,8 +40,10 @@ public class Product {
 
     @Column(name = "created_at")
     private String createdAt;
+
     @Column(name = "modified_at")
     private String modifiedAt;
+
     @Builder
     public Product(Long categoryId, String name, int price, int stock, String imageUrl,
                    String description, String createdAt, String modifiedAt) {

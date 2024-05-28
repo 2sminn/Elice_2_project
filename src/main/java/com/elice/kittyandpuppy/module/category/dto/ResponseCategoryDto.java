@@ -1,7 +1,7 @@
 package com.elice.kittyandpuppy.module.category.dto;
 
 import com.elice.kittyandpuppy.module.category.entity.Category;
-import com.elice.kittyandpuppy.module.product.dto.RequestProductDto;
+import com.elice.kittyandpuppy.module.product.dto.ResponseProductDto;
 import lombok.Builder;
 import lombok.Data;
 
@@ -17,8 +17,9 @@ public class ResponseCategoryDto {
     private String branch;
     private Long parentCategoryId;
     private List<ResponseCategoryDto> subCategories;
-    private List<RequestProductDto> products;
+    private List<ResponseProductDto> products;
 
+    // Convert Entity to DTO
     public static ResponseCategoryDto fromEntity(Category entity) {
         if (entity == null) return null;
 
@@ -30,6 +31,8 @@ public class ResponseCategoryDto {
                 .parentCategoryId(entity.getParentCategory() != null ? entity.getParentCategory().getId() : null)
                 .subCategories(entity.getSubCategories() != null ? entity.getSubCategories().stream()
                         .map(ResponseCategoryDto::fromEntity).collect(Collectors.toList()) : null)
+                .products(entity.getProducts() != null ? entity.getProducts().stream()
+                        .map(ResponseProductDto::fromEntity).collect(Collectors.toList()) : null)
                 .build();
     }
 }
