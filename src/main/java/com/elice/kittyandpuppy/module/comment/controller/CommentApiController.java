@@ -21,6 +21,9 @@ import java.util.List;
 public class CommentApiController {
     private final CommentService commentService;
 
+
+
+
     @Operation(summary = "댓글 작성")
     @PostMapping
     public ResponseEntity<Comment> createComment(@RequestBody final CommentRequest commentRequest) {
